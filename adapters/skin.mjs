@@ -148,6 +148,44 @@ export default {
 			if (distance > 2) fail(`opened ${distance}px from the bottom`);
 		},
 
+		"An existing conversation never flashes the empty state": async ({ page, base }) => {
+			await open(page, base);
+
+			const row = await page.$(`${selectors.chatRow} button`);
+
+			if (row === null) return "no saved chats on this account";
+
+			await row.click();
+			await page.waitForURL(new RegExp("/c/c-"));
+
+			const address = page.url();
+			const seen = await page.evaluate(() => {
+				const flashes = { empty: 0 };
+				const observer = new MutationObserver(() => {
+					if (document.body.textContent?.includes("This is your own skin")) flashes.empty += 1;
+				});
+
+				observer.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+				globalThis.__basicFlashes = flashes;
+
+				return true;
+			});
+
+			await page.addInitScript(() => {
+				globalThis.__basicFlashes = { empty: 0 };
+				new MutationObserver(() => {
+					if (document.body?.textContent?.includes("This is your own skin")) globalThis.__basicFlashes.empty += 1;
+				}).observe(document, { childList: true, subtree: true, characterData: true });
+			});
+			await page.goto(address, { waitUntil: "load" });
+			await page.waitForFunction(statusMatches, { selector: selectors.status, pattern: "Idle|Working" }, { timeout: 20000 });
+			await page.waitForTimeout(500);
+
+			const flashes = await page.evaluate(() => globalThis.__basicFlashes.empty);
+
+			if (seen && flashes > 0) fail(`the empty state rendered ${flashes} times while the conversation loaded`);
+		},
+
 		"My own message always pins": async ({ page, base }) => {
 			await open(page, base);
 			await fillLog(page, 200);

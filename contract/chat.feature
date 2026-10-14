@@ -47,6 +47,12 @@ Feature: The expected UX contract for an agent chat, October 2026
       When an older page of history loads
       Then my scroll position is kept relative to the message I was reading
 
+    @must @skin
+    Scenario: An existing conversation never flashes the empty state
+      When I open the address of a conversation that has messages
+      Then a loading state shows until the messages arrive
+      And the empty state with starters never appears, not even for one frame
+
     @must @my.ax
     Scenario: My own message always pins
       When I send a message

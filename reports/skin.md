@@ -1,8 +1,8 @@
 # skin conformance report
 
-Run against the deployed app on 2026-10-13, floor only.
+Run against the deployed app on 2026-10-14, floor only.
 
-pass 36 · fail 0 · n/a 5 · untested 0
+pass 37 · fail 0 · n/a 5 · untested 0
 
 | Scenario | Tags | Result | Detail |
 | --- | --- | --- | --- |
@@ -11,6 +11,7 @@ pass 36 · fail 0 · n/a 5 · untested 0
 | A scroll-wheel up releases the pin at once | @must @chat.ax | pass |  |
 | A way back to the newest message | @must @my.ax @chat.ax | pass | unread count is model-backed; verified by the body story tests |
 | Opening a conversation lands at the bottom | @must @my.ax | pass |  |
+| An existing conversation never flashes the empty state | @must @skin | pass |  |
 | My own message always pins | @must @my.ax | pass |  |
 | Enter sends, Shift+Enter breaks a line, on desktop | @must @my.ax @t3 | pass | Enter-to-send is exercised by the turn checks |
 | Enter during IME composition never sends | @must @my.ax | pass |  |
