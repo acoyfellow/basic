@@ -1,0 +1,31 @@
+.gitignore
+  s_1edf569f022c1c::t_af21c4f70eb744 1-2
+POST.md
+  s_1edf569f022c1c::t_5b6600a155d3ff 1-145
+README.md
+  s_1edf569f022c1c::t_9c60bae20353e0 1-25
+adapters/skin.mjs
+  s_1edf569f022c1c::t_a91ebad5103412 1-583
+contract/chat.feature
+  s_1edf569f022c1c::t_49bc85f4baf55e 1-305
+reports/skin.md
+  s_1edf569f022c1c::t_75c9b0597d8873 1-49
+run.mjs
+  s_1edf569f022c1c::t_93372f0471da85 1-89
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "fe582833f1ff8e8d7f428b162f10eb5295ef1be1",
+  "prompts": {},
+  "sessions": {
+    "s_1edf569f022c1c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a0df3d-f9fc-74ea-ae36-1d244e193f8b",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jordan Coeyman <jcoeyman@cloudflare.com>"
+    }
+  }
+}
