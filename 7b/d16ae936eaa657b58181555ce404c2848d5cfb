@@ -1,0 +1,25 @@
+README.md
+  s_1edf569f022c1c::t_b1f066ed5305af 5,22
+adapters/skin.mjs
+  s_1edf569f022c1c::t_04d10535aa08f1 151-188
+contract/chat.feature
+  s_1edf569f022c1c::t_79643d83b9f8be 50-55
+reports/skin.md
+  s_1edf569f022c1c::t_568abe471bcaed 3,5,14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7bd16ae936eaa657b58181555ce404c2848d5cfb",
+  "prompts": {},
+  "sessions": {
+    "s_1edf569f022c1c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a0df3d-f9fc-74ea-ae36-1d244e193f8b",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jordan Coeyman <jcoeyman@cloudflare.com>"
+    }
+  }
+}
