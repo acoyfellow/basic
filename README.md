@@ -20,6 +20,3 @@ Exit code 0 means every floor scenario passed or has a written reason it does no
 | App | Floor | Report |
 | --- | --- | --- |
 | skin | 37 pass, 0 fail, 5 n/a | `reports/skin.md` |
-| my.ax | not run | |
-| chat.ax | not run | |
-| coil.ax | not run | |
