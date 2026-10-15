@@ -1,0 +1,43 @@
+README.md
+  s_d58794dec92dc7::t_1c675e1c6186d9 10-60
+diagram.mjs
+  s_d58794dec92dc7::t_b96adf859913b3 1-311
+diagrams/contract.svg
+  s_d58794dec92dc7::t_69b651146eb65d 1-173
+diagrams/rules/01-scroll-follows-the-reader-never-the-stream.svg
+  s_d58794dec92dc7::t_8f99a75826271d 1-132
+diagrams/rules/02-the-composer-keeps-what-i-type.svg
+  s_d58794dec92dc7::t_a9cef2d3f5f5cf 1-172
+diagrams/rules/03-a-running-turn-is-visible-timed-and-stoppable.svg
+  s_d58794dec92dc7::t_c77baeb0db954c 1-141
+diagrams/rules/04-the-conversation-list-tells-me-what-needs-me.svg
+  s_d58794dec92dc7::t_88bee4098eb08c 1-98
+diagrams/rules/05-messages-have-actions-where-i-need-them.svg
+  s_d58794dec92dc7::t_45324e9572a7f3 1-67
+diagrams/rules/06-connection-state-is-truthful.svg
+  s_d58794dec92dc7::t_f778ad3cfc7621 1-66
+diagrams/rules/07-notices-are-placed-in-time-not-pinned-on-top.svg
+  s_d58794dec92dc7::t_e20b843e02499b 1-40
+diagrams/rules/08-the-page-works-for-everyone.svg
+  s_d58794dec92dc7::t_081605efeecf84 1-63
+diagrams/rules/09-the-first-screen-invites-a-first-message.svg
+  s_d58794dec92dc7::t_aecb1e2c74e306 1-52
+diagrams/skin.svg
+  s_d58794dec92dc7::t_22ec924ab747b8 1-174
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1e5ca6f0cd3ed8e4efe94466db98d8adecce9b73",
+  "prompts": {},
+  "sessions": {
+    "s_d58794dec92dc7": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a115e6-5bb3-75ac-b511-2988f1aebfad",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jordan Coeyman <jcoeyman@cloudflare.com>"
+    }
+  }
+}
