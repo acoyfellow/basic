@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1052" height="1550" viewBox="0 0 1052 1550" role="img" aria-label="Basic rule 2: The composer keeps what I type">
+<title>Basic rule 2: The composer keeps what I type</title>
+<rect width="1052" height="1550" fill="#ffffff"/>
+<g font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<text x="40" y="52" font-size="22" font-weight="700" fill="#1d1d1f" text-anchor="start">Rule 2: The composer keeps what I type</text>
+<text x="40" y="78" font-size="13" font-weight="400" fill="#6e6e73" text-anchor="start">Each row is one scenario: the situation, what happens, and what must be true after.</text>
+<text x="190" y="112" font-size="11" font-weight="700" fill="#a1a1a6" text-anchor="middle">GIVEN</text>
+<text x="526" y="112" font-size="11" font-weight="700" fill="#f38020" text-anchor="middle">WHEN</text>
+<text x="862" y="112" font-size="11" font-weight="700" fill="#2e9e5b" text-anchor="middle">THEN</text>
+<rect x="40" y="126" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="139" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="140" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">Enter sends, Shift+Enter breaks a line, on desktop</text>
+<rect x="40" y="158" width="300" height="50" rx="8" fill="#f5f5f7" stroke="#a1a1a6"/>
+<text x="52" y="180" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">a desktop keyboard</text>
+<path d="M346 183 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 179 L374 183 L368 187 Z" fill="#6e6e73"/>
+<rect x="376" y="158" width="300" height="50" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="180" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I press Enter</text>
+<text x="388" y="195" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">when I press Shift+Enter</text>
+<path d="M682 183 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 179 L710 183 L704 187 Z" fill="#6e6e73"/>
+<rect x="712" y="158" width="300" height="50" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="180" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the message sends</text>
+<text x="724" y="195" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">then a newline is inserted</text>
+<rect x="40" y="238" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="251" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="252" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">Enter during IME composition never sends</text>
+<rect x="40" y="270" width="300" height="40" rx="8" fill="#f5f5f7" stroke="#a1a1a6"/>
+<text x="52" y="292" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I am composing with an input method</text>
+<path d="M346 290 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 286 L374 290 L368 294 Z" fill="#6e6e73"/>
+<rect x="376" y="270" width="300" height="40" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="292" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I press Enter to confirm a candidate</text>
+<path d="M682 290 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 286 L710 290 L704 294 Z" fill="#6e6e73"/>
+<rect x="712" y="270" width="300" height="40" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="292" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">nothing is sent</text>
+<rect x="40" y="340" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="353" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="354" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">On a phone, Enter is a newline</text>
+<rect x="40" y="372" width="300" height="50" rx="8" fill="#f5f5f7" stroke="#a1a1a6"/>
+<text x="52" y="394" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">a touch keyboard</text>
+<path d="M346 397 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 393 L374 397 L368 401 Z" fill="#6e6e73"/>
+<rect x="376" y="372" width="300" height="50" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="394" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I press Return</text>
+<path d="M682 397 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 393 L710 397 L704 401 Z" fill="#6e6e73"/>
+<rect x="712" y="372" width="300" height="50" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="394" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">a newline is inserted and only the Send</text>
+<text x="724" y="409" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">button sends</text>
+<rect x="40" y="452" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="465" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="466" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">The shortcut is written down</text>
+<rect x="40" y="484" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="513" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 509 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 505 L374 509 L368 513 Z" fill="#6e6e73"/>
+<rect x="376" y="484" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="526" y="513" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M682 509 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 505 L710 509 L704 513 Z" fill="#6e6e73"/>
+<rect x="712" y="484" width="300" height="50" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="506" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the composer shows &quot;Enter to send, Shift</text>
+<text x="724" y="521" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">+ Enter for new line&quot; or equivalent</text>
+<rect x="40" y="564" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="577" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="578" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">The composer is focused and ready on load</text>
+<rect x="40" y="596" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="625" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 621 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 617 L374 621 L368 625 Z" fill="#6e6e73"/>
+<rect x="376" y="596" width="300" height="50" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="618" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">a new chat opens</text>
+<path d="M682 621 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 617 L710 621 L704 625 Z" fill="#6e6e73"/>
+<rect x="712" y="596" width="300" height="50" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="618" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the text box has focus, with no click</text>
+<text x="724" y="633" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">needed</text>
+<rect x="40" y="676" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="689" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="690" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">The composer grows with the text, up to a limit</text>
+<rect x="40" y="708" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="737" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 733 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 729 L374 733 L368 737 Z" fill="#6e6e73"/>
+<rect x="376" y="708" width="300" height="50" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="730" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I type more lines than fit</text>
+<path d="M682 733 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 729 L710 733 L704 737 Z" fill="#6e6e73"/>
+<rect x="712" y="708" width="300" height="50" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="730" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the composer grows up to about 160 px,</text>
+<text x="724" y="745" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">then scrolls inside itself</text>
+<rect x="40" y="788" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="801" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="802" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">Send is disabled for empty input, and says why</text>
+<rect x="40" y="820" width="300" height="50" rx="8" fill="#f5f5f7" stroke="#a1a1a6"/>
+<text x="52" y="842" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the composer is empty</text>
+<path d="M346 845 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 841 L374 845 L368 849 Z" fill="#6e6e73"/>
+<rect x="376" y="820" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="526" y="849" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M682 845 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 841 L710 845 L704 849 Z" fill="#6e6e73"/>
+<rect x="712" y="820" width="300" height="50" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="842" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the Send button is disabled with the</text>
+<text x="724" y="857" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">label &quot;Message requires text&quot;</text>
+<rect x="40" y="900" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="913" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="914" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">A send that cannot go out keeps the draft</text>
+<rect x="40" y="932" width="300" height="95" rx="8" fill="#f5f5f7" stroke="#a1a1a6"/>
+<text x="52" y="954" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the connection is down</text>
+<path d="M346 979.5 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 975.5 L374 979.5 L368 983.5 Z" fill="#6e6e73"/>
+<rect x="376" y="932" width="300" height="95" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="954" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I press Send</text>
+<path d="M682 979.5 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 975.5 L710 979.5 L704 983.5 Z" fill="#6e6e73"/>
+<rect x="712" y="932" width="300" height="95" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="954" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the message is not sent</text>
+<text x="724" y="969" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and my text stays in the composer</text>
+<text x="724" y="984" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and I am told &quot;Message not sent:</text>
+<text x="724" y="999" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">reconnecting. Your draft is still in the</text>
+<text x="724" y="1014" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">composer&quot;</text>
+<rect x="40" y="1057" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="1070" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="1071" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">The draft survives a reload or a deploy</text>
+<rect x="40" y="1089" width="300" height="80" rx="8" fill="#f5f5f7" stroke="#a1a1a6"/>
+<text x="52" y="1111" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I typed a draft and attached files</text>
+<path d="M346 1129 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 1125 L374 1129 L368 1133 Z" fill="#6e6e73"/>
+<rect x="376" y="1089" width="300" height="80" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="1111" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the page reloads for a new deploy</text>
+<path d="M682 1129 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 1125 L710 1129 L704 1133 Z" fill="#6e6e73"/>
+<rect x="712" y="1089" width="300" height="80" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="1111" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the draft and the attachments come back</text>
+<text x="724" y="1126" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">in the same conversation</text>
+<text x="724" y="1141" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and a draft older than one hour is</text>
+<text x="724" y="1156" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">dropped</text>
+<rect x="40" y="1199" width="53.599999999999994" height="18" rx="9" fill="#eef4ff" stroke="#4a7bd8"/><text x="66.8" y="1212" font-size="11" font-weight="600" fill="#1f4a99" text-anchor="middle">should</text>
+<text x="105.6" y="1213" font-size="14" font-weight="600" fill="#1f4a99" text-anchor="start">Typing hides the starter prompts</text>
+<rect x="40" y="1231" width="300" height="40" rx="8" fill="#f5f5f7" stroke="#a1a1a6"/>
+<text x="52" y="1253" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the empty state shows suggested prompts</text>
+<path d="M346 1251 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 1247 L374 1251 L368 1255 Z" fill="#6e6e73"/>
+<rect x="376" y="1231" width="300" height="40" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="1253" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I type the first character</text>
+<path d="M682 1251 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 1247 L710 1251 L704 1255 Z" fill="#6e6e73"/>
+<rect x="712" y="1231" width="300" height="40" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="1253" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the suggestions get out of the way</text>
+<rect x="40" y="1301" width="53.599999999999994" height="18" rx="9" fill="#eef4ff" stroke="#4a7bd8"/><text x="66.8" y="1314" font-size="11" font-weight="600" fill="#1f4a99" text-anchor="middle">should</text>
+<text x="105.6" y="1315" font-size="14" font-weight="600" fill="#1f4a99" text-anchor="start">Paste an image</text>
+<rect x="40" y="1333" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="1362" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 1358 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 1354 L374 1358 L368 1362 Z" fill="#6e6e73"/>
+<rect x="376" y="1333" width="300" height="50" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="1355" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I paste an image into the composer</text>
+<path d="M682 1358 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 1354 L710 1358 L704 1362 Z" fill="#6e6e73"/>
+<rect x="712" y="1333" width="300" height="50" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="1355" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">it becomes an attachment chip before I</text>
+<text x="724" y="1370" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">send</text>
+<rect x="40" y="1413" width="53.599999999999994" height="18" rx="9" fill="#eef4ff" stroke="#4a7bd8"/><text x="66.8" y="1426" font-size="11" font-weight="600" fill="#1f4a99" text-anchor="middle">should</text>
+<text x="105.6" y="1427" font-size="14" font-weight="600" fill="#1f4a99" text-anchor="start">Locked features say why they are locked</text>
+<rect x="40" y="1445" width="300" height="65" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="1481.5" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 1477.5 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 1473.5 L374 1477.5 L368 1481.5 Z" fill="#6e6e73"/>
+<rect x="376" y="1445" width="300" height="65" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="526" y="1481.5" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M682 1477.5 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 1473.5 L710 1477.5 L704 1481.5 Z" fill="#6e6e73"/>
+<rect x="712" y="1445" width="300" height="65" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="1467" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">a disabled control has a label such as</text>
+<text x="724" y="1482" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">&quot;Attaching files is a subscriber-only</text>
+<text x="724" y="1497" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">feature&quot;</text>
+</g>
+</svg>

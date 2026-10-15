@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1052" height="405" viewBox="0 0 1052 405" role="img" aria-label="Basic rule 7: Notices are placed in time, not pinned on top">
+<title>Basic rule 7: Notices are placed in time, not pinned on top</title>
+<rect width="1052" height="405" fill="#ffffff"/>
+<g font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<text x="40" y="52" font-size="22" font-weight="700" fill="#1d1d1f" text-anchor="start">Rule 7: Notices are placed in time, not pinned on top</text>
+<text x="40" y="78" font-size="13" font-weight="400" fill="#6e6e73" text-anchor="start">Each row is one scenario: the situation, what happens, and what must be true after.</text>
+<text x="190" y="112" font-size="11" font-weight="700" fill="#a1a1a6" text-anchor="middle">GIVEN</text>
+<text x="526" y="112" font-size="11" font-weight="700" fill="#f38020" text-anchor="middle">WHEN</text>
+<text x="862" y="112" font-size="11" font-weight="700" fill="#2e9e5b" text-anchor="middle">THEN</text>
+<rect x="40" y="126" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="139" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="140" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">Errors sit in the transcript in order</text>
+<rect x="40" y="158" width="300" height="80" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="202" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 198 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 194 L374 198 L368 202 Z" fill="#6e6e73"/>
+<rect x="376" y="158" width="300" height="80" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="180" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">a system notice or error appears</text>
+<path d="M682 198 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 194 L710 198 L704 202 Z" fill="#6e6e73"/>
+<rect x="712" y="158" width="300" height="80" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="180" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">it sits after the messages it relates</text>
+<text x="724" y="195" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">to, not above newer messages</text>
+<text x="724" y="210" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and starting a new turn clears transient</text>
+<text x="724" y="225" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">notices</text>
+<rect x="40" y="268" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="281" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="282" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">A long error is summarised, with detail on demand</text>
+<rect x="40" y="300" width="300" height="65" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="336.5" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 332.5 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 328.5 L374 332.5 L368 336.5 Z" fill="#6e6e73"/>
+<rect x="376" y="300" width="300" height="65" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="526" y="336.5" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M682 332.5 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 328.5 L710 332.5 L704 336.5 Z" fill="#6e6e73"/>
+<rect x="712" y="300" width="300" height="65" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="322" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">an error shows one readable line</text>
+<text x="724" y="337" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and the full text is available in a</text>
+<text x="724" y="352" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">disclosure or a details view</text>
+</g>
+</svg>

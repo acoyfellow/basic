@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1052" height="928" viewBox="0 0 1052 928" role="img" aria-label="Basic rule 4: The conversation list tells me what needs me">
+<title>Basic rule 4: The conversation list tells me what needs me</title>
+<rect width="1052" height="928" fill="#ffffff"/>
+<g font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<text x="40" y="52" font-size="22" font-weight="700" fill="#1d1d1f" text-anchor="start">Rule 4: The conversation list tells me what needs me</text>
+<text x="40" y="78" font-size="13" font-weight="400" fill="#6e6e73" text-anchor="start">Each row is one scenario: the situation, what happens, and what must be true after.</text>
+<text x="190" y="112" font-size="11" font-weight="700" fill="#a1a1a6" text-anchor="middle">GIVEN</text>
+<text x="526" y="112" font-size="11" font-weight="700" fill="#f38020" text-anchor="middle">WHEN</text>
+<text x="862" y="112" font-size="11" font-weight="700" fill="#2e9e5b" text-anchor="middle">THEN</text>
+<rect x="40" y="126" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="139" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="140" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">A new chat appears in the list at once</text>
+<rect x="40" y="158" width="300" height="80" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="202" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 198 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 194 L374 198 L368 202 Z" fill="#6e6e73"/>
+<rect x="376" y="158" width="300" height="80" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="180" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I send the first message of a new chat</text>
+<path d="M682 198 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 194 L710 198 L704 202 Z" fill="#6e6e73"/>
+<rect x="712" y="158" width="300" height="80" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="180" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the chat is listed under &quot;Today&quot; before</text>
+<text x="724" y="195" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the reply arrives</text>
+<text x="724" y="210" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and the URL changes to the chat's own</text>
+<text x="724" y="225" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">address</text>
+<rect x="40" y="268" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="281" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="282" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">Each chat shows whether it is working</text>
+<rect x="40" y="300" width="300" height="80" rx="8" fill="#f5f5f7" stroke="#a1a1a6"/>
+<text x="52" y="322" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">a chat is running a turn</text>
+<path d="M346 340 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 336 L374 340 L368 344 Z" fill="#6e6e73"/>
+<rect x="376" y="300" width="300" height="80" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="526" y="344" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M682 340 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 336 L710 340 L704 344 Z" fill="#6e6e73"/>
+<rect x="712" y="300" width="300" height="80" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="322" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">its list row shows a &quot;Response in</text>
+<text x="724" y="337" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">progress&quot; status</text>
+<text x="724" y="352" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and the indicator clears when the turn</text>
+<text x="724" y="367" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">ends</text>
+<rect x="40" y="410" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="423" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<rect x="86.4" y="410" width="47" height="18" rx="9" fill="#f1ecff" stroke="#7a5af5"/><text x="109.9" y="423" font-size="11" font-weight="600" fill="#4b2fc0" text-anchor="middle">agent</text>
+<text x="145.4" y="424" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">Each chat shows working, idle, or failed at a glance</text>
+<rect x="40" y="442" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="471" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 467 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 463 L374 467 L368 471 Z" fill="#6e6e73"/>
+<rect x="376" y="442" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="526" y="471" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M682 467 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 463 L710 467 L704 471 Z" fill="#6e6e73"/>
+<rect x="712" y="442" width="300" height="50" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="464" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">each row has a dot: animated for</text>
+<text x="724" y="479" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">working, green for idle, red for failed</text>
+<rect x="40" y="522" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="535" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="536" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">The list is grouped by time and searchable</text>
+<rect x="40" y="554" width="300" height="80" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="598" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 594 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 590 L374 594 L368 598 Z" fill="#6e6e73"/>
+<rect x="376" y="554" width="300" height="80" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="526" y="598" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M682 594 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 590 L710 594 L704 598 Z" fill="#6e6e73"/>
+<rect x="712" y="554" width="300" height="80" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="576" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">chats are grouped as Today, Yesterday,</text>
+<text x="724" y="591" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">Last 7 days, Older</text>
+<text x="724" y="606" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and a search box filters threads by</text>
+<text x="724" y="621" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">title</text>
+<rect x="40" y="664" width="53.599999999999994" height="18" rx="9" fill="#eef4ff" stroke="#4a7bd8"/><text x="66.8" y="677" font-size="11" font-weight="600" fill="#1f4a99" text-anchor="middle">should</text>
+<text x="105.6" y="678" font-size="14" font-weight="600" fill="#1f4a99" text-anchor="start">Pin, archive, and rename from the row</text>
+<rect x="40" y="696" width="300" height="80" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="740" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 736 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 732 L374 736 L368 740 Z" fill="#6e6e73"/>
+<rect x="376" y="696" width="300" height="80" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="526" y="740" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M682 736 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 732 L710 736 L704 740 Z" fill="#6e6e73"/>
+<rect x="712" y="696" width="300" height="80" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="718" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">each row has Pin and Archive actions on</text>
+<text x="724" y="733" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">hover</text>
+<text x="724" y="748" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and double-clicking the title renames it</text>
+<text x="724" y="763" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">in place</text>
+<rect x="40" y="806" width="53.599999999999994" height="18" rx="9" fill="#eef4ff" stroke="#4a7bd8"/><text x="66.8" y="819" font-size="11" font-weight="600" fill="#1f4a99" text-anchor="middle">should</text>
+<text x="105.6" y="820" font-size="14" font-weight="600" fill="#1f4a99" text-anchor="start">Delete asks first</text>
+<rect x="40" y="838" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="867" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 863 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 859 L374 863 L368 867 Z" fill="#6e6e73"/>
+<rect x="376" y="838" width="300" height="50" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="860" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I delete a conversation</text>
+<path d="M682 863 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 859 L710 863 L704 867 Z" fill="#6e6e73"/>
+<rect x="712" y="838" width="300" height="50" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="860" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I am asked to confirm, naming the</text>
+<text x="724" y="875" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">conversation</text>
+</g>
+</svg>

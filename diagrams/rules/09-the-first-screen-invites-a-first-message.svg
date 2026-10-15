@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1052" height="502" viewBox="0 0 1052 502" role="img" aria-label="Basic rule 9: The first screen invites a first message">
+<title>Basic rule 9: The first screen invites a first message</title>
+<rect width="1052" height="502" fill="#ffffff"/>
+<g font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<text x="40" y="52" font-size="22" font-weight="700" fill="#1d1d1f" text-anchor="start">Rule 9: The first screen invites a first message</text>
+<text x="40" y="78" font-size="13" font-weight="400" fill="#6e6e73" text-anchor="start">Each row is one scenario: the situation, what happens, and what must be true after.</text>
+<text x="190" y="112" font-size="11" font-weight="700" fill="#a1a1a6" text-anchor="middle">GIVEN</text>
+<text x="526" y="112" font-size="11" font-weight="700" fill="#f38020" text-anchor="middle">WHEN</text>
+<text x="862" y="112" font-size="11" font-weight="700" fill="#2e9e5b" text-anchor="middle">THEN</text>
+<rect x="40" y="126" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="139" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="140" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">The empty state offers starters</text>
+<rect x="40" y="158" width="300" height="80" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="202" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 198 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 194 L374 198 L368 202 Z" fill="#6e6e73"/>
+<rect x="376" y="158" width="300" height="80" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="180" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">there are no messages</text>
+<path d="M682 198 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 194 L710 198 L704 202 Z" fill="#6e6e73"/>
+<rect x="712" y="158" width="300" height="80" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="180" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the page asks a plain question such as</text>
+<text x="724" y="195" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">&quot;How can I help you?&quot;</text>
+<text x="724" y="210" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and offers three to five one-click</text>
+<text x="724" y="225" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">starters</text>
+<rect x="40" y="268" width="53.599999999999994" height="18" rx="9" fill="#eef4ff" stroke="#4a7bd8"/><text x="66.8" y="281" font-size="11" font-weight="600" fill="#1f4a99" text-anchor="middle">should</text>
+<text x="105.6" y="282" font-size="14" font-weight="600" fill="#1f4a99" text-anchor="start">Starters belong to the owner</text>
+<rect x="40" y="300" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="329" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 325 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 321 L374 325 L368 329 Z" fill="#6e6e73"/>
+<rect x="376" y="300" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="526" y="329" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M682 325 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 321 L710 325 L704 329 Z" fill="#6e6e73"/>
+<rect x="712" y="300" width="300" height="50" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="322" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the owner can edit the starter list in</text>
+<text x="724" y="337" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">Settings</text>
+<rect x="40" y="380" width="53.599999999999994" height="18" rx="9" fill="#eef4ff" stroke="#4a7bd8"/><text x="66.8" y="393" font-size="11" font-weight="600" fill="#1f4a99" text-anchor="middle">should</text>
+<text x="105.6" y="394" font-size="14" font-weight="600" fill="#1f4a99" text-anchor="start">The copy names the outcome, not the feature</text>
+<rect x="40" y="412" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="441" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 437 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 433 L374 437 L368 441 Z" fill="#6e6e73"/>
+<rect x="376" y="412" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="526" y="441" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M682 437 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 433 L710 437 L704 441 Z" fill="#6e6e73"/>
+<rect x="712" y="412" width="300" height="50" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="434" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the empty-state copy says what the</text>
+<text x="724" y="449" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">reader gets, in one short line</text>
+</g>
+</svg>

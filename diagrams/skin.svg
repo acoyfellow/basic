@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1268" height="1046" viewBox="0 0 1268 1046" role="img" aria-label="Basic contract results for skin">
+<title>Basic contract results for skin</title>
+<rect width="1268" height="1046" fill="#ffffff"/>
+<g font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<text x="40" y="56" font-size="26" font-weight="700" fill="#1d1d1f" text-anchor="start">Basic contract: skin</text>
+<text x="40" y="86" font-size="14" font-weight="400" fill="#6e6e73" text-anchor="start">skin: 37 pass, 0 fail, 5 n/a. Yellow dashed chips were not run.</text>
+<rect x="40" y="112" width="40.4" height="18" rx="9" fill="#e9f7ef" stroke="#2e9e5b"/><text x="60.2" y="125" font-size="11" font-weight="600" fill="#1c6b3c" text-anchor="middle">pass</text>
+<rect x="90.4" y="112" width="40.4" height="18" rx="9" fill="#fdecec" stroke="#d93a3a"/><text x="110.60000000000001" y="125" font-size="11" font-weight="600" fill="#9b1c1c" text-anchor="middle">fail</text>
+<rect x="140.8" y="112" width="33.8" height="18" rx="9" fill="#f2f2f4" stroke="#a1a1a6"/><text x="157.70000000000002" y="125" font-size="11" font-weight="600" fill="#55555a" text-anchor="middle">n/a</text>
+<rect x="184.60000000000002" y="112" width="66.8" height="18" rx="9" fill="#fff8e1" stroke="#d9a400"/><text x="218.00000000000003" y="125" font-size="11" font-weight="600" fill="#7a5c00" text-anchor="middle">untested</text>
+<rect x="40" y="150" width="380" height="322" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<circle cx="64" cy="176" r="12" fill="#1d1d1f"/>
+<text x="64" y="180" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="84" y="181" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">Scroll follows the reader, never the</text>
+<text x="84" y="199" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">stream</text>
+<rect x="54" y="218" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="64" y="234" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Following the stream while at the bottom</text>
+<rect x="54" y="246" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="64" y="262" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Reading history while the agent streams</text>
+<rect x="54" y="274" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="64" y="290" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">A scroll-wheel up releases the pin at once</text>
+<rect x="54" y="302" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="64" y="318" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">A way back to the newest message</text>
+<rect x="54" y="330" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="64" y="346" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Opening a conversation lands at the bottom</text>
+<rect x="54" y="358" width="352" height="24" rx="6" fill="#fff8e1" stroke="#d9a400" stroke-dasharray="4 3"/>
+<text x="64" y="374" font-size="12" font-weight="400" fill="#7a5c00" text-anchor="start">Older history pages in without a jump</text>
+<rect x="54" y="386" width="352" height="40" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="64" y="402" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">An existing conversation never flashes the</text>
+<text x="64" y="418" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">empty state</text>
+<rect x="54" y="430" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="64" y="446" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">My own message always pins</text>
+<rect x="444" y="150" width="380" height="448" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<circle cx="468" cy="176" r="12" fill="#1d1d1f"/>
+<text x="468" y="180" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="488" y="181" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">The composer keeps what I type</text>
+<rect x="458" y="200" width="352" height="40" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="468" y="216" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Enter sends, Shift+Enter breaks a line, on</text>
+<text x="468" y="232" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">desktop</text>
+<rect x="458" y="244" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="468" y="260" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Enter during IME composition never sends</text>
+<rect x="458" y="272" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="468" y="288" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">On a phone, Enter is a newline</text>
+<rect x="458" y="300" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="468" y="316" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">The shortcut is written down</text>
+<rect x="458" y="328" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="468" y="344" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">The composer is focused and ready on load</text>
+<rect x="458" y="356" width="352" height="40" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="468" y="372" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">The composer grows with the text, up to a</text>
+<text x="468" y="388" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">limit</text>
+<rect x="458" y="400" width="352" height="40" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="468" y="416" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Send is disabled for empty input, and says</text>
+<text x="468" y="432" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">why</text>
+<rect x="458" y="444" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="468" y="460" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">A send that cannot go out keeps the draft</text>
+<rect x="458" y="472" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="468" y="488" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">The draft survives a reload or a deploy</text>
+<rect x="458" y="500" width="352" height="24" rx="6" fill="#fff8e1" stroke="#d9a400" stroke-dasharray="4 3"/>
+<text x="468" y="516" font-size="12" font-weight="400" fill="#7a5c00" text-anchor="start">Typing hides the starter prompts</text>
+<rect x="458" y="528" width="352" height="24" rx="6" fill="#fff8e1" stroke="#d9a400" stroke-dasharray="4 3"/>
+<text x="468" y="544" font-size="12" font-weight="400" fill="#7a5c00" text-anchor="start">Paste an image</text>
+<rect x="458" y="556" width="352" height="24" rx="6" fill="#fff8e1" stroke="#d9a400" stroke-dasharray="4 3"/>
+<text x="468" y="572" font-size="12" font-weight="400" fill="#7a5c00" text-anchor="start">Locked features say why they are locked</text>
+<rect x="848" y="150" width="380" height="382" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<circle cx="872" cy="176" r="12" fill="#1d1d1f"/>
+<text x="872" y="180" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="892" y="181" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">A running turn is visible, timed, and</text>
+<text x="892" y="199" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">stoppable</text>
+<rect x="862" y="218" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="872" y="234" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Send becomes Stop</text>
+<rect x="862" y="246" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="872" y="262" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Esc stops the agent</text>
+<rect x="862" y="274" width="352" height="40" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="872" y="290" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">A thinking indicator appears only when it is</text>
+<text x="872" y="306" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">needed</text>
+<rect x="862" y="318" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="872" y="334" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Each tool call shows a live timer</text>
+<text x="1206" y="334" font-size="10" font-weight="700" fill="#4b2fc0" text-anchor="end">agent</text>
+<rect x="862" y="346" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="872" y="362" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">The whole task shows a live timer</text>
+<text x="1206" y="362" font-size="10" font-weight="700" fill="#4b2fc0" text-anchor="end">agent</text>
+<rect x="862" y="374" width="352" height="24" rx="6" fill="#f2f2f4" stroke="#a1a1a6"/>
+<text x="872" y="390" font-size="12" font-weight="400" fill="#55555a" text-anchor="start">A stuck tool row never runs forever</text>
+<text x="1206" y="390" font-size="10" font-weight="700" fill="#4b2fc0" text-anchor="end">agent</text>
+<rect x="862" y="402" width="352" height="40" rx="6" fill="#f2f2f4" stroke="#a1a1a6"/>
+<text x="872" y="418" font-size="12" font-weight="400" fill="#55555a" text-anchor="start">A turn that ends with nothing visible says</text>
+<text x="872" y="434" font-size="12" font-weight="400" fill="#55555a" text-anchor="start">so</text>
+<rect x="862" y="446" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="872" y="462" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Reasoning is folded</text>
+<text x="1206" y="462" font-size="10" font-weight="700" fill="#4b2fc0" text-anchor="end">agent</text>
+<rect x="862" y="474" width="352" height="40" rx="6" fill="#fff8e1" stroke="#d9a400" stroke-dasharray="4 3"/>
+<text x="872" y="490" font-size="12" font-weight="400" fill="#7a5c00" text-anchor="start">Tool rows keep their open or closed state</text>
+<text x="872" y="506" font-size="12" font-weight="400" fill="#7a5c00" text-anchor="start">while streaming</text>
+<rect x="40" y="496" width="380" height="266" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<circle cx="64" cy="522" r="12" fill="#1d1d1f"/>
+<text x="64" y="526" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="84" y="527" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">The conversation list tells me what</text>
+<text x="84" y="545" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">needs me</text>
+<rect x="54" y="564" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="64" y="580" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">A new chat appears in the list at once</text>
+<rect x="54" y="592" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="64" y="608" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Each chat shows whether it is working</text>
+<rect x="54" y="620" width="352" height="40" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="64" y="636" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Each chat shows working, idle, or failed at</text>
+<text x="64" y="652" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">a glance</text>
+<text x="398" y="636" font-size="10" font-weight="700" fill="#4b2fc0" text-anchor="end">agent</text>
+<rect x="54" y="664" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="64" y="680" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">The list is grouped by time and searchable</text>
+<rect x="54" y="692" width="352" height="24" rx="6" fill="#fff8e1" stroke="#d9a400" stroke-dasharray="4 3"/>
+<text x="64" y="708" font-size="12" font-weight="400" fill="#7a5c00" text-anchor="start">Pin, archive, and rename from the row</text>
+<rect x="54" y="720" width="352" height="24" rx="6" fill="#fff8e1" stroke="#d9a400" stroke-dasharray="4 3"/>
+<text x="64" y="736" font-size="12" font-weight="400" fill="#7a5c00" text-anchor="start">Delete asks first</text>
+<rect x="848" y="556" width="380" height="192" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<circle cx="872" cy="582" r="12" fill="#1d1d1f"/>
+<text x="872" y="586" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+<text x="892" y="587" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">Messages have actions where I need them</text>
+<rect x="862" y="606" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="872" y="622" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Copy a message</text>
+<rect x="862" y="634" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="872" y="650" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Copy a code block</text>
+<rect x="862" y="662" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="872" y="678" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Retry, edit, and branch</text>
+<rect x="862" y="690" width="352" height="40" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="872" y="706" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Code is highlighted without blocking the</text>
+<text x="872" y="722" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">first token</text>
+<rect x="444" y="622" width="380" height="208" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<circle cx="468" cy="648" r="12" fill="#1d1d1f"/>
+<text x="468" y="652" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">6</text>
+<text x="488" y="653" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">Connection state is truthful</text>
+<rect x="458" y="672" width="352" height="40" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="468" y="688" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Reconnecting is shown, then gives up</text>
+<text x="468" y="704" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">honestly</text>
+<rect x="458" y="716" width="352" height="24" rx="6" fill="#f2f2f4" stroke="#a1a1a6"/>
+<text x="468" y="732" font-size="12" font-weight="400" fill="#55555a" text-anchor="start">A stale close cannot undo a good connection</text>
+<rect x="458" y="744" width="352" height="40" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="468" y="760" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">A backgrounded tab catches up when it</text>
+<text x="468" y="776" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">returns</text>
+<rect x="458" y="788" width="352" height="24" rx="6" fill="#f2f2f4" stroke="#a1a1a6"/>
+<text x="468" y="804" font-size="12" font-weight="400" fill="#55555a" text-anchor="start">A turn interrupted by a restart resumes</text>
+<text x="802" y="804" font-size="10" font-weight="700" fill="#4b2fc0" text-anchor="end">agent</text>
+<rect x="848" y="772" width="380" height="154" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<circle cx="872" cy="798" r="12" fill="#1d1d1f"/>
+<text x="872" y="802" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">7</text>
+<text x="892" y="803" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">Notices are placed in time, not pinned</text>
+<text x="892" y="821" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">on top</text>
+<rect x="862" y="840" width="352" height="24" rx="6" fill="#f2f2f4" stroke="#a1a1a6"/>
+<text x="872" y="856" font-size="12" font-weight="400" fill="#55555a" text-anchor="start">Errors sit in the transcript in order</text>
+<rect x="862" y="868" width="352" height="40" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="872" y="884" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">A long error is summarised, with detail on</text>
+<text x="872" y="900" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">demand</text>
+<rect x="40" y="786" width="380" height="176" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<circle cx="64" cy="812" r="12" fill="#1d1d1f"/>
+<text x="64" y="816" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">8</text>
+<text x="84" y="817" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">The page works for everyone</text>
+<rect x="54" y="836" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="64" y="852" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">The transcript is a polite live region</text>
+<rect x="54" y="864" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="64" y="880" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Motion respects the system setting</text>
+<rect x="54" y="892" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="64" y="908" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">Every icon button has a name</text>
+<rect x="54" y="920" width="352" height="24" rx="6" fill="#fff8e1" stroke="#d9a400" stroke-dasharray="4 3"/>
+<text x="64" y="936" font-size="12" font-weight="400" fill="#7a5c00" text-anchor="start">Notifications have a keyboard shortcut</text>
+<rect x="444" y="854" width="380" height="148" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<circle cx="468" cy="880" r="12" fill="#1d1d1f"/>
+<text x="468" y="884" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">9</text>
+<text x="488" y="885" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">The first screen invites a first message</text>
+<rect x="458" y="904" width="352" height="24" rx="6" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="468" y="920" font-size="12" font-weight="400" fill="#1c6b3c" text-anchor="start">The empty state offers starters</text>
+<rect x="458" y="932" width="352" height="24" rx="6" fill="#fff8e1" stroke="#d9a400" stroke-dasharray="4 3"/>
+<text x="468" y="948" font-size="12" font-weight="400" fill="#7a5c00" text-anchor="start">Starters belong to the owner</text>
+<rect x="458" y="960" width="352" height="24" rx="6" fill="#fff8e1" stroke="#d9a400" stroke-dasharray="4 3"/>
+<text x="468" y="976" font-size="12" font-weight="400" fill="#7a5c00" text-anchor="start">The copy names the outcome, not the feature</text>
+</g>
+</svg>
