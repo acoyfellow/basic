@@ -33,7 +33,7 @@ const STEP_COLORS = {
 
 const escapeXml = (text) => text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
 
-const slug = (text) => text.replace(/[^\w]+/g, "-").replace(/^-|-$/g, "").toLowerCase();
+const slug = (text) => text.replaceAll("'", "").replace(/[^\w]+/g, "-").replace(/^-|-$/g, "").toLowerCase();
 
 const wrap = (text, maxChars) => {
 	const lines = [];

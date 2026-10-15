@@ -62,6 +62,22 @@ const startTurn = async (page, text) => {
 	await page.waitForSelector(selectors.stop, { timeout: 15000 });
 };
 
+const panelWidth = async (page, selector) => page.$eval(selector, (element) => Math.round(element.getBoundingClientRect().width)).catch(() => 0);
+
+const dragHandle = async (page, selector, dx) => {
+	const box = await page.locator(selector).boundingBox();
+
+	if (box === null) fail(`${selector} is not on screen`);
+
+	const x = box.x + box.width / 2;
+	const y = box.y + Math.min(200, box.height / 2);
+
+	await page.mouse.move(x, y);
+	await page.mouse.down();
+	await page.mouse.move(x + dx, y, { steps: 8 });
+	await page.mouse.up();
+};
+
 const waitIdle = async (page, timeout = 240000) => page.waitForSelector(selectors.send, { timeout });
 
 export default {
@@ -610,12 +626,263 @@ export default {
 
 		"The empty state offers starters": async ({ page, base }) => {
 			await open(page, base);
-			await page.click("nav[aria-label='Chats'] button:has-text('New chat')");
+			await page.goto(`${base}/`, { waitUntil: "load" });
+			await page.waitForSelector(selectors.composer);
 			await page.waitForTimeout(800);
 
 			const starters = await page.$$eval("button", (buttons) => buttons.filter((button) => button.textContent?.includes("→")).length);
 
 			if (starters < 3) fail(`only ${starters} starters`);
+		},
+
+		"A signed-out visitor sees one way in": async ({ page, base }) => {
+			const visitor = await page.context().browser().newContext();
+			const fresh = await visitor.newPage();
+
+			for (const path of ["/", "/settings", "/c/c-basic-probe"]) {
+				await fresh.goto(base + path, { waitUntil: "load" });
+
+				const signIn = await fresh.getByRole("link", { name: "Sign in with Cloudflare" }).count();
+				const leaked = await fresh.locator(`${selectors.composer}, ${selectors.chatRow}, #panel-files`).count();
+
+				if (signIn !== 1) fail(`${path} shows ${signIn} sign-in buttons`);
+				if (leaked > 0) fail(`${path} shows app content to a signed-out visitor`);
+			}
+
+			await visitor.close();
+		},
+
+		"The API refuses a caller who is not signed in": async ({ page, base }) => {
+			const visitor = await page.context().browser().newContext();
+			const response = await visitor.request.get(`${base}/_kernel/api/me`, { headers: { accept: "application/json" } });
+			const body = await response.text();
+
+			await visitor.close();
+			if (response.status() !== 401) fail(`the API answered ${response.status()}, not 401`);
+			if (!/sign in/i.test(body) || !body.includes("/oauth/login")) fail(`the 401 body does not say where to sign in: ${body.slice(0, 120)}`);
+		},
+
+		"The first sign-in asks only what it needs, then lands somewhere useful": "Needs a brand-new Cloudflare identity to sign in for the first time; the kernel sends a first sign-in to /settings to pick the paying account, then home. Covered by the callback code, not by this runner.",
+
+		"A cancelled or failed sign-in says why": async ({ page, base }) => {
+			const visitor = await page.context().browser().newContext();
+			const fresh = await visitor.newPage();
+
+			await fresh.goto(`${base}/oauth/callback?error=access_denied&error_description=The+user+cancelled`, { waitUntil: "load" });
+
+			const alert = (await fresh.locator("[role=alert]").textContent().catch(() => "")) ?? "";
+			const retry = await fresh.getByRole("link", { name: "Sign in with Cloudflare" }).count();
+
+			await visitor.close();
+			if (!/cancelled|did not sign you in/i.test(alert)) fail(`no plain reason shown: "${alert}"`);
+			if (retry !== 1) fail("no way to try again");
+		},
+
+		"Who I am is always one click away": async ({ page, base }) => {
+			await open(page, base);
+
+			const who = await page.locator("#signed-in-as").textContent({ timeout: 5000 }).catch(() => "");
+			const title = await page.getAttribute("#sign-out button", "title").catch(() => "");
+
+			if (!who?.includes("@") && !title?.includes("@")) fail("the signed-in identity is not shown in the app");
+		},
+
+		"Signing out is one visible control": async ({ page, base }) => {
+			await open(page, base);
+
+			const control = page.getByRole("button", { name: "Sign out" });
+
+			if (!(await control.isVisible())) fail("no visible Sign out control in the app");
+
+			const method = await page.getAttribute("#sign-out", "method");
+
+			if (method?.toLowerCase() !== "post") fail("Sign out is not a POST, so a link or prefetch could sign people out");
+
+			return "visible in the header; ending the session is checked by the next scenario on a throwaway session";
+		},
+
+		"After signing out, nothing private is reachable": async ({ page, base }) => {
+			const session = process.env.BASIC_THROWAWAY_COOKIE;
+
+			if (!session) return "SKIPPED: the live sign-out needs BASIC_THROWAWAY_COOKIE, a session this run may end";
+
+			const browser = page.context().browser();
+			const throwaway = await browser.newContext();
+			const host = new URL(base).hostname;
+
+			await throwaway.addCookies(session.split(";").map((part) => part.trim()).filter(Boolean).map((pair) => ({ name: pair.split("=")[0], value: pair.slice(pair.indexOf("=") + 1), domain: host, path: "/", secure: base.startsWith("https"), httpOnly: true })));
+			const tab = await throwaway.newPage();
+
+			await tab.goto(base + "/", { waitUntil: "load" });
+			await tab.getByRole("button", { name: "Sign out" }).click();
+			await tab.waitForURL(base + "/", { timeout: 10000 });
+			await tab.goBack().catch(() => {});
+			await tab.reload({ waitUntil: "load" });
+
+			const signIn = await tab.getByRole("link", { name: "Sign in with Cloudflare" }).count();
+			const api = await throwaway.request.get(`${base}/_kernel/api/me`, { headers: { accept: "application/json" } });
+			const reused = await browser.newContext();
+			const replay = await reused.request.get(`${base}/_kernel/api/me`, { headers: { accept: "application/json", cookie: session } });
+
+			const statuses = { page: signIn, api: api.status(), replay: replay.status() };
+
+			await reused.close();
+			await throwaway.close();
+			if (statuses.page !== 1) fail("after signing out, reload does not show the sign-in page");
+			if (statuses.api !== 401) fail(`after signing out, the API answered ${statuses.api}`);
+			if (statuses.replay !== 401) fail(`the old session cookie still works on the server (${statuses.replay})`);
+		},
+
+		"Signing out revokes what the app was granted": "The kernel's logout revokes the refresh token at Cloudflare and drops the stored grant (kernel/auth/cloudflare.ts logout). A browser cannot observe the provider-side revocation.",
+
+		"An expired session sends me to sign in, keeping my place": "MISSING: an expired session shows the sign-in page, but skin does not bring you back to the conversation you were on after signing in.",
+
+		"A side panel can be hidden and shown again": async ({ page, base }) => {
+			await open(page, base);
+			await page.evaluate(() => localStorage.removeItem("skin-layout"));
+			await page.reload({ waitUntil: "load" });
+			await page.waitForSelector(selectors.composer);
+
+			for (const edge of ["chats", "files"]) {
+				const toggle = `#toggle-${edge}`;
+				const panel = `#panel-${edge}`;
+				const name = await page.getAttribute(toggle, "aria-label");
+
+				if (!name) fail(`${edge} toggle has no accessible name`);
+
+				const before = await panelWidth(page, panel);
+				const conversationBefore = await panelWidth(page, selectors.log);
+
+				await page.click(toggle);
+				if ((await panelWidth(page, panel)) !== 0) fail(`${edge} did not hide`);
+				if ((await panelWidth(page, selectors.log)) <= conversationBefore) fail(`the conversation did not take the ${edge} width`);
+				await page.click(toggle);
+				if ((await panelWidth(page, panel)) !== before) fail(`${edge} came back at ${await panelWidth(page, panel)} px, not ${before}`);
+			}
+		},
+
+		"A side panel can be resized on desktop": async ({ page, base }) => {
+			await open(page, base);
+			await page.evaluate(() => localStorage.removeItem("skin-layout"));
+			await page.reload({ waitUntil: "load" });
+			await page.waitForSelector(selectors.composer);
+
+			const start = await panelWidth(page, "#panel-files");
+
+			await dragHandle(page, "#resize-files", -120);
+			const wider = await panelWidth(page, "#panel-files");
+
+			if (Math.abs(wider - (start + 120)) > 4) fail(`files went from ${start} to ${wider} px for a 120 px drag`);
+
+			await dragHandle(page, "#resize-files", -3000);
+			const viewport = page.viewportSize().width;
+			const conversation = await panelWidth(page, selectors.log);
+
+			if (conversation < 320) fail(`the conversation shrank to ${conversation} px at ${viewport} px`);
+
+			await dragHandle(page, "#resize-chats", -3000);
+			const narrowest = await panelWidth(page, "#panel-chats");
+
+			if (narrowest < 120) fail(`chats shrank to ${narrowest} px with no minimum`);
+
+			await page.evaluate(() => localStorage.removeItem("skin-layout"));
+
+			return `files ${start} → ${wider} px; conversation kept ${conversation} px; chats stop at ${narrowest} px`;
+		},
+
+		"Panel sizes and visibility survive a reload": async ({ page, base }) => {
+			await open(page, base);
+			await page.evaluate(() => localStorage.removeItem("skin-layout"));
+			await page.reload({ waitUntil: "load" });
+			await page.waitForSelector(selectors.composer);
+			await dragHandle(page, "#resize-files", -100);
+			await page.click("#toggle-chats");
+
+			const files = await panelWidth(page, "#panel-files");
+
+			await page.reload({ waitUntil: "load" });
+			await page.waitForSelector(selectors.composer);
+
+			const kept = { chats: await panelWidth(page, "#panel-chats"), files: await panelWidth(page, "#panel-files") };
+
+			await page.evaluate(() => localStorage.removeItem("skin-layout"));
+			if (kept.chats !== 0) fail("chats came back after a reload");
+			if (kept.files !== files) fail(`files is ${kept.files} px after a reload, not ${files}`);
+		},
+
+		"What is inside a panel adapts to its width": async ({ page, base }) => {
+			await open(page, base);
+
+			const report = [];
+
+			for (const width of [1440, 1024, 800]) {
+				await page.setViewportSize({ width, height: 800 });
+				await page.waitForTimeout(150);
+
+				const overflow = await page.evaluate(() => {
+					const sideways = (element) => element.scrollWidth > element.clientWidth + 1;
+					const regions = ["header", "#panel-chats", "#panel-files", "#log"].map((selector) => document.querySelector(selector)).filter(Boolean);
+					const page = document.documentElement.scrollWidth - document.documentElement.clientWidth;
+					const clipped = regions.filter((region) => region.clientWidth > 0 && getComputedStyle(region).overflowX !== "auto" && sideways(region)).map((region) => region.id || region.tagName);
+
+					return { page, clipped };
+				});
+
+				if (overflow.page > 0) fail(`the page scrolls sideways by ${overflow.page} px at ${width} px`);
+				if (overflow.clipped.length > 0) fail(`${overflow.clipped.join(", ")} overflow sideways at ${width} px`);
+				report.push(width);
+			}
+
+			return `no sideways overflow at ${report.join(", ")} px`;
+		},
+
+		"On a phone, side panels open over the conversation": async ({ page, base }) => {
+			await page.setViewportSize({ width: 390, height: 844 });
+			await open(page, base);
+
+			if ((await panelWidth(page, selectors.log)) < 380) fail("a side panel takes width from the conversation on a phone");
+			if (await page.locator("#resize-files").isVisible()) fail("a drag edge is visible on a phone");
+
+			await page.getByRole("button", { name: "Files", exact: true }).click();
+			await page.waitForFunction(() => getComputedStyle(document.querySelector("#panel-files")).position === "fixed", null, { timeout: 5000 }).catch(() => {});
+			const files = await page.$eval("#panel-files", (element) => ({ position: getComputedStyle(element).position, width: element.getBoundingClientRect().width }));
+
+			if (files.position !== "fixed" || files.width < 380) fail(`the files panel opened ${files.position} at ${files.width} px`);
+		},
+
+		"Each panel toggle has a keyboard shortcut": async ({ page, base }) => {
+			await open(page, base);
+			await page.evaluate(() => localStorage.removeItem("skin-layout"));
+			await page.reload({ waitUntil: "load" });
+			await page.waitForSelector(selectors.composer);
+
+			for (const [key, panel] of [["b", "#panel-chats"], ["j", "#panel-files"]]) {
+				await page.keyboard.press(`ControlOrMeta+${key}`);
+				if ((await panelWidth(page, panel)) !== 0) fail(`Cmd+${key.toUpperCase()} did not hide ${panel}`);
+				await page.keyboard.press(`ControlOrMeta+${key}`);
+				if ((await panelWidth(page, panel)) === 0) fail(`Cmd+${key.toUpperCase()} did not show ${panel}`);
+			}
+
+			const titles = await page.$$eval("[data-panel-toggle]", (toggles) => toggles.map((toggle) => toggle.title));
+
+			if (!titles.every((title) => /⌘[BJ]/.test(title))) fail("a panel toggle does not show its shortcut");
+		},
+
+		"A double click on the drag edge restores the default width": async ({ page, base }) => {
+			await open(page, base);
+			await page.evaluate(() => localStorage.removeItem("skin-layout"));
+			await page.reload({ waitUntil: "load" });
+			await page.waitForSelector(selectors.composer);
+
+			const start = await panelWidth(page, "#panel-files");
+
+			await dragHandle(page, "#resize-files", -150);
+			await page.dblclick("#resize-files");
+
+			const reset = await panelWidth(page, "#panel-files");
+
+			await page.evaluate(() => localStorage.removeItem("skin-layout"));
+			if (reset !== start) fail(`files is ${reset} px after a double click, not ${start}`);
 		},
 	},
 };

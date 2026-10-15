@@ -2,9 +2,9 @@
 
 A conformance suite for agent chat. The behaviors every chat app must keep, written as Gherkin, with a browser runner that checks a real deployment.
 
-- `contract/chat.feature`: 52 scenarios. 42 are tagged `@must`: the floor.
-- `run.mjs`: runs the scenarios against `BASE` in Chromium and writes `reports/<app>.md`.
-- `adapters/<app>.mjs`: how one app is driven. A check is a function, an `n/a` reason string, or a `MISSING:` string that counts as a fail.
+- `contract/chat.feature`: 68 scenarios. 55 are tagged `@must`: the floor.
+- `run.mjs`: runs the scenarios against `BASE` in Chromium and writes `reports/<app>.md`. `--rule=<words>` runs one rule and leaves the report alone.
+- `adapters/<app>.mjs`: how one app is driven. A check is a function, an `n/a` reason string, or a `MISSING:` string that counts as a fail. A check that returns `SKIPPED: <reason>` is reported as n/a with that reason.
 - `POST.md`: the draft post that explains where each scenario comes from.
 
 ## Diagrams
@@ -22,15 +22,15 @@ A conformance suite for agent chat. The behaviors every chat app must keep, writ
 
 ![skin results](diagrams/skin.svg)
 
-### 1. Scroll follows the reader never the stream
+### 1. Scroll follows the reader, never the stream
 
 ![Rule 1](diagrams/rules/01-scroll-follows-the-reader-never-the-stream.svg)
 
-### 2. The composer keeps what i type
+### 2. The composer keeps what I type
 
 ![Rule 2](diagrams/rules/02-the-composer-keeps-what-i-type.svg)
 
-### 3. A running turn is visible timed and stoppable
+### 3. A running turn is visible, timed, and stoppable
 
 ![Rule 3](diagrams/rules/03-a-running-turn-is-visible-timed-and-stoppable.svg)
 
@@ -38,7 +38,7 @@ A conformance suite for agent chat. The behaviors every chat app must keep, writ
 
 ![Rule 4](diagrams/rules/04-the-conversation-list-tells-me-what-needs-me.svg)
 
-### 5. Messages have actions where i need them
+### 5. Messages have actions where I need them
 
 ![Rule 5](diagrams/rules/05-messages-have-actions-where-i-need-them.svg)
 
@@ -46,17 +46,25 @@ A conformance suite for agent chat. The behaviors every chat app must keep, writ
 
 ![Rule 6](diagrams/rules/06-connection-state-is-truthful.svg)
 
-### 7. Notices are placed in time not pinned on top
+### 7. Notices are placed in time, not pinned on top
 
 ![Rule 7](diagrams/rules/07-notices-are-placed-in-time-not-pinned-on-top.svg)
 
-### 8. The page works for everyone
+### 8. Side panels fit the reader's screen
 
-![Rule 8](diagrams/rules/08-the-page-works-for-everyone.svg)
+![Rule 8](diagrams/rules/08-side-panels-fit-the-readers-screen.svg)
 
-### 9. The first screen invites a first message
+### 9. Signing in and out is plain and complete
 
-![Rule 9](diagrams/rules/09-the-first-screen-invites-a-first-message.svg)
+![Rule 9](diagrams/rules/09-signing-in-and-out-is-plain-and-complete.svg)
+
+### 10. The page works for everyone
+
+![Rule 10](diagrams/rules/10-the-page-works-for-everyone.svg)
+
+### 11. The first screen invites a first message
+
+![Rule 11](diagrams/rules/11-the-first-screen-invites-a-first-message.svg)
 
 ## Run
 

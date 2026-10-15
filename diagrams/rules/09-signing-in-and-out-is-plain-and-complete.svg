@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1052" height="1324" viewBox="0 0 1052 1324" role="img" aria-label="Basic rule 9: Signing in and out is plain and complete">
+<title>Basic rule 9: Signing in and out is plain and complete</title>
+<rect width="1052" height="1324" fill="#ffffff"/>
+<g font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<text x="40" y="52" font-size="22" font-weight="700" fill="#1d1d1f" text-anchor="start">Rule 9: Signing in and out is plain and complete</text>
+<text x="40" y="78" font-size="13" font-weight="400" fill="#6e6e73" text-anchor="start">Each row is one scenario: the situation, what happens, and what must be true after.</text>
+<text x="190" y="112" font-size="11" font-weight="700" fill="#a1a1a6" text-anchor="middle">GIVEN</text>
+<text x="526" y="112" font-size="11" font-weight="700" fill="#f38020" text-anchor="middle">WHEN</text>
+<text x="862" y="112" font-size="11" font-weight="700" fill="#2e9e5b" text-anchor="middle">THEN</text>
+<rect x="40" y="126" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="139" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="140" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">A signed-out visitor sees one way in</text>
+<rect x="40" y="158" width="300" height="80" rx="8" fill="#f5f5f7" stroke="#a1a1a6"/>
+<text x="52" y="180" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I am not signed in</text>
+<path d="M346 198 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 194 L374 198 L368 202 Z" fill="#6e6e73"/>
+<rect x="376" y="158" width="300" height="80" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="180" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I open any page of the app</text>
+<path d="M682 198 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 194 L710 198 L704 202 Z" fill="#6e6e73"/>
+<rect x="712" y="158" width="300" height="80" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="180" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I see what the app does and one clear</text>
+<text x="724" y="195" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">sign-in button</text>
+<text x="724" y="210" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and no conversation, file, or setting of</text>
+<text x="724" y="225" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">anyone is shown</text>
+<rect x="40" y="268" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="281" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="282" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">The API refuses a caller who is not signed in</text>
+<rect x="40" y="300" width="300" height="65" rx="8" fill="#f5f5f7" stroke="#a1a1a6"/>
+<text x="52" y="322" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I am not signed in</text>
+<path d="M346 332.5 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 328.5 L374 332.5 L368 336.5 Z" fill="#6e6e73"/>
+<rect x="376" y="300" width="300" height="65" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="322" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">a script calls the app's API</text>
+<path d="M682 332.5 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 328.5 L710 332.5 L704 336.5 Z" fill="#6e6e73"/>
+<rect x="712" y="300" width="300" height="65" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="322" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">it gets 401 with a short reason and</text>
+<text x="724" y="337" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">where to sign in</text>
+<text x="724" y="352" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and not a sign-in page with status 200</text>
+<rect x="40" y="395" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="408" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="409" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">The first sign-in asks only what it needs, then lands somewhere useful</text>
+<rect x="40" y="427" width="300" height="95" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="478.5" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 474.5 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 470.5 L374 474.5 L368 478.5 Z" fill="#6e6e73"/>
+<rect x="376" y="427" width="300" height="95" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="449" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I sign in for the first time</text>
+<path d="M682 474.5 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 470.5 L710 474.5 L704 478.5 Z" fill="#6e6e73"/>
+<rect x="712" y="427" width="300" height="95" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="449" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I am asked for anything the app cannot</text>
+<text x="724" y="464" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">work without, such as which account pays</text>
+<text x="724" y="479" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">for models</text>
+<text x="724" y="494" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and then I land in the app, ready to</text>
+<text x="724" y="509" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">type</text>
+<rect x="40" y="552" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="565" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="566" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">A cancelled or failed sign-in says why</text>
+<rect x="40" y="584" width="300" height="65" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="620.5" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 616.5 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 612.5 L374 616.5 L368 620.5 Z" fill="#6e6e73"/>
+<rect x="376" y="584" width="300" height="65" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="606" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I cancel on the identity provider's</text>
+<text x="388" y="621" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">screen or it fails</text>
+<path d="M682 616.5 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 612.5 L710 616.5 L704 620.5 Z" fill="#6e6e73"/>
+<rect x="712" y="584" width="300" height="65" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="606" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I come back to the sign-in page with one</text>
+<text x="724" y="621" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">plain line about what went wrong</text>
+<text x="724" y="636" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and a way to try again</text>
+<rect x="40" y="679" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="692" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="693" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">Who I am is always one click away</text>
+<rect x="40" y="711" width="300" height="50" rx="8" fill="#f5f5f7" stroke="#a1a1a6"/>
+<text x="52" y="733" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I am signed in</text>
+<path d="M346 736 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 732 L374 736 L368 740 Z" fill="#6e6e73"/>
+<rect x="376" y="711" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="526" y="740" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M682 736 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 732 L710 736 L704 740 Z" fill="#6e6e73"/>
+<rect x="712" y="711" width="300" height="50" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="733" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the page shows which identity is signed</text>
+<text x="724" y="748" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">in, or opens it from one visible control</text>
+<rect x="40" y="791" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="804" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="805" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">Signing out is one visible control</text>
+<rect x="40" y="823" width="300" height="95" rx="8" fill="#f5f5f7" stroke="#a1a1a6"/>
+<text x="52" y="845" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I am signed in</text>
+<path d="M346 870.5 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 866.5 L374 870.5 L368 874.5 Z" fill="#6e6e73"/>
+<rect x="376" y="823" width="300" height="95" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="845" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I use it</text>
+<path d="M682 870.5 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 866.5 L710 870.5 L704 874.5 Z" fill="#6e6e73"/>
+<rect x="712" y="823" width="300" height="95" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="845" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">a &quot;Sign out&quot; control is visible in the</text>
+<text x="724" y="860" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">app, without opening settings</text>
+<text x="724" y="875" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">then my session ends on the server, not</text>
+<text x="724" y="890" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">only in this tab</text>
+<text x="724" y="905" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and I land on the signed-out page</text>
+<rect x="40" y="948" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="961" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<text x="92.4" y="962" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">After signing out, nothing private is reachable</text>
+<rect x="40" y="980" width="300" height="50" rx="8" fill="#f5f5f7" stroke="#a1a1a6"/>
+<text x="52" y="1002" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I signed out</text>
+<path d="M346 1005 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 1001 L374 1005 L368 1009 Z" fill="#6e6e73"/>
+<rect x="376" y="980" width="300" height="50" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="1002" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I press Back or reload a page I had open</text>
+<path d="M682 1005 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 1001 L710 1005 L704 1009 Z" fill="#6e6e73"/>
+<rect x="712" y="980" width="300" height="50" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="1002" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I see the signed-out page</text>
+<text x="724" y="1017" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and the API answers 401</text>
+<rect x="40" y="1060" width="53.599999999999994" height="18" rx="9" fill="#eef4ff" stroke="#4a7bd8"/><text x="66.8" y="1073" font-size="11" font-weight="600" fill="#1f4a99" text-anchor="middle">should</text>
+<text x="105.6" y="1074" font-size="14" font-weight="600" fill="#1f4a99" text-anchor="start">Signing out revokes what the app was granted</text>
+<rect x="40" y="1092" width="300" height="50" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="1121" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 1117 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 1113 L374 1117 L368 1121 Z" fill="#6e6e73"/>
+<rect x="376" y="1092" width="300" height="50" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="1114" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I sign out</text>
+<path d="M682 1117 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 1113 L710 1117 L704 1121 Z" fill="#6e6e73"/>
+<rect x="712" y="1092" width="300" height="50" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="1114" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the app gives back the tokens it held</text>
+<text x="724" y="1129" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">for me, so they cannot be used again</text>
+<rect x="40" y="1172" width="53.599999999999994" height="18" rx="9" fill="#eef4ff" stroke="#4a7bd8"/><text x="66.8" y="1185" font-size="11" font-weight="600" fill="#1f4a99" text-anchor="middle">should</text>
+<text x="105.6" y="1186" font-size="14" font-weight="600" fill="#1f4a99" text-anchor="start">An expired session sends me to sign in, keeping my place</text>
+<rect x="40" y="1204" width="300" height="80" rx="8" fill="#f5f5f7" stroke="#a1a1a6"/>
+<text x="52" y="1226" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">my session expired while the page was</text>
+<text x="52" y="1241" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">open</text>
+<path d="M346 1244 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 1240 L374 1244 L368 1248 Z" fill="#6e6e73"/>
+<rect x="376" y="1204" width="300" height="80" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="1226" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I act on the page</text>
+<path d="M682 1244 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 1240 L710 1244 L704 1248 Z" fill="#6e6e73"/>
+<rect x="712" y="1204" width="300" height="80" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="1226" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I am told to sign in again instead of</text>
+<text x="724" y="1241" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">seeing a broken page</text>
+<text x="724" y="1256" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and after signing in I return to where I</text>
+<text x="724" y="1271" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">was</text>
+</g>
+</svg>

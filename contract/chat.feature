@@ -272,6 +272,112 @@ Feature: The expected UX contract for an agent chat, October 2026
       Then an error shows one readable line
       And the full text is available in a disclosure or a details view
 
+  Rule: Side panels fit the reader's screen
+
+    @must
+    Scenario: A side panel can be hidden and shown again
+      Given the page has a left or a right panel next to the conversation
+      And each panel has a visible toggle button with an accessible name
+      When I press the toggle
+      Then the panel hides and the conversation takes its width
+      And pressing the toggle again brings the panel back at the width it had
+
+    @must
+    Scenario: A side panel can be resized on desktop
+      Given a side panel is open on a desktop-width screen
+      When I drag the edge between the panel and the conversation
+      Then the panel width follows the pointer
+      And it stops at a minimum and a maximum width
+      And the conversation never gets narrower than a readable minimum
+
+    @must
+    Scenario: Panel sizes and visibility survive a reload
+      Given I resized or hid a side panel
+      When I reload the page
+      Then each panel has the same width and the same visibility
+
+    @must
+    Scenario: What is inside a panel adapts to its width
+      When a side panel or the conversation is resized to any allowed width
+      Then nothing inside it overflows sideways or is cut off
+      And controls that no longer fit move into a menu or wrap
+
+    @must
+    Scenario: On a phone, side panels open over the conversation
+      Given the screen is phone width
+      Then no side panel takes width from the conversation
+      And each panel opens from a button and covers the conversation until closed
+      And there is no drag edge
+
+    @should
+    Scenario: Each panel toggle has a keyboard shortcut
+      Then each side panel can be shown and hidden with a documented shortcut, such as Cmd+B for the left and Cmd+J for the right
+
+    @should
+    Scenario: A double click on the drag edge restores the default width
+      When I double click the edge of a side panel
+      Then the panel returns to its default width
+
+  Rule: Signing in and out is plain and complete
+
+    @must
+    Scenario: A signed-out visitor sees one way in
+      Given I am not signed in
+      When I open any page of the app
+      Then I see what the app does and one clear sign-in button
+      And no conversation, file, or setting of anyone is shown
+
+    @must
+    Scenario: The API refuses a caller who is not signed in
+      Given I am not signed in
+      When a script calls the app's API
+      Then it gets 401 with a short reason and where to sign in
+      And not a sign-in page with status 200
+
+    @must
+    Scenario: The first sign-in asks only what it needs, then lands somewhere useful
+      When I sign in for the first time
+      Then I am asked for anything the app cannot work without, such as which account pays for models
+      And then I land in the app, ready to type
+
+    @must
+    Scenario: A cancelled or failed sign-in says why
+      When I cancel on the identity provider's screen or it fails
+      Then I come back to the sign-in page with one plain line about what went wrong
+      And a way to try again
+
+    @must
+    Scenario: Who I am is always one click away
+      Given I am signed in
+      Then the page shows which identity is signed in, or opens it from one visible control
+
+    @must
+    Scenario: Signing out is one visible control
+      Given I am signed in
+      Then a "Sign out" control is visible in the app, without opening settings
+      When I use it
+      Then my session ends on the server, not only in this tab
+      And I land on the signed-out page
+
+    @must
+    Scenario: After signing out, nothing private is reachable
+      Given I signed out
+      When I press Back or reload a page I had open
+      Then I see the signed-out page
+      And the API answers 401
+
+    @should
+    Scenario: Signing out revokes what the app was granted
+      When I sign out
+      Then the app gives back the tokens it held for me, so they cannot be used again
+
+    @should
+    Scenario: An expired session sends me to sign in, keeping my place
+      Given my session expired while the page was open
+      When I act on the page
+      Then I am told to sign in again instead of seeing a broken page
+      And after signing in I return to where I was
+
   Rule: The page works for everyone
 
     @must

@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1268" height="1046" viewBox="0 0 1268 1046" role="img" aria-label="Basic agent chat contract map">
+<svg xmlns="http://www.w3.org/2000/svg" width="1268" height="1294" viewBox="0 0 1268 1294" role="img" aria-label="Basic agent chat contract map">
 <title>Basic agent chat contract map</title>
-<rect width="1268" height="1046" fill="#ffffff"/>
+<rect width="1268" height="1294" fill="#ffffff"/>
 <g font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
 <text x="40" y="56" font-size="26" font-weight="700" fill="#1d1d1f" text-anchor="start">Basic: the agent chat contract</text>
-<text x="40" y="86" font-size="14" font-weight="400" fill="#6e6e73" text-anchor="start">52 scenarios in 9 rules. 42 are @must, the floor. 10 @should, 6 @agent.</text>
+<text x="40" y="86" font-size="14" font-weight="400" fill="#6e6e73" text-anchor="start">68 scenarios in 11 rules. 54 are @must, the floor. 14 @should, 6 @agent.</text>
 <rect x="40" y="112" width="47" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="63.5" y="125" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">@must</text>
 <rect x="97" y="112" width="60.199999999999996" height="18" rx="9" fill="#eef4ff" stroke="#4a7bd8"/><text x="127.1" y="125" font-size="11" font-weight="600" fill="#1f4a99" text-anchor="middle">@should</text>
 <rect x="167.2" y="112" width="53.599999999999994" height="18" rx="9" fill="#f1ecff" stroke="#7a5af5"/><text x="194" y="125" font-size="11" font-weight="600" fill="#4b2fc0" text-anchor="middle">@agent</text>
@@ -147,27 +147,73 @@
 <rect x="862" y="868" width="352" height="40" rx="6" fill="#fff1e6" stroke="#f38020"/>
 <text x="872" y="884" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A long error is summarised, with detail on</text>
 <text x="872" y="900" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">demand</text>
-<rect x="40" y="786" width="380" height="176" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<rect x="40" y="786" width="380" height="292" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
 <circle cx="64" cy="812" r="12" fill="#1d1d1f"/>
 <text x="64" y="816" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">8</text>
-<text x="84" y="817" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">The page works for everyone</text>
+<text x="84" y="817" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">Side panels fit the reader's screen</text>
 <rect x="54" y="836" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="852" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">The transcript is a polite live region</text>
+<text x="64" y="852" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A side panel can be hidden and shown again</text>
 <rect x="54" y="864" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="880" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Motion respects the system setting</text>
+<text x="64" y="880" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A side panel can be resized on desktop</text>
 <rect x="54" y="892" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="908" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Every icon button has a name</text>
-<rect x="54" y="920" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
-<text x="64" y="936" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Notifications have a keyboard shortcut</text>
-<rect x="444" y="854" width="380" height="148" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<text x="64" y="908" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Panel sizes and visibility survive a reload</text>
+<rect x="54" y="920" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="936" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">What is inside a panel adapts to its width</text>
+<rect x="54" y="948" width="352" height="40" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="964" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">On a phone, side panels open over the</text>
+<text x="64" y="980" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">conversation</text>
+<rect x="54" y="992" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="64" y="1008" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Each panel toggle has a keyboard shortcut</text>
+<rect x="54" y="1020" width="352" height="40" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="64" y="1036" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">A double click on the drag edge restores the</text>
+<text x="64" y="1052" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">default width</text>
+<rect x="444" y="854" width="380" height="380" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
 <circle cx="468" cy="880" r="12" fill="#1d1d1f"/>
 <text x="468" y="884" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">9</text>
-<text x="488" y="885" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">The first screen invites a first message</text>
+<text x="488" y="885" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">Signing in and out is plain and complete</text>
 <rect x="458" y="904" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="468" y="920" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">The empty state offers starters</text>
-<rect x="458" y="932" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
-<text x="468" y="948" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Starters belong to the owner</text>
-<rect x="458" y="960" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
-<text x="468" y="976" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">The copy names the outcome, not the feature</text>
+<text x="468" y="920" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A signed-out visitor sees one way in</text>
+<rect x="458" y="932" width="352" height="40" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="468" y="948" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">The API refuses a caller who is not signed</text>
+<text x="468" y="964" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">in</text>
+<rect x="458" y="976" width="352" height="40" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="468" y="992" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">The first sign-in asks only what it needs,</text>
+<text x="468" y="1008" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">then lands somewhere useful</text>
+<rect x="458" y="1020" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="468" y="1036" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A cancelled or failed sign-in says why</text>
+<rect x="458" y="1048" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="468" y="1064" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Who I am is always one click away</text>
+<rect x="458" y="1076" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="468" y="1092" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Signing out is one visible control</text>
+<rect x="458" y="1104" width="352" height="40" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="468" y="1120" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">After signing out, nothing private is</text>
+<text x="468" y="1136" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">reachable</text>
+<rect x="458" y="1148" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="468" y="1164" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Signing out revokes what the app was granted</text>
+<rect x="458" y="1176" width="352" height="40" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="468" y="1192" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">An expired session sends me to sign in,</text>
+<text x="468" y="1208" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">keeping my place</text>
+<rect x="848" y="950" width="380" height="176" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<circle cx="872" cy="976" r="12" fill="#1d1d1f"/>
+<text x="872" y="980" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">10</text>
+<text x="892" y="981" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">The page works for everyone</text>
+<rect x="862" y="1000" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="872" y="1016" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">The transcript is a polite live region</text>
+<rect x="862" y="1028" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="872" y="1044" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Motion respects the system setting</text>
+<rect x="862" y="1056" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="872" y="1072" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Every icon button has a name</text>
+<rect x="862" y="1084" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="872" y="1100" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Notifications have a keyboard shortcut</text>
+<rect x="40" y="1102" width="380" height="148" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<circle cx="64" cy="1128" r="12" fill="#1d1d1f"/>
+<text x="64" y="1132" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">11</text>
+<text x="84" y="1133" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">The first screen invites a first message</text>
+<rect x="54" y="1152" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="1168" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">The empty state offers starters</text>
+<rect x="54" y="1180" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="64" y="1196" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Starters belong to the owner</text>
+<rect x="54" y="1208" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="64" y="1224" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">The copy names the outcome, not the feature</text>
 </g>
 </svg>
