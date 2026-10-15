@@ -1,0 +1,39 @@
+README.md
+  s_d58794dec92dc7::t_1cffc2c0e6eddc 5-7,25,29,33,41,49,53,55,57,59-67
+adapters/skin.mjs
+  s_d58794dec92dc7::t_52506cf0841c2f 65-80,629-630,637-886
+contract/chat.feature
+  s_d58794dec92dc7::t_47bf239349f88e 275-380
+diagram.mjs
+  s_d58794dec92dc7::t_7f9620bb4bc1de 36
+diagrams/contract.svg
+  s_d58794dec92dc7::t_723a13f828a27a 1,3,6,150,153,155,157,159-170,173,175-217
+diagrams/rules/08-side-panels-fit-the-readers-screen.svg
+  s_d58794dec92dc7::t_7842125f5484f8 1-119
+diagrams/rules/09-signing-in-and-out-is-plain-and-complete.svg
+  s_d58794dec92dc7::t_f5a148e6978dd6 1-142
+diagrams/rules/10-the-page-works-for-everyone.svg
+  s_d58794dec92dc7::t_0c1843252e95f0 1-2,5
+diagrams/rules/11-the-first-screen-invites-a-first-message.svg
+  s_d58794dec92dc7::t_4d98b27e8b2bff 1-2,5
+diagrams/skin.svg
+  s_d58794dec92dc7::t_3b1e9ad9eb955a 1,3,151,154-160,162-171,174-218
+run.mjs
+  s_d58794dec92dc7::t_6407d3cf9f4f7a 7,13,24-25,29,32,60-62,93-94
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "710671b82b498316d9a6bea7942a4aef2c49890f",
+  "prompts": {},
+  "sessions": {
+    "s_d58794dec92dc7": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a115e6-5bb3-75ac-b511-2988f1aebfad",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jordan Coeyman <jcoeyman@cloudflare.com>"
+    }
+  }
+}
