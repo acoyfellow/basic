@@ -1,0 +1,23 @@
+adapters/myax.mjs
+  s_bddf4eb8848d16::t_1a2b82471cc95e 1-977
+contract/chat.feature
+  s_bddf4eb8848d16::t_ea876b8a29f284 396-400
+reports/myax.md
+  s_bddf4eb8848d16::t_fb4e02d29a2892 1-63
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "64a1731ee3160b76300efb18eea76d8b23a0128f",
+  "prompts": {},
+  "sessions": {
+    "s_bddf4eb8848d16": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a0de5b-f971-75f6-97ad-8153da509084",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jordan Coeyman <jcoeyman@cloudflare.com>"
+    }
+  }
+}
