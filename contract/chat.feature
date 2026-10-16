@@ -393,6 +393,11 @@ Feature: The expected UX contract for an agent chat, October 2026
     Scenario: Every icon button has a name
       Then every icon-only button has an accessible label
 
+    @must
+    Scenario: No text sits on top of other text
+      Given the chat on a desktop and on a phone, idle and while a turn runs
+      Then no visible text, placeholder, or label overlaps any other text
+
     @should
     Scenario: Notifications have a keyboard shortcut
       Then the notification region is reachable with a documented shortcut such as Alt+T
