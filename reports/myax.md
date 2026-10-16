@@ -2,7 +2,7 @@
 
 Run against the deployed app on 2026-10-16, floor only.
 
-pass 44 · fail 1 · n/a 10 · untested 0
+pass 45 · fail 0 · n/a 10 · untested 0
 
 | Scenario | Tags | Result | Detail |
 | --- | --- | --- | --- |
@@ -26,7 +26,7 @@ pass 44 · fail 1 · n/a 10 · untested 0
 | Esc stops the agent | @must | pass |  |
 | A thinking indicator appears only when it is needed | @must | pass |  |
 | Each tool call shows a live timer | @must @agent | pass |  |
-| The whole task shows a live timer | @must @agent | fail | tab title is "My Agent Experience" |
+| The whole task shows a live timer | @must @agent | pass |  |
 | A stuck tool row never runs forever | @must @agent | n/a | Covered by Chat.svelte settleOrphanTools: a tool row without a result when the turn ends becomes an error row ("No result — the turn ended"); a live run cannot kill the agent mid-call on demand. |
 | A turn that ends with nothing visible says so | @must | n/a | Covered by shouldReportInvisibleCompletion in Chat.svelte, which pushes "Agent completed without a visible response. Please retry."; a real model cannot be made to reply with nothing on demand. |
 | Reasoning is folded | @must @agent | pass | the model returned no reasoning; nothing is open |

@@ -516,11 +516,11 @@ export default {
 
 			const read = () => page.evaluate(() => (document.body.innerText.match(/task\s+\d+(m\s*\d+s|s)/i) ?? [""])[0]);
 			const first = await read();
+			const title = await page.title();
 
 			await page.waitForTimeout(2200);
 
 			const second = await read();
-			const title = await page.title();
 
 			await stop(page);
 
