@@ -65,6 +65,17 @@ const textOverlaps = async (page) =>
 
 			return style.visibility !== "hidden" && style.display !== "none" && Number(style.opacity) > 0.05;
 		};
+		const clipped = (element, rect) => {
+			for (let parent = element.parentElement; parent !== null; parent = parent.parentElement) {
+				if (getComputedStyle(parent).overflow === "visible") continue;
+
+				const bounds = parent.getBoundingClientRect();
+
+				if (rect.bottom <= bounds.top + 1 || rect.top >= bounds.bottom - 1 || rect.right <= bounds.left + 1 || rect.left >= bounds.right - 1) return true;
+			}
+
+			return false;
+		};
 		const boxes = [];
 		const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
 
@@ -77,7 +88,7 @@ const textOverlaps = async (page) =>
 			const range = document.createRange();
 
 			range.selectNodeContents(node);
-			for (const rect of range.getClientRects()) if (rect.width > 2 && rect.height > 2) boxes.push({ owner, text: text.slice(0, 30), rect });
+			for (const rect of range.getClientRects()) if (rect.width > 2 && rect.height > 2 && !clipped(owner, rect)) boxes.push({ owner, text: text.slice(0, 30), rect });
 		}
 
 		for (const field of document.querySelectorAll("textarea, input")) {
