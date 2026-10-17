@@ -24,6 +24,15 @@ Feature: The expected UX contract for an agent chat, October 2026
       Then following stops on that event, before the next token arrives
 
     @must
+    Scenario: Scrolling up during a real reply is never pulled back
+      Given the agent is streaming a real reply through the app's own rendering
+      And the transcript is pinned to the bottom
+      When I scroll up with the wheel, trackpad, or scrollbar while tokens keep arriving
+      Then every later render leaves my scroll position where I put it
+      When I scroll back to within 80 px of the bottom
+      Then following resumes with the next token
+
+    @must
     Scenario: A way back to the newest message
       Given I am not at the bottom
       Then a "Scroll to latest" button is visible above the composer

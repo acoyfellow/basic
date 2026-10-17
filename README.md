@@ -2,7 +2,7 @@
 
 A conformance suite for agent chat. The behaviors every chat app must keep, written as Gherkin, with a browser runner that checks a real deployment.
 
-- `contract/chat.feature`: 68 scenarios. 55 are tagged `@must`: the floor.
+- `contract/chat.feature`: 70 scenarios. 57 are tagged `@must`: the floor.
 - `run.mjs`: runs the scenarios against `BASE` in Chromium and writes `reports/<app>.md`. `--rule=<words>` runs one rule and leaves the report alone.
 - `adapters/<app>.mjs`: how one app is driven. A check is a function, an `n/a` reason string, or a `MISSING:` string that counts as a fail. A check that returns `SKIPPED: <reason>` is reported as n/a with that reason.
 - `POST.md`: the draft post that explains where each scenario comes from.
