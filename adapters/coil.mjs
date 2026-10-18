@@ -260,8 +260,25 @@ export default {
 
 		"Opening a conversation lands at the bottom": async ({ page, base }) => {
 			const name = await newThread(page, "lands");
+			const paragraph = Array.from({ length: 12 }, (_, line) => `Line ${line + 1} of a long answer about the sea and its tides.`).join("\n\n");
 
-			await rpc(page, "SendMessage", { name, requestId: `basic-${Date.now()}`, text: LONG_REPLY });
+			await page.route("**/api/rpc", async (route) => {
+				if (!(route.request().postData() ?? "").includes('"ViewThread"')) return route.continue();
+
+				const response = await route.fetch();
+				const exits = await response.json();
+				const view = exits[0]?.exit?.value;
+
+				if (view === undefined) return route.fulfill({ response });
+
+				view.busy = false;
+				view.messages = Array.from({ length: 8 }, (_, turn) => [
+					{ id: `u${turn}`, role: "user", kind: "pi.user", text: `question ${turn + 1}` },
+					{ id: `a${turn}`, role: "assistant", kind: "pi.assistant", text: paragraph },
+				]).flat();
+
+				return route.fulfill({ response, json: exits });
+			});
 			await open(page, base, name);
 			await page.waitForSelector(`${selectors.log} .msg.assistant`, { timeout: 30000 });
 			await page.waitForTimeout(800);
