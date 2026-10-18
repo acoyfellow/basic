@@ -49,11 +49,13 @@ const rpc = async (page, tag, payload) => {
 	return exit.exit.value;
 };
 
-const newThread = async (page, title) => {
+const ANSWER_MODEL = process.env.COIL_ANSWER_MODEL ?? "@cf/moonshotai/kimi-k2.6";
+
+const newThread = async (page, title, model = MODEL) => {
 	await signIn(page);
 	const view = await rpc(page, "CreateThread", { title: `basic: ${title}`, warm: false });
 
-	await rpc(page, "SetModel", { name: view.name, model: MODEL });
+	await rpc(page, "SetModel", { name: view.name, model });
 
 	return view.name;
 };
@@ -159,8 +161,6 @@ const streamLong = async (page, base, title) => {
 export default {
 	checks: {
 		"Older history pages in without a jump": "coil loads the whole conversation (up to 500 entries) in one view; there is no paged older history to load.",
-		"On a phone, Enter is a newline": "MISSING: Enter sends on every device; phones have no newline-on-Enter rule.",
-		"The shortcut is written down": "MISSING: no visible hint that Enter sends and Shift+Enter breaks a line.",
 		"A send that cannot go out keeps the draft": "Covered by the client story test 'a failed send puts the text back and says why' (client/src/story.test.ts).",
 		"Typing hides the starter prompts": "coil has no starter prompts; the empty thread shows one line about the computer instead.",
 		"Paste an image": "MISSING: pasting an image into the composer does nothing; files are attached by drag and drop only.",
@@ -175,8 +175,6 @@ export default {
 		"The list is grouped by time and searchable": "MISSING: the list is grouped by state, not by time; search is in the Cmd-K palette, not in the list.",
 		"Pin, archive, and rename from the row": "MISSING: archive and rename are in the thread menu and palette, not on the row; there is no pin.",
 		"Delete asks first": "Delete runs through a confirm dialog before the RPC (client/src/command.ts RunOp Delete); no runner check yet.",
-		"Copy a message": "MISSING: messages have Edit and Retry, but no Copy control.",
-		"Copy a code block": "MISSING: code blocks have no Copy control.",
 		"Retry, edit, and branch": "Edit and Retry are on every user message and Fork branches a thread; covered by the client story test 'edit puts the text back; retry sends it again'.",
 		"Code is highlighted without blocking the first token": "Chat code blocks are not syntax highlighted; only /docs uses the highlighter.",
 		"Reconnecting is shown, then gives up honestly": "MISSING: an offline banner appears when the browser is offline, but a dropped event stream reconnects silently and never says it gave up.",
@@ -194,11 +192,9 @@ export default {
 		"A double click on the drag edge restores the default width": "A double click on a drag handle restores its default width (client/src/layout.ts dblclick).",
 		"The first sign-in asks only what it needs, then lands somewhere useful": "Needs a brand-new Cloudflare identity; coil asks for 7 scopes, then sends a first sign-in to the gateway picker and then home (src/auth/cloudflare.ts).",
 		"A cancelled or failed sign-in says why": "MISSING: a cancelled consent returns to the sign-in page with no message saying it was cancelled.",
-		"Who I am is always one click away": "MISSING: the sidebar says 'Signed in with Cloudflare' and the account name is only in /oauth/me, not in the UI.",
 		"After signing out, nothing private is reachable": "Covered by 'The API refuses a caller who is not signed in' and the sign-out route clearing the session cookie (src/auth/cloudflare.ts logout).",
 		"Signing out revokes what the app was granted": "Sign out revokes the refresh token at Cloudflare and drops the stored grant (src/auth/cloudflare.ts logout). A browser cannot observe the provider-side revocation.",
 		"An expired session sends me to sign in, keeping my place": "MISSING: an expired session shows the sign-in page, but coil does not return you to the thread you were on.",
-		"Motion respects the system setting": "MISSING: coil has no prefers-reduced-motion rule; spinners and transitions always animate.",
 		"No text sits on top of other text": "No overlap check in this adapter yet; the myax adapter's overlap check needs coil selectors.",
 		"Notifications have a keyboard shortcut": "MISSING: notifications are toggled from a sidebar button only; there is no shortcut.",
 		"The empty state offers starters": "MISSING: an empty thread shows one line about its computer, not starter prompts.",
@@ -472,6 +468,92 @@ export default {
 			await anonymous.close();
 
 			if (status < 300) fail(`anonymous ListThreads returned ${status}`);
+		},
+
+		"On a phone, Enter is a newline": async ({ base, page }) => {
+			const phone = await page.context().browser().newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+			const mobile = await phone.newPage();
+
+			await openFresh(mobile, base, "phone enter");
+			await waitReady(mobile);
+			await mobile.fill(selectors.composer, "first line");
+			await mobile.focus(selectors.composer);
+			await mobile.keyboard.press("End");
+			await mobile.keyboard.press("Enter");
+			await mobile.waitForTimeout(500);
+
+			const value = await mobile.inputValue(selectors.composer);
+			const sent = (await mobile.$(selectors.stop)) !== null;
+
+			await phone.close();
+
+			if (sent) fail("Enter sent the message on a phone");
+			if (!value.includes("\n")) fail("Enter did not insert a newline on a phone");
+		},
+
+		"The shortcut is written down": async ({ page, base }) => {
+			await openFresh(page, base, "shortcut hint");
+			await waitReady(page);
+
+			const text = await page.locator("#composer").innerText();
+
+			if (!/enter/i.test(text) || !/shift/i.test(text)) fail(`the composer does not say what Enter and Shift+Enter do: "${text.slice(0, 120)}"`);
+		},
+
+		"Copy a message": async ({ page, base }) => {
+			const name = await newThread(page, "copy message", ANSWER_MODEL);
+
+			await rpc(page, "SendMessage", { name, requestId: `basic-${Date.now()}`, text: "Reply with exactly: the tide is high" });
+			await open(page, base, name);
+			await page.waitForSelector(`${selectors.log} .msg.assistant`, { timeout: 90000 });
+
+			const last = page.locator(`${selectors.log} .msg.assistant`).last();
+
+			await last.hover();
+			await last.locator(".copy").click();
+			await page.waitForTimeout(300);
+
+			const copied = await page.evaluate(() => navigator.clipboard.readText());
+
+			if (!copied.toLowerCase().includes("tide")) fail(`the clipboard holds "${copied.slice(0, 80)}"`);
+		},
+
+		"Copy a code block": async ({ page, base }) => {
+			await installStreamDriver(page);
+			await openFresh(page, base, "copy code");
+			await waitReady(page);
+			await page.evaluate(() => window.__basicEmit({ _tag: "text", delta: "Here:\n```js\nconsole.log('sea')\n```\ndone" }));
+			await page.waitForSelector(`${selectors.liveText} pre.code`, { timeout: 10000 });
+			await page.hover(`${selectors.liveText} pre.code`);
+			await page.click(`${selectors.liveText} pre.code .code-copy`);
+			await page.waitForTimeout(300);
+
+			const copied = await page.evaluate(() => navigator.clipboard.readText());
+
+			if (copied.trim() !== "console.log('sea')") fail(`the clipboard holds "${copied.slice(0, 80)}"`);
+		},
+
+		"Motion respects the system setting": async ({ page, base }) => {
+			await page.emulateMedia({ reducedMotion: "reduce" });
+			await openFresh(page, base, "reduced motion");
+			await waitReady(page);
+
+			const moving = await page.evaluate(() =>
+				[...document.querySelectorAll("*")]
+					.map((element) => getComputedStyle(element))
+					.filter((style) => parseFloat(style.animationDuration) > 0.05 || parseFloat(style.transitionDuration) > 0.05).length,
+			);
+
+			if (moving > 0) fail(`${moving} elements still animate with reduced motion on`);
+		},
+
+		"Who I am is always one click away": async ({ page, base }) => {
+			await openFresh(page, base, "whoami");
+			await page.waitForFunction(() => {
+				const text = document.querySelector("#whoami")?.textContent ?? "";
+
+				return text !== "" && text !== "Signed in with Cloudflare";
+			}, null, { timeout: 15000 }).catch(() => fail("the sidebar does not name the signed-in account"));
 		},
 
 		"Signing out is one visible control": async ({ page, base }) => {
