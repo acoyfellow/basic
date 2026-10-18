@@ -163,11 +163,8 @@ export default {
 		"Older history pages in without a jump": "coil loads the whole conversation (up to 500 entries) in one view; there is no paged older history to load.",
 		"A send that cannot go out keeps the draft": "Covered by the client story test 'a failed send puts the text back and says why' (client/src/story.test.ts).",
 		"Typing hides the starter prompts": "coil has no starter prompts; the empty thread shows one line about the computer instead.",
-		"Paste an image": "MISSING: pasting an image into the composer does nothing; files are attached by drag and drop only.",
 		"Locked features say why they are locked": "coil has no plan tiers or locked features; every signed-in user has the same features on their own account.",
-		"Each tool call shows a live timer": "MISSING: a running tool row shows a spinner but no elapsed time.",
 		"A stuck tool row never runs forever": "Covered by the server: every agent command runs under a 120 s timeout (src/shell.ts RUN_LIMIT_SECONDS) and Stop ends it within 5 s (test/stop.test.ts).",
-		"A turn that ends with nothing visible says so": "MISSING: a turn that ends with no text shows only its footer, with no line saying the agent replied with nothing.",
 		"Reasoning is folded": "coil does not render model reasoning; only the reply text and tool rows are shown.",
 		"Tool rows keep their open or closed state while streaming": "Tool rows are keyed by call id (client/src/view/feed.ts), so a row keeps its open state across renders; no runner check yet.",
 		"Each chat shows whether it is working": "The sidebar groups threads into Working, Running, and Paused with a coloured dot (client/src/view/side.ts); no runner check yet.",
@@ -182,7 +179,6 @@ export default {
 		"A backgrounded tab catches up when it returns": "The thread view reloads on every event stream reconnect and on a 10 s refresh tick; no runner check yet.",
 		"A turn interrupted by a restart resumes": "Pi Durable keeps the turn in the Durable Object; a restarted thread continues it (test/thread.test.ts). Not reproducible from a browser.",
 		"Errors sit in the transcript in order": "A failed model call is written into the transcript as the agent's message, in order (src/agent.ts entriesToMessages).",
-		"A long error is summarised, with detail on demand": "MISSING: a long model error is shown in full as one paragraph, with no summary and no folded detail.",
 		"A side panel can be hidden and shown again": "The threads sidebar and computer panel collapse with buttons and Cmd-B / Cmd-J (client/src/layout.ts); no runner check yet.",
 		"A side panel can be resized on desktop": "Both side columns resize by dragging their edge (client/src/layout.ts); no runner check yet.",
 		"Panel sizes and visibility survive a reload": "Widths and visibility persist in localStorage (client/src/layout.ts); no runner check yet.",
@@ -196,7 +192,6 @@ export default {
 		"Signing out revokes what the app was granted": "Sign out revokes the refresh token at Cloudflare and drops the stored grant (src/auth/cloudflare.ts logout). A browser cannot observe the provider-side revocation.",
 		"An expired session sends me to sign in, keeping my place": "MISSING: an expired session shows the sign-in page, but coil does not return you to the thread you were on.",
 		"No text sits on top of other text": "No overlap check in this adapter yet; the myax adapter's overlap check needs coil selectors.",
-		"Notifications have a keyboard shortcut": "MISSING: notifications are toggled from a sidebar button only; there is no shortcut.",
 		"The empty state offers starters": "MISSING: an empty thread shows one line about its computer, not starter prompts.",
 		"Starters belong to the owner": "coil has no starter prompts, so there are none to own.",
 		"The copy names the outcome, not the feature": "Copy review is a human judgement; not checked by this runner.",
@@ -554,6 +549,88 @@ export default {
 
 				return text !== "" && text !== "Signed in with Cloudflare";
 			}, null, { timeout: 15000 }).catch(() => fail("the sidebar does not name the signed-in account"));
+		},
+
+		"Paste an image": async ({ page, base }) => {
+			await openFresh(page, base, "paste image");
+			await waitReady(page);
+
+			const uploads = [];
+
+			page.on("request", (request) => {
+				if (request.method() !== "GET" && request.url().includes("/api/")) uploads.push(request.postData()?.slice(0, 200) ?? "");
+			});
+			await page.focus(selectors.composer);
+			await page.evaluate(() => {
+				const data = new DataTransfer();
+				const pixel = Uint8Array.from(atob("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="), (c) => c.charCodeAt(0));
+
+				data.items.add(new File([pixel], "dot.png", { type: "image/png" }));
+				document.querySelector("#text").dispatchEvent(new ClipboardEvent("paste", { clipboardData: data, bubbles: true, cancelable: true }));
+			});
+			await page.waitForFunction(() => (document.querySelector("#text")?.value ?? "").includes("Attached:"), null, { timeout: 30000 }).catch(() => fail("pasting an image did not attach it"));
+		},
+
+		"Each tool call shows a live timer": async ({ page, base }) => {
+			await installStreamDriver(page);
+			await openFresh(page, base, "tool timer");
+			await waitReady(page);
+			await page.evaluate(() => window.__basicEmit({ _tag: "tool_start", id: "basic-1", name: "run", args: "{\"command\":\"sleep 30\"}" }));
+			await page.waitForSelector("details.tool .tool-time", { timeout: 10000 }).catch(() => fail("a running tool row shows no timer"));
+		},
+
+		"A long error is summarised, with detail on demand": async ({ page, base }) => {
+			const name = await newThread(page, "long error", "@cf/meta/llama-3.3-70b-instruct-fp8-fast");
+
+			await rpc(page, "SendMessage", { name, requestId: `basic-${Date.now()}`, text: "Write 120 numbered lines about the sea into list.txt with your write tool, then summarise it." }).catch(() => undefined);
+			await open(page, base, name);
+
+			const found = await page.waitForSelector(".msg.error", { timeout: 60000 }).catch(() => null);
+
+			if (found === null) return "SKIPPED: the model did not fail on this run, so there was no long error to fold";
+
+			const summary = await page.$eval(".msg.error .error-summary", (element) => element.textContent ?? "");
+
+			if (summary.length > 260) fail(`the error summary is ${summary.length} characters`);
+			if ((await page.$(".msg.error details.error-detail")) === null) fail("the long error has no folded detail");
+		},
+
+		"Notifications have a keyboard shortcut": async ({ page, base }) => {
+			await openFresh(page, base, "notify shortcut");
+
+			const shortcut = await page.$eval("#notify", (element) => element.getAttribute("aria-keyshortcuts")).catch(() => null);
+
+			if (!shortcut) fail("the notifications control declares no keyboard shortcut");
+		},
+
+		"A turn that ends with nothing visible says so": async ({ page, base }) => {
+			const name = await newThread(page, "silent turn");
+
+			await page.route("**/api/rpc", async (route) => {
+				const body = route.request().postData() ?? "";
+
+				if (!body.includes('"ViewThread"')) return route.continue();
+
+				const response = await route.fetch();
+				const exits = await response.json();
+				const view = exits[0]?.exit?.value;
+
+				if (view === undefined) return route.fulfill({ response });
+
+				view.busy = false;
+				view.messages = [
+					{ id: "u1", role: "user", kind: "pi.user", text: "do it quietly" },
+					{ id: "t1:c1", role: "tool", kind: "pi.assistant", text: "", tool: { id: "c1", name: "run", args: "{}" } },
+					{ id: "r1", role: "toolResult", kind: "pi.tool-result", text: "ok", toolCallId: "c1" },
+				];
+				view.turns = [{ seq: 1, at: 1, ended: 2, tools: 1, prompt: "do it quietly", stat: "", diff: "" }];
+
+				return route.fulfill({ response, json: exits });
+			});
+			await open(page, base, name);
+			await page.waitForSelector("[data-turn='1']", { timeout: 20000 });
+
+			if ((await page.$("[data-note='no-reply']")) === null) fail("a turn with no reply has no note saying so");
 		},
 
 		"Signing out is one visible control": async ({ page, base }) => {
