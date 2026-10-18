@@ -168,7 +168,6 @@ export default {
 		"Reasoning is folded": "coil does not render model reasoning; only the reply text and tool rows are shown.",
 		"Tool rows keep their open or closed state while streaming": "Tool rows are keyed by call id (client/src/view/feed.ts), so a row keeps its open state across renders; no runner check yet.",
 		"Each chat shows whether it is working": "The sidebar groups threads into Working, Running, and Paused with a coloured dot (client/src/view/side.ts); no runner check yet.",
-		"Each chat shows working, idle, or failed at a glance": "MISSING: the sidebar shows working, running, and paused, but a thread whose last turn failed looks the same as an idle one.",
 		"The list is grouped by time and searchable": "MISSING: the list is grouped by state, not by time; search is in the Cmd-K palette, not in the list.",
 		"Pin, archive, and rename from the row": "MISSING: archive and rename are in the thread menu and palette, not on the row; there is no pin.",
 		"Delete asks first": "Delete runs through a confirm dialog before the RPC (client/src/command.ts RunOp Delete); no runner check yet.",
@@ -189,7 +188,6 @@ export default {
 		"After signing out, nothing private is reachable": "Covered by 'The API refuses a caller who is not signed in' and the sign-out route clearing the session cookie (src/auth/cloudflare.ts logout).",
 		"Signing out revokes what the app was granted": "Sign out revokes the refresh token at Cloudflare and drops the stored grant (src/auth/cloudflare.ts logout). A browser cannot observe the provider-side revocation.",
 		"No text sits on top of other text": "No overlap check in this adapter yet; the myax adapter's overlap check needs coil selectors.",
-		"The empty state offers starters": "MISSING: an empty thread shows one line about its computer, not starter prompts.",
 		"Starters belong to the owner": "coil has no starter prompts, so there are none to own.",
 		"The copy names the outcome, not the feature": "Copy review is a human judgement; not checked by this runner.",
 		"Following the stream while at the bottom": async ({ page, base }) => {
@@ -679,6 +677,57 @@ export default {
 			await page.waitForSelector("#connection.lost", { timeout: 60000 }).catch(() => fail("coil never says it gave up reconnecting"));
 
 			if ((await page.$("#connection.lost button")) === null) fail("the gave-up notice has no way to reconnect");
+		},
+
+		"Each chat shows working, idle, or failed at a glance": async ({ page, base }) => {
+			const name = await newThread(page, "failed glance");
+
+			await page.route("**/api/rpc", async (route) => {
+				const body = route.request().postData() ?? "";
+
+				if (!body.includes('"ListThreads"')) return route.continue();
+
+				const response = await route.fetch();
+				const exits = await response.json();
+				const list = exits[0]?.exit?.value;
+
+				if (!Array.isArray(list)) return route.fulfill({ response });
+
+				for (const thread of list) if (thread.name === name) Object.assign(thread, { busy: false, failed: true });
+
+				return route.fulfill({ response, json: exits });
+			});
+			await open(page, base, name);
+
+			const dot = page.locator(`[data-thread="${name}"] .dot`);
+
+			await dot.waitFor({ timeout: 20000 });
+
+			const state = await dot.evaluate((element) => ({ cls: element.className, label: element.getAttribute("aria-label"), color: getComputedStyle(element).backgroundColor }));
+			const idle = await page.locator("[data-thread] .dot:not(.failed):not(.busy)").first().evaluate((element) => getComputedStyle(element).backgroundColor).catch(() => null);
+
+			if (!state.cls.includes("failed")) fail(`a failed thread's dot is "${state.cls}"`);
+			if (!/fail/i.test(state.label ?? "")) fail(`a failed thread's dot is labelled "${state.label}"`);
+			if (idle !== null && idle === state.color) fail("a failed thread looks the same colour as an idle one");
+		},
+
+		"The empty state offers starters": async ({ page, base }) => {
+			await openFresh(page, base, "starters");
+			await waitReady(page);
+			await page.waitForLoadState("networkidle").catch(() => undefined);
+
+			const starters = page.locator("#starters .starter");
+
+			if ((await starters.count()) < 2) fail("an empty thread offers no starter prompts");
+
+			const text = (await starters.first().textContent()) ?? "";
+
+			await starters.first().click();
+			await page.waitForFunction((want) => document.querySelector("#text")?.value === want, text, { timeout: 5000 }).catch(() => undefined);
+
+			const draft = await page.$eval(selectors.composer, (element) => element.value);
+
+			if (draft !== text) fail(`clicking a starter puts "${draft}" in the composer, not "${text}"`);
 		},
 
 		"Signing out is one visible control": async ({ page, base }) => {
