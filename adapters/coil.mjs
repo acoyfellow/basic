@@ -168,8 +168,6 @@ export default {
 		"Reasoning is folded": "coil does not render model reasoning; only the reply text and tool rows are shown.",
 		"Tool rows keep their open or closed state while streaming": "Tool rows are keyed by call id (client/src/view/feed.ts), so a row keeps its open state across renders; no runner check yet.",
 		"Each chat shows whether it is working": "The sidebar groups threads into Working, Running, and Paused with a coloured dot (client/src/view/side.ts); no runner check yet.",
-		"The list is grouped by time and searchable": "MISSING: the list is grouped by state, not by time; search is in the Cmd-K palette, not in the list.",
-		"Pin, archive, and rename from the row": "MISSING: archive and rename are in the thread menu and palette, not on the row; there is no pin.",
 		"Delete asks first": "Delete runs through a confirm dialog before the RPC (client/src/command.ts RunOp Delete); no runner check yet.",
 		"Retry, edit, and branch": "Edit and Retry are on every user message and Fork branches a thread; covered by the client story test 'edit puts the text back; retry sends it again'.",
 		"Code is highlighted without blocking the first token": "Chat code blocks are not syntax highlighted; only /docs uses the highlighter.",
@@ -728,6 +726,60 @@ export default {
 			const draft = await page.$eval(selectors.composer, (element) => element.value);
 
 			if (draft !== text) fail(`clicking a starter puts "${draft}" in the composer, not "${text}"`);
+		},
+
+		"The list is grouped by time and searchable": async ({ page, base }) => {
+			const name = await openFresh(page, base, `needle ${Date.now()}`);
+
+			await page.waitForSelector("#list .group", { timeout: 20000 });
+
+			const labels = await page.$$eval("#list .group", (groups) => groups.map((group) => (group.textContent ?? "").replace(/\s*\d+$/, "")));
+			const timeWords = ["Pinned", "Today", "Yesterday", "Previous 7 days", "Earlier"];
+
+			if (!labels.every((label) => timeWords.includes(label) || /^(Hide archived|Archived)/.test(label))) fail(`list groups are ${labels.join(", ")}`);
+			if (!labels.includes("Today")) fail("a thread made just now is not under Today");
+
+			const title = await page.$eval(`[data-thread="${name}"] .t`, (element) => element.textContent ?? "");
+
+			await page.fill("#list-filter", title.split(" ").slice(1).join(" "));
+			await page.waitForFunction(() => document.querySelectorAll("#list [data-thread]").length <= 2, null, { timeout: 5000 }).catch(() => fail("the filter does not narrow the list"));
+
+			if ((await page.$(`[data-thread="${name}"]`)) === null) fail("the filter hides the thread it should find");
+
+			await page.fill("#list-filter", "zzzz-no-such-thread-qqqq");
+			await page.waitForFunction(() => document.querySelectorAll("#list [data-thread]").length === 0, null, { timeout: 5000 }).catch(() => fail("a filter with no match still shows threads"));
+		},
+
+		"Pin, archive, and rename from the row": async ({ page, base }) => {
+			const name = await openFresh(page, base, "row actions");
+			const row = page.locator(`[data-thread="${name}"]`).locator("..");
+
+			await row.hover();
+			await row.locator(".row-more").click();
+			await page.waitForSelector(`[data-menu-for="${name}"] [role=menuitem]`, { timeout: 5000 });
+
+			const items = await page.$$eval(`[data-menu-for="${name}"] [role=menuitem]`, (buttons) => buttons.map((button) => button.textContent ?? ""));
+
+			for (const want of ["Pin", "Rename", "Archive"]) if (!items.includes(want)) fail(`the row menu has ${items.join(", ")}, not ${want}`);
+
+			await page.click(`[data-menu-for="${name}"] [data-op="pin"]`);
+			await page.waitForFunction((thread) => {
+				const groups = [...document.querySelectorAll("#list .group")];
+				const first = groups[0];
+
+				return first?.textContent?.startsWith("Pinned") && first.nextElementSibling?.querySelector(`[data-thread="${thread}"]`) !== null;
+			}, name, { timeout: 15000 }).catch(() => fail("pinning does not move the thread under Pinned"));
+
+			page.once("dialog", (dialog) => dialog.accept("renamed by basic"));
+			await row.locator(".row-more").click();
+			await page.waitForSelector(`[data-menu-for="${name}"] [data-op="rename"]`, { timeout: 5000 });
+			await page.click(`[data-menu-for="${name}"] [data-op="rename"]`);
+			await page.waitForFunction((thread) => document.querySelector(`[data-thread="${thread}"] .t`)?.textContent === "renamed by basic", name, { timeout: 15000 }).catch(() => fail("rename from the row does not change the title"));
+
+			await row.locator(".row-more").click();
+			await page.waitForSelector(`[data-menu-for="${name}"] [data-op="archive"]`, { timeout: 5000 });
+			await page.click(`[data-menu-for="${name}"] [data-op="archive"]`);
+			await page.waitForFunction((thread) => document.querySelector(`#list [data-thread="${thread}"]`) === null, name, { timeout: 15000 }).catch(() => fail("archive from the row does not remove it from the list"));
 		},
 
 		"Signing out is one visible control": async ({ page, base }) => {
