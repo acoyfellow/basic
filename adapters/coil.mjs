@@ -36,12 +36,25 @@ const signIn = async (page) => {
 	await page.context().addCookies(sessionCookies().map(({ name, value }) => (name.startsWith("__Host-") ? { name, value, url: `https://${host()}/`, secure: true, httpOnly: true } : { name, value, domain: host(), path: "/", secure: true, httpOnly: true })));
 };
 
+const NETWORK_BLIP = /ECONNRESET|ECONNREFUSED|ETIMEDOUT|EAI_AGAIN|socket hang up/;
+
+const post = async (page, body, attempt = 1) => {
+	try {
+		return await page.context().request.post(`https://${host()}/api/rpc`, {
+			headers: { "content-type": "application/json" },
+			data: body,
+			timeout: 120000,
+		});
+	} catch (cause) {
+		if (attempt >= 3 || !NETWORK_BLIP.test(String(cause))) throw cause;
+		await new Promise((resolve) => setTimeout(resolve, 2000 * attempt));
+
+		return post(page, body, attempt + 1);
+	}
+};
+
 const rpc = async (page, tag, payload) => {
-	const response = await page.context().request.post(`https://${host()}/api/rpc`, {
-		headers: { "content-type": "application/json" },
-		data: JSON.stringify({ _tag: "Request", id: "1", tag, payload, headers: [] }),
-		timeout: 120000,
-	});
+	const response = await post(page, JSON.stringify({ _tag: "Request", id: "1", tag, payload, headers: [] }));
 	const [exit] = await response.json();
 
 	if (exit?.exit?._tag !== "Success") fail(`${tag} failed: ${JSON.stringify(exit).slice(0, 200)}`);
@@ -689,7 +702,11 @@ export default {
 			});
 			await openFresh(page, base, "reconnect");
 			await page.waitForSelector("#connection", { timeout: 15000 }).catch(() => fail("a dropped stream shows no reconnecting notice"));
-			await page.waitForSelector("#connection.lost", { timeout: 60000 }).catch(() => fail("coil never says it gave up reconnecting"));
+			await page.waitForSelector("#connection.lost", { timeout: 60000 }).catch(async () => {
+				const shown = await page.$eval("#connection", (element) => element.textContent).catch(() => "no notice");
+
+				fail(`coil never says it gave up reconnecting; it shows "${shown}"`);
+			});
 
 			if ((await page.$("#connection.lost button")) === null) fail("the gave-up notice has no way to reconnect");
 		},
