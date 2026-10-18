@@ -174,7 +174,6 @@ export default {
 		"Delete asks first": "Delete runs through a confirm dialog before the RPC (client/src/command.ts RunOp Delete); no runner check yet.",
 		"Retry, edit, and branch": "Edit and Retry are on every user message and Fork branches a thread; covered by the client story test 'edit puts the text back; retry sends it again'.",
 		"Code is highlighted without blocking the first token": "Chat code blocks are not syntax highlighted; only /docs uses the highlighter.",
-		"Reconnecting is shown, then gives up honestly": "MISSING: an offline banner appears when the browser is offline, but a dropped event stream reconnects silently and never says it gave up.",
 		"A stale close cannot undo a good connection": "Each event stream carries an epoch in the model, and a close only reconnects the current epoch (client/src/update.ts StreamClosed); no runner check yet.",
 		"A backgrounded tab catches up when it returns": "The thread view reloads on every event stream reconnect and on a 10 s refresh tick; no runner check yet.",
 		"A turn interrupted by a restart resumes": "Pi Durable keeps the turn in the Durable Object; a restarted thread continues it (test/thread.test.ts). Not reproducible from a browser.",
@@ -187,10 +186,8 @@ export default {
 		"Each panel toggle has a keyboard shortcut": "Cmd-B toggles the threads sidebar and Cmd-J the computer panel (client/src/layout.ts).",
 		"A double click on the drag edge restores the default width": "A double click on a drag handle restores its default width (client/src/layout.ts dblclick).",
 		"The first sign-in asks only what it needs, then lands somewhere useful": "Needs a brand-new Cloudflare identity; coil asks for 7 scopes, then sends a first sign-in to the gateway picker and then home (src/auth/cloudflare.ts).",
-		"A cancelled or failed sign-in says why": "MISSING: a cancelled consent returns to the sign-in page with no message saying it was cancelled.",
 		"After signing out, nothing private is reachable": "Covered by 'The API refuses a caller who is not signed in' and the sign-out route clearing the session cookie (src/auth/cloudflare.ts logout).",
 		"Signing out revokes what the app was granted": "Sign out revokes the refresh token at Cloudflare and drops the stored grant (src/auth/cloudflare.ts logout). A browser cannot observe the provider-side revocation.",
-		"An expired session sends me to sign in, keeping my place": "MISSING: an expired session shows the sign-in page, but coil does not return you to the thread you were on.",
 		"No text sits on top of other text": "No overlap check in this adapter yet; the myax adapter's overlap check needs coil selectors.",
 		"The empty state offers starters": "MISSING: an empty thread shows one line about its computer, not starter prompts.",
 		"Starters belong to the owner": "coil has no starter prompts, so there are none to own.",
@@ -631,6 +628,57 @@ export default {
 			await page.waitForSelector("[data-turn='1']", { timeout: 20000 });
 
 			if ((await page.$("[data-note='no-reply']")) === null) fail("a turn with no reply has no note saying so");
+		},
+
+		"A cancelled or failed sign-in says why": async ({ page, base }) => {
+			const anonymous = await page.context().browser().newContext();
+			const visitor = await anonymous.newPage();
+
+			await visitor.goto(`${base}/oauth/callback?error=access_denied&error_description=The+user+cancelled`, { waitUntil: "load" });
+
+			const text = await visitor.locator("body").innerText();
+
+			await anonymous.close();
+
+			if (!/did not sign you in/i.test(text) || !/cancelled/i.test(text)) fail(`a cancelled sign-in shows: "${text.slice(0, 160)}"`);
+		},
+
+		"An expired session sends me to sign in, keeping my place": async ({ page, base }) => {
+			const anonymous = await page.context().browser().newContext();
+			const visitor = await anonymous.newPage();
+
+			await visitor.goto(`${base}/t/some-thread-1a2b3c`, { waitUntil: "load" });
+
+			const href = await visitor.$eval("#sign-in", (element) => element.getAttribute("href")).catch(() => null);
+
+			await anonymous.close();
+
+			if (href !== "/oauth/login?return=%2Ft%2Fsome-thread-1a2b3c") fail(`the sign-in link on an expired thread page is ${href}`);
+		},
+
+		"Reconnecting is shown, then gives up honestly": async ({ page, base }) => {
+			await page.addInitScript(() => {
+				window.EventSource = class extends EventTarget {
+					constructor() {
+						super();
+						this.readyState = 0;
+						setTimeout(() => {
+							this.readyState = 2;
+							this.onerror?.(new Event("error"));
+						}, 50);
+					}
+
+					close() {
+						this.readyState = 2;
+					}
+				};
+				window.EventSource.CLOSED = 2;
+			});
+			await openFresh(page, base, "reconnect");
+			await page.waitForSelector("#connection", { timeout: 15000 }).catch(() => fail("a dropped stream shows no reconnecting notice"));
+			await page.waitForSelector("#connection.lost", { timeout: 60000 }).catch(() => fail("coil never says it gave up reconnecting"));
+
+			if ((await page.$("#connection.lost button")) === null) fail("the gave-up notice has no way to reconnect");
 		},
 
 		"Signing out is one visible control": async ({ page, base }) => {
