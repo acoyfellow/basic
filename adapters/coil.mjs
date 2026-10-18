@@ -13,7 +13,7 @@ const selectors = {
 	whoami: "#whoami",
 };
 
-const MODEL = process.env.COIL_MODEL ?? "@cf/zai-org/glm-5.3";
+const MODEL = process.env.COIL_MODEL ?? "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
 const host = () => new URL(process.env.BASE ?? "http://localhost").host;
 
 const sessionCookies = () =>
@@ -98,8 +98,11 @@ const typeInto = async (page, selector, text) => {
 	await page.keyboard.insertText(text);
 };
 
+const waitReady = async (page) =>
+	page.waitForFunction((send) => document.querySelector(send) !== null && document.querySelector("#feed .feed-inner .skeleton") === null, selectors.send, { timeout: 30000 });
+
 const send = async (page, text) => {
-	await page.waitForSelector(`${selectors.send}:not([disabled])`, { timeout: 30000 });
+	await waitReady(page);
 	await typeInto(page, selectors.composer, text);
 	await page.press(selectors.composer, "Enter");
 	await page.waitForSelector(selectors.stop, { timeout: 60000 });
@@ -107,25 +110,103 @@ const send = async (page, text) => {
 
 const waitIdle = async (page, timeout = 180000) => page.waitForSelector(selectors.send, { timeout });
 
-const LONG_REPLY = "Write a numbered list from 1 to 80. Each line is the number, then one short sentence about the sea. No preamble.";
+const LONG_REPLY = "Write a numbered list from 1 to 150. Each line is the number, then one full sentence of about fifteen words about the sea. No preamble.";
 
-const streamLong = async (page, base, title) => {
-	await openFresh(page, base, title);
-	await send(page, LONG_REPLY);
-	await page.waitForSelector(selectors.liveText, { timeout: 60000 });
-	await page.waitForFunction((selector) => (document.querySelector(selector)?.textContent?.length ?? 0) > 400, selectors.liveText, { timeout: 60000 });
+const installStreamDriver = async (page) =>
+	page.addInitScript(() => {
+		window.__basicSources = [];
+		window.EventSource = class extends EventTarget {
+			constructor(url) {
+				super();
+				this.url = url;
+				this.readyState = 1;
+				this.onmessage = null;
+				this.onerror = null;
+				window.__basicSources.push(this);
+			}
+
+			close() {
+				this.readyState = 2;
+			}
+		};
+		window.EventSource.CLOSED = 2;
+		window.__basicEmit = (event) => {
+			for (const source of window.__basicSources) {
+				const message = new MessageEvent("message", { data: JSON.stringify(event) });
+
+				source.onmessage?.(message);
+				source.dispatchEvent(message);
+			}
+		};
+	});
+
+const streamTokens = async (page, count) => {
+	for (let index = 0; index < count; index += 1) {
+		await page.evaluate((line) => window.__basicEmit({ _tag: "text", delta: `\n${line}. The sea keeps moving under a long grey sky, and the gulls ride home.` }), index);
+		await page.waitForTimeout(20);
+	}
 };
 
-const stillStreaming = async (page) => (await page.$(selectors.liveText)) !== null;
+const streamLong = async (page, base, title) => {
+	await installStreamDriver(page);
+	await openFresh(page, base, title);
+	await waitReady(page);
+	await streamTokens(page, 80);
+	await page.waitForSelector(selectors.liveText, { timeout: 10000 });
+};
+
 
 export default {
 	checks: {
+		"Older history pages in without a jump": "coil loads the whole conversation (up to 500 entries) in one view; there is no paged older history to load.",
+		"On a phone, Enter is a newline": "MISSING: Enter sends on every device; phones have no newline-on-Enter rule.",
+		"The shortcut is written down": "MISSING: no visible hint that Enter sends and Shift+Enter breaks a line.",
+		"A send that cannot go out keeps the draft": "Covered by the client story test 'a failed send puts the text back and says why' (client/src/story.test.ts).",
+		"Typing hides the starter prompts": "coil has no starter prompts; the empty thread shows one line about the computer instead.",
+		"Paste an image": "MISSING: pasting an image into the composer does nothing; files are attached by drag and drop only.",
+		"Locked features say why they are locked": "coil has no plan tiers or locked features; every signed-in user has the same features on their own account.",
+		"Each tool call shows a live timer": "MISSING: a running tool row shows a spinner but no elapsed time.",
+		"A stuck tool row never runs forever": "Covered by the server: every agent command runs under a 120 s timeout (src/shell.ts RUN_LIMIT_SECONDS) and Stop ends it within 5 s (test/stop.test.ts).",
+		"A turn that ends with nothing visible says so": "MISSING: a turn that ends with no text shows only its footer, with no line saying the agent replied with nothing.",
+		"Reasoning is folded": "coil does not render model reasoning; only the reply text and tool rows are shown.",
+		"Tool rows keep their open or closed state while streaming": "Tool rows are keyed by call id (client/src/view/feed.ts), so a row keeps its open state across renders; no runner check yet.",
+		"Each chat shows whether it is working": "The sidebar groups threads into Working, Running, and Paused with a coloured dot (client/src/view/side.ts); no runner check yet.",
+		"Each chat shows working, idle, or failed at a glance": "MISSING: the sidebar shows working, running, and paused, but a thread whose last turn failed looks the same as an idle one.",
+		"The list is grouped by time and searchable": "MISSING: the list is grouped by state, not by time; search is in the Cmd-K palette, not in the list.",
+		"Pin, archive, and rename from the row": "MISSING: archive and rename are in the thread menu and palette, not on the row; there is no pin.",
+		"Delete asks first": "Delete runs through a confirm dialog before the RPC (client/src/command.ts RunOp Delete); no runner check yet.",
+		"Copy a message": "MISSING: messages have Edit and Retry, but no Copy control.",
+		"Copy a code block": "MISSING: code blocks have no Copy control.",
+		"Retry, edit, and branch": "Edit and Retry are on every user message and Fork branches a thread; covered by the client story test 'edit puts the text back; retry sends it again'.",
+		"Code is highlighted without blocking the first token": "Chat code blocks are not syntax highlighted; only /docs uses the highlighter.",
+		"Reconnecting is shown, then gives up honestly": "MISSING: an offline banner appears when the browser is offline, but a dropped event stream reconnects silently and never says it gave up.",
+		"A stale close cannot undo a good connection": "Each event stream carries an epoch in the model, and a close only reconnects the current epoch (client/src/update.ts StreamClosed); no runner check yet.",
+		"A backgrounded tab catches up when it returns": "The thread view reloads on every event stream reconnect and on a 10 s refresh tick; no runner check yet.",
+		"A turn interrupted by a restart resumes": "Pi Durable keeps the turn in the Durable Object; a restarted thread continues it (test/thread.test.ts). Not reproducible from a browser.",
+		"Errors sit in the transcript in order": "A failed model call is written into the transcript as the agent's message, in order (src/agent.ts entriesToMessages).",
+		"A long error is summarised, with detail on demand": "MISSING: a long model error is shown in full as one paragraph, with no summary and no folded detail.",
+		"A side panel can be hidden and shown again": "The threads sidebar and computer panel collapse with buttons and Cmd-B / Cmd-J (client/src/layout.ts); no runner check yet.",
+		"A side panel can be resized on desktop": "Both side columns resize by dragging their edge (client/src/layout.ts); no runner check yet.",
+		"Panel sizes and visibility survive a reload": "Widths and visibility persist in localStorage (client/src/layout.ts); no runner check yet.",
+		"What is inside a panel adapts to its width": "Panels use container queries (src/ui/style.ts); no runner check yet.",
+		"On a phone, side panels open over the conversation": "On phones the side columns are hidden and open as drawers over the chat; no runner check yet.",
+		"Each panel toggle has a keyboard shortcut": "Cmd-B toggles the threads sidebar and Cmd-J the computer panel (client/src/layout.ts).",
+		"A double click on the drag edge restores the default width": "A double click on a drag handle restores its default width (client/src/layout.ts dblclick).",
+		"The first sign-in asks only what it needs, then lands somewhere useful": "Needs a brand-new Cloudflare identity; coil asks for 7 scopes, then sends a first sign-in to the gateway picker and then home (src/auth/cloudflare.ts).",
+		"A cancelled or failed sign-in says why": "MISSING: a cancelled consent returns to the sign-in page with no message saying it was cancelled.",
+		"Who I am is always one click away": "MISSING: the sidebar says 'Signed in with Cloudflare' and the account name is only in /oauth/me, not in the UI.",
+		"After signing out, nothing private is reachable": "Covered by 'The API refuses a caller who is not signed in' and the sign-out route clearing the session cookie (src/auth/cloudflare.ts logout).",
+		"Signing out revokes what the app was granted": "Sign out revokes the refresh token at Cloudflare and drops the stored grant (src/auth/cloudflare.ts logout). A browser cannot observe the provider-side revocation.",
+		"An expired session sends me to sign in, keeping my place": "MISSING: an expired session shows the sign-in page, but coil does not return you to the thread you were on.",
+		"Motion respects the system setting": "MISSING: coil has no prefers-reduced-motion rule; spinners and transitions always animate.",
+		"No text sits on top of other text": "No overlap check in this adapter yet; the myax adapter's overlap check needs coil selectors.",
+		"Notifications have a keyboard shortcut": "MISSING: notifications are toggled from a sidebar button only; there is no shortcut.",
+		"The empty state offers starters": "MISSING: an empty thread shows one line about its computer, not starter prompts.",
+		"Starters belong to the owner": "coil has no starter prompts, so there are none to own.",
+		"The copy names the outcome, not the feature": "Copy review is a human judgement; not checked by this runner.",
 		"Following the stream while at the bottom": async ({ page, base }) => {
 			await streamLong(page, base, "follow");
-			await page.$eval(selectors.log, (element) => (element.scrollTop = element.scrollHeight));
-			await page.waitForTimeout(1500);
-
-			if (!(await stillStreaming(page))) return "SKIPPED: the reply finished before the check";
+			await streamTokens(page, 10);
 
 			const distance = await distanceFromBottom(page);
 
@@ -140,7 +221,7 @@ export default {
 
 			const before = await scrollTop(page);
 
-			await page.waitForTimeout(2000);
+			await streamTokens(page, 20);
 
 			const after = await scrollTop(page);
 
@@ -155,29 +236,25 @@ export default {
 
 			for (let step = 0; step < 6; step += 1) {
 				await page.mouse.wheel(0, -200);
-				await page.waitForTimeout(400);
+				await streamTokens(page, 5);
 				samples.push(await distanceFromBottom(page));
 			}
-
-			if (!(await stillStreaming(page))) return "SKIPPED: the reply finished before the check";
 
 			const pulled = samples.filter((distance) => distance < 80).length;
 
 			if (pulled > 0) fail(`scrolled up 6 times during the stream; ${pulled} of 6 samples were pulled back to the bottom (${samples.join(", ")} px)`);
 
 			await page.$eval(selectors.log, (element) => (element.scrollTop = element.scrollHeight));
-			await page.waitForTimeout(1500);
+			await streamTokens(page, 10);
 
-			if ((await stillStreaming(page)) && (await distanceFromBottom(page)) > 80) fail("following did not resume after returning to the bottom");
+			if ((await distanceFromBottom(page)) > 80) fail("following did not resume after returning to the bottom");
 		},
 
 		"A scroll-wheel up releases the pin at once": async ({ page, base }) => {
 			await streamLong(page, base, "wheel release");
 			await page.hover(selectors.log);
 			await page.mouse.wheel(0, -300);
-			await page.waitForTimeout(600);
-
-			if (!(await stillStreaming(page))) return "SKIPPED: the reply finished before the check";
+			await streamTokens(page, 3);
 
 			const distance = await distanceFromBottom(page);
 
@@ -241,7 +318,7 @@ export default {
 
 		"Enter sends, Shift+Enter breaks a line, on desktop": async ({ page, base }) => {
 			await openFresh(page, base, "enter");
-			await page.waitForSelector(`${selectors.send}:not([disabled])`, { timeout: 30000 });
+			await waitReady(page);
 			await typeInto(page, selectors.composer, "line one");
 			await page.keyboard.press("Shift+Enter");
 
@@ -268,11 +345,7 @@ export default {
 
 		"The composer is focused and ready on load": async ({ page, base }) => {
 			await openFresh(page, base, "focus");
-			await page.waitForTimeout(500);
-
-			const focused = await page.evaluate(() => document.activeElement?.id);
-
-			if (focused !== "text") fail(`focus is on ${focused || "nothing"}, not the composer`);
+			await page.waitForFunction(() => document.activeElement?.id === "text", null, { timeout: 5000 }).catch(async () => fail(`focus is on ${(await page.evaluate(() => document.activeElement?.id)) || "nothing"}, not the composer`));
 		},
 
 		"The composer grows with the text, up to a limit": async ({ page, base }) => {
@@ -296,9 +369,10 @@ export default {
 			await openFresh(page, base, "empty send");
 			await page.fill(selectors.composer, "");
 
-			const disabled = await page.$eval(selectors.send, (element) => element.disabled);
+			const { disabled, why } = await page.$eval(selectors.send, (element) => ({ disabled: element.disabled, why: element.getAttribute("data-tip") || element.title }));
 
 			if (!disabled) fail("Send is enabled with an empty composer");
+			if (!why) fail("Send is disabled but nothing says why");
 		},
 
 		"The draft survives a reload or a deploy": async ({ page, base }) => {
@@ -328,9 +402,14 @@ export default {
 		},
 
 		"A thinking indicator appears only when it is needed": async ({ page, base }) => {
+			await installStreamDriver(page);
 			await openFresh(page, base, "thinking");
-			await send(page, LONG_REPLY);
-			await page.waitForSelector(selectors.liveText, { timeout: 60000 });
+			await send(page, "Reply with: ok");
+
+			if ((await page.$(selectors.liveWait)) === null) fail("no thinking indicator while waiting for the first token");
+
+			await streamTokens(page, 3);
+			await page.waitForSelector(selectors.liveText, { timeout: 10000 });
 
 			if ((await page.$(selectors.liveWait)) !== null) fail("the thinking indicator stays while text streams");
 		},
@@ -338,11 +417,15 @@ export default {
 		"The whole task shows a live timer": async ({ page, base }) => {
 			await openFresh(page, base, "task timer");
 			await send(page, LONG_REPLY);
-			await page.waitForTimeout(2500);
+			await page.waitForSelector("#turn-timer", { timeout: 15000 }).catch(() => fail("no running timer while the turn runs"));
 
-			const text = await page.$eval(selectors.log, (element) => element.innerText);
+			const first = await page.$eval("#turn-timer", (element) => element.textContent);
 
-			if (!/\d+s/.test(text) && !/\d+s/.test(await page.title())) fail("no running timer while the turn runs");
+			await page.waitForTimeout(2200);
+
+			const later = await page.$eval("#turn-timer", (element) => element.textContent).catch(() => first);
+
+			if (first === later && (await page.$(selectors.stop)) !== null) fail(`the timer did not advance (${first})`);
 		},
 
 		"A new chat appears in the list at once": async ({ page, base }) => {
@@ -393,8 +476,7 @@ export default {
 
 		"Signing out is one visible control": async ({ page, base }) => {
 			await openFresh(page, base, "sign out");
-
-			if ((await page.$(selectors.signOut)) === null) fail("no visible Sign out control");
+			await page.waitForSelector(selectors.signOut, { state: "visible", timeout: 15000 }).catch(() => fail("no visible Sign out control"));
 		},
 	},
 };
