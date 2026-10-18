@@ -572,6 +572,16 @@ export default {
 
 				return text !== "" && text !== "Signed in with Cloudflare";
 			}, null, { timeout: 15000 }).catch(() => fail("the sidebar does not name the signed-in account"));
+
+			await Promise.all([page.waitForURL(/\/oauth\/gateway/, { timeout: 15000 }), page.click("#gateway-link")]).catch(() => fail(`the Gateway control does not open the gateway picker; the page stays at ${page.url()}`));
+
+			const current = await page.$eval("input[name=gateway]:checked", (radio) => radio.value).catch(() => fail("the gateway picker shows no gateway in use"));
+
+			await Promise.all([page.waitForURL((url) => !url.pathname.startsWith("/oauth/"), { timeout: 15000 }), page.click("button[type=submit]")]).catch(() => fail("saving the gateway does not return to coil"));
+
+			const account = await page.evaluate(() => fetch("/oauth/me").then((response) => response.json()));
+
+			if (account.gateway !== current) fail(`after saving ${current}, coil uses ${account.gateway}`);
 		},
 
 		"Paste an image": async ({ page, base }) => {
