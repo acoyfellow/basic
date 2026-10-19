@@ -1,0 +1,53 @@
+diagram.mjs
+  s_afaa55a7f6b1c0::t_6d6f3b5d3a41b6 5-9
+diagrams/kernel-matrix.svg
+  s_afaa55a7f6b1c0::t_b86a8dd6e88bb5 1-7
+kernel/invariants.mjs
+  s_afaa55a7f6b1c0::t_3d953470c48281 1,3-15
+kernel/matrix.mjs
+  s_afaa55a7f6b1c0::t_0d9d931c092c8f 1-67
+kernel/optouts.json
+  s_afaa55a7f6b1c0::t_ddb5cedfc0151c 1-5
+kernel/run.mjs
+  s_afaa55a7f6b1c0::t_b84f192e490d0b 6-7,52-54,58,80-93,115,117-125
+reports/kernel-chat-ax.json
+  s_afaa55a7f6b1c0::t_7380e6d3468807 6,14,18,24,28,35,43,49,53,60,62-72,79,85,89,96,108,121,123-132,135,152,154-163,183,204,206-217,220,224,228,234,245,247-256
+reports/kernel-chat-ax.md
+  s_afaa55a7f6b1c0::t_28f016384c329f 3,17-53
+reports/kernel-coil.json
+  s_afaa55a7f6b1c0::t_6662868c5874e0 6,14,18,24,28,35,43,49,53,60,62-73,80,86,90,93,97,109,122,126,143,164,185,189,193,197,203,214,216-225
+reports/kernel-coil.md
+  s_afaa55a7f6b1c0::t_dff6f62bc3b454 3,17-32
+reports/kernel-hark.json
+  s_afaa55a7f6b1c0::t_c2cb8541aefeec 6,14,18,24,28,35,43,49,53,60,68,74,78,85,97,110,114,131,152,173,175-186,189,193,197,203,214
+reports/kernel-hark.md
+  s_afaa55a7f6b1c0::t_8c82ae79bbd86e 3,17-25
+reports/kernel-my-ax.json
+  s_afaa55a7f6b1c0::t_fcd3418bec72dc 6,14,18,24,28,35,43,49,53,60,62-73,80,86,90,93,97,109,122,126,143,164,185,189,193,197,203,214-216
+reports/kernel-my-ax.md
+  s_afaa55a7f6b1c0::t_6a3c1f6eca57c9 3,16-25
+reports/kernel-skin.json
+  s_afaa55a7f6b1c0::t_c52a47dc888fce 6,14,18,24,28,35,43,49,53,60,68,74,78,85,97,110,112-121,124,141,162,183,187,191,195,201,212
+reports/kernel-skin.md
+  s_afaa55a7f6b1c0::t_36f2db81c9ddee 3,17-25
+reports/kernel-tenon.json
+  s_afaa55a7f6b1c0::t_799903914ac9ba 6,14,18,24,28,35,43,49,53,60,68,74,78,85,97,110,114,131,152,173,177,181,185,191,202
+reports/kernel-tenon.md
+  s_afaa55a7f6b1c0::t_8d11fddf18d37f 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4c9467c4d3d757c68d25077ed2fc8a8135cfaf54",
+  "prompts": {},
+  "sessions": {
+    "s_afaa55a7f6b1c0": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a14ea7-4b6e-73ae-baa7-f14cc479fb9a",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jordan Coeyman <jcoeyman@cloudflare.com>"
+    }
+  }
+}
