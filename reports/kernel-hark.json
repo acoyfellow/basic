@@ -171,10 +171,10 @@
     {
       "id": "T8",
       "name": "Changes the agent makes are versioned, gated, and append-only",
-      "verdict": "partial",
+      "verdict": "missing",
       "fix": {
-        "file": "hark/src/auth/every-scope.ts",
-        "near": "hark/src/auth/every-scope.ts:101",
+        "file": "hark/src",
+        "near": null,
         "change": "Store versions in an append-only table; gate before live; rollback inserts a new row.",
         "reference": "tenon/src/index.ts:249",
         "tests": [
@@ -204,8 +204,8 @@
           "at": null
         },
         {
-          "re": "/artifact/i",
-          "at": "hark/src/auth/every-scope.ts:101"
+          "re": "/artifacts?\\.(put|get|create|save)\\(|artifact_id|ARTIFACT_ID/i",
+          "at": null
         }
       ]
     },

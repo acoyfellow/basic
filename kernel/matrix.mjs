@@ -57,7 +57,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${
 <style>.title{font-size:20px;font-weight:700;fill:#1d1d1f}.sub{font-size:13px;fill:#6e6e73}.app{font-size:14px;font-weight:600;text-anchor:middle;fill:#1d1d1f}.score{font-size:12px;text-anchor:middle;fill:#6e6e73}.rule{font-size:13px;fill:#1d1d1f}.id{font-weight:700}.verdict{font-size:12px;text-anchor:middle;fill:#1d1d1f}.legend{font-size:12px;fill:#495057}</style>
 <rect width="100%" height="100%" fill="#ffffff"/>
 <text x="24" y="32" class="title">tenon: nine rules, five apps</text>
-<text x="24" y="52" class="sub">Static probes from basic/kernel. A cell is a place to read, not proof. Generated ${new Date().toISOString().slice(0, 10)}.</text>
+<text x="24" y="52" class="sub">Static probes from basic/kernel. A cell is a place to read, not proof.</text>
 ${header}${rows}${legend}
 </svg>
 `;

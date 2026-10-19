@@ -1,6 +1,6 @@
 # kernel: coil
 
-Static probes read `coil/src, shared` (54 files). Generated 2026-10-19T04:43:27.908Z.
+Static probes read `coil/src, shared` (54 files). Comments are ignored.
 A probe hit is evidence to read, not proof. "has" means at least one strong probe hit; "partial" means only weak probes hit.
 
 | Invariant | Verdict | Evidence |

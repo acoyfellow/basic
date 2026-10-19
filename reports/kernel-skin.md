@@ -1,6 +1,6 @@
 # kernel: skin
 
-Static probes read `skin/kernel, shared` (35 files). Generated 2026-10-19T04:43:28.260Z.
+Static probes read `skin/kernel, shared` (35 files). Comments are ignored.
 A probe hit is evidence to read, not proof. "has" means at least one strong probe hit; "partial" means only weak probes hit.
 
 | Invariant | Verdict | Evidence |

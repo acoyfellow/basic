@@ -1,6 +1,6 @@
 # kernel: hark
 
-Static probes read `hark/src, shared` (53 files). Generated 2026-10-19T04:43:27.970Z.
+Static probes read `hark/src, shared` (53 files). Comments are ignored.
 A probe hit is evidence to read, not proof. "has" means at least one strong probe hit; "partial" means only weak probes hit.
 
 | Invariant | Verdict | Evidence |
@@ -12,7 +12,7 @@ A probe hit is evidence to read, not proof. "has" means at least one strong prob
 | T5 Writes must come from the app origin | ✅ has | `hark/src/index.ts:43`<br>`hark/src/auth/session.ts:83` |
 | T6 Agent-written code runs in an isolate with no ambient network or secrets | ✅ has | `hark/src/workbench.ts:94`<br>`hark/src/workbench.ts:90`<br>`hark/src/computer.ts:67` |
 | T7 A run is visible, truthful, and stoppable | ✅ has | `hark/src/hark.ts:935`<br>`hark/src/hark.ts:715` |
-| T8 Changes the agent makes are versioned, gated, and append-only | 🟡 partial | `hark/src/auth/every-scope.ts:101` |
+| T8 Changes the agent makes are versioned, gated, and append-only | ❌ missing | no probe hit |
 | T9 Public pages are served before the gate; nothing else is | ✅ has | `hark/src/index.ts:20` |
 
 ## Fix tasks
@@ -20,6 +20,6 @@ A probe hit is evidence to read, not proof. "has" means at least one strong prob
 ### T8 Changes the agent makes are versioned, gated, and append-only
 
 - Change: Store versions in an append-only table; gate before live; rollback inserts a new row.
-- Where: `hark/src/auth/every-scope.ts:101`
+- Where: `hark/src`
 - Copy from: `tenon/src/index.ts:249`
 - Proof: `node basic/kernel/run.mjs --app=hark && node -e "const r=require('./basic/reports/kernel-hark.json').rows.find(x=>x.id==='T8');process.exit(r.verdict==='has'?0:1)"`

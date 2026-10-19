@@ -192,7 +192,7 @@
           "at": null
         },
         {
-          "re": "/artifact/i",
+          "re": "/artifacts?\\.(put|get|create|save)\\(|artifact_id|ARTIFACT_ID/i",
           "at": null
         }
       ]

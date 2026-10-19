@@ -8,7 +8,7 @@
       "strong": [
         {
           "re": "/cf-access-jwt-assertion/i",
-          "at": "my-ax/src/auth.ts:4"
+          "at": "my-ax/src/auth.ts:108"
         },
         {
           "re": "/\\/oauth\\/callback/i",
@@ -59,7 +59,7 @@
       "id": "T3",
       "name": "The payer is explicit, and a user payer never falls back to host inference",
       "verdict": "partial",
-      "note": "routes to the user account (my-ax/src/routes/browser.ts:6) and also calls host AI (my-ax/src/index.tsx:77); confirm the host call never serves a user-paid turn",
+      "note": "routes to the user account (my-ax/src/routes/browser.ts:6) and also calls host AI (my-ax/src/index.tsx:144); confirm the host call never serves a user-paid turn",
       "fix": {
         "file": "my-ax/src/routes/browser.ts",
         "near": "my-ax/src/routes/browser.ts:6",
@@ -84,7 +84,7 @@
       "weak": [
         {
           "re": "/env\\.AI\\b|this\\.env\\.AI\\b/i",
-          "at": "my-ax/src/index.tsx:77"
+          "at": "my-ax/src/index.tsx:144"
         },
         {
           "re": "/accountName/i",
@@ -155,7 +155,7 @@
         },
         {
           "re": "/getSandbox|sandboxComputer|Container\\b/",
-          "at": "my-ax/src/index.tsx:324"
+          "at": "my-ax/src/named-computer.ts:1"
         }
       ]
     },
@@ -195,7 +195,7 @@
         },
         {
           "re": "/\\/rollback\\b|\\/api\\/rollback/i",
-          "at": "my-ax/src/code-mode-runtime.ts:244"
+          "at": null
         }
       ],
       "weak": [
@@ -204,8 +204,8 @@
           "at": null
         },
         {
-          "re": "/artifact/i",
-          "at": "my-ax/src/agent.ts:38"
+          "re": "/artifacts?\\.(put|get|create|save)\\(|artifact_id|ARTIFACT_ID/i",
+          "at": "my-ax/src/artifacts.ts:7"
         }
       ]
     },

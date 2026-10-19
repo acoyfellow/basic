@@ -2,6 +2,7 @@ import { readFileSync, readdirSync, statSync, writeFileSync, mkdirSync } from 'n
 import { join, relative, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { INVARIANTS, APPS } from './invariants.mjs';
+import { stripComments } from './source.mjs';
 
 const OPTOUTS = JSON.parse(readFileSync(new URL('./optouts.json', import.meta.url), 'utf8'));
 
@@ -34,7 +35,11 @@ const walk = (dir) => {
 };
 const appRoot = join(root, app);
 for (const d of APPS[app].dirs) walk(join(appRoot, d));
-const sources = files.map((f) => ({ f: relative(root, f), lines: readFileSync(f, 'utf8').split('\n') }));
+if (files.length === 0) {
+  console.error(`no source files under ${appRoot} (${APPS[app].dirs.join(', ')}); check --root`);
+  process.exit(2);
+}
+const sources = files.map((f) => ({ f: relative(root, f), lines: stripComments(readFileSync(f, 'utf8')).split('\n') }));
 
 const find = (re) => {
   for (const { f, lines } of sources) {
@@ -94,7 +99,7 @@ const fixFor = (row) => {
 const out = [
   `# kernel: ${app}`,
   '',
-  `Static probes read \`${app}/${APPS[app].dirs.join(', ')}\` (${sources.length} files). Generated ${new Date().toISOString()}.`,
+  `Static probes read \`${app}/${APPS[app].dirs.join(', ')}\` (${sources.length} files). Comments are ignored.`,
   `A probe hit is evidence to read, not proof. "has" means at least one strong probe hit; "partial" means only weak probes hit.`,
   '',
   '| Invariant | Verdict | Evidence |',
