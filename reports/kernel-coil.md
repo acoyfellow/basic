@@ -1,6 +1,6 @@
 # kernel: coil
 
-Static probes read `coil/src, shared` (54 files). Generated 2026-10-19T03:19:29.285Z.
+Static probes read `coil/src, shared` (54 files). Generated 2026-10-19T04:43:27.908Z.
 A probe hit is evidence to read, not proof. "has" means at least one strong probe hit; "partial" means only weak probes hit.
 
 | Invariant | Verdict | Evidence |
@@ -14,3 +14,19 @@ A probe hit is evidence to read, not proof. "has" means at least one strong prob
 | T7 A run is visible, truthful, and stoppable | ✅ has | `coil/src/rpc.ts:123`<br>`coil/src/agent.ts:197`<br>`coil/src/agent.ts:744` |
 | T8 Changes the agent makes are versioned, gated, and append-only | ✅ has | `coil/src/computer.ts:130` |
 | T9 Public pages are served before the gate; nothing else is | 🟡 partial | `coil/src/index.ts:231`<br>`coil/src/auth/cloudflare.ts:62` |
+
+## Fix tasks
+
+### T3 The payer is explicit, and a user payer never falls back to host inference
+
+- Change: Declare the payer in config; when the payer is user and no grant exists, fail instead of calling env.AI.
+- Where: `coil/src/auth/oauth.ts:197`
+- Copy from: `tenon/src/index.ts:95`
+- Proof: `node basic/kernel/run.mjs --app=coil && node -e "const r=require('./basic/reports/kernel-coil.json').rows.find(x=>x.id==='T3');process.exit(r.verdict==='has'?0:1)"`
+
+### T9 Public pages are served before the gate; nothing else is
+
+- Change: Keep one PUBLIC set served before the identity check; everything else goes through it.
+- Where: `coil/src/index.ts:231`
+- Copy from: `tenon/src/index.ts:25`
+- Proof: `node basic/kernel/run.mjs --app=coil && node -e "const r=require('./basic/reports/kernel-coil.json').rows.find(x=>x.id==='T9');process.exit(r.verdict==='has'?0:1)"`

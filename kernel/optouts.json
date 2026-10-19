@@ -1,0 +1,5 @@
+{
+  "my-ax": {
+    "T9": "Access-only app: every route, including landing, sits behind Cloudflare Access by design."
+  }
+}

@@ -1,6 +1,6 @@
 # kernel: tenon
 
-Static probes read `tenon/src` (1 files). Generated 2026-10-19T03:19:29.552Z.
+Static probes read `tenon/src` (1 files). Generated 2026-10-19T04:43:31.888Z.
 A probe hit is evidence to read, not proof. "has" means at least one strong probe hit; "partial" means only weak probes hit.
 
 | Invariant | Verdict | Evidence |

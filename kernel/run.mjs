@@ -3,6 +3,8 @@ import { join, relative, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { INVARIANTS, APPS } from './invariants.mjs';
 
+const OPTOUTS = JSON.parse(readFileSync(new URL('./optouts.json', import.meta.url), 'utf8'));
+
 const HERE = dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map((a) => a.replace(/^--/, '').split('=')));
 const app = args.app;
@@ -47,12 +49,13 @@ const rows = INVARIANTS.map((inv) => {
   const weak = inv.weak.map((re) => ({ re: String(re), at: find(re) }));
   const s = strong.filter((x) => x.at).length;
   const w = weak.filter((x) => x.at).length;
-  const verdict = s > 0 ? 'has' : s > 0 || w > 0 ? 'partial' : 'missing';
-  return { ...inv, strong, weak, verdict };
+  const optout = OPTOUTS[app]?.[inv.id];
+  const verdict = optout ? 'n/a' : s > 0 ? 'has' : w > 0 ? 'partial' : 'missing';
+  return { ...inv, strong, weak, verdict, note: optout };
 });
 
 const t3 = rows.find((r) => r.id === 'T3');
-if (t3.strong[0].at && t3.weak[0].at) {
+if (t3.verdict !== 'n/a' && t3.strong[0].at && t3.weak[0].at) {
   t3.verdict = 'partial';
   t3.note = `routes to the user account (${t3.strong[0].at}) and also calls host AI (${t3.weak[0].at}); confirm the host call never serves a user-paid turn`;
 }
@@ -74,7 +77,20 @@ if (BASE) {
   );
 }
 
-const icon = { has: '✅ has', partial: '🟡 partial', missing: '❌ missing' };
+const icon = { has: '✅ has', partial: '🟡 partial', missing: '❌ missing', 'n/a': '⚪ n/a' };
+
+const fixFor = (row) => {
+  if (row.verdict === 'has' || row.verdict === 'n/a') return undefined;
+  const hit = [...row.strong, ...row.weak].find((probe) => probe.at);
+  return {
+    file: hit ? hit.at.replace(/:\d+$/, '') : `${app}/${APPS[app].dirs[0]}`,
+    near: hit?.at ?? null,
+    change: row.fix,
+    reference: row.reference,
+    tests: row.tests,
+    proof: `node basic/kernel/run.mjs --app=${app} && node -e "const r=require('./basic/reports/kernel-${app}.json').rows.find(x=>x.id==='${row.id}');process.exit(r.verdict==='has'?0:1)"`,
+  };
+};
 const out = [
   `# kernel: ${app}`,
   '',
@@ -96,9 +112,17 @@ mkdirSync(join(HERE, '..', 'reports'), { recursive: true });
 writeFileSync(join(HERE, '..', 'reports', `kernel-${app}.md`), out.join('\n'));
 writeFileSync(
   join(HERE, '..', 'reports', `kernel-${app}.json`),
-  JSON.stringify({ app, rows: rows.map(({ id, verdict, strong, weak, note }) => ({ id, verdict, strong, weak, note })), live }, null, 2),
+  JSON.stringify({ app, rows: rows.map((row) => ({ id: row.id, name: row.name, verdict: row.verdict, note: row.note, fix: fixFor(row), strong: row.strong, weak: row.weak })), live }, null, 2),
 );
-const has = rows.filter((r) => r.verdict === 'has').length;
+const gaps = rows.filter((r) => r.verdict === 'partial' || r.verdict === 'missing');
+if (gaps.length) {
+  out.push('## Fix tasks', '', ...gaps.flatMap((r) => {
+    const f = fixFor(r);
+    return [`### ${r.id} ${r.name}`, '', `- Change: ${f.change}`, `- Where: ${f.near ? `\`${f.near}\`` : `\`${f.file}\``}`, `- Copy from: \`${f.reference}\``, `- Proof: \`${f.proof}\``, ''];
+  }));
+  writeFileSync(join(HERE, '..', 'reports', `kernel-${app}.md`), out.join('\n'));
+}
+const has = rows.filter((r) => r.verdict === 'has' || r.verdict === 'n/a').length;
 const livePass = live.every((l) => l.pass);
 console.log(`${app}: ${has}/${rows.length} has${live.length ? `, live ${live.filter((l) => l.pass).length}/${live.length}` : ''}`);
 process.exit(args.strict === '1' && (has !== rows.length || !livePass) ? 1 : 0);

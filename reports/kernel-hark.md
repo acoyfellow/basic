@@ -1,6 +1,6 @@
 # kernel: hark
 
-Static probes read `hark/src, shared` (53 files). Generated 2026-10-19T03:19:29.331Z.
+Static probes read `hark/src, shared` (53 files). Generated 2026-10-19T04:43:27.970Z.
 A probe hit is evidence to read, not proof. "has" means at least one strong probe hit; "partial" means only weak probes hit.
 
 | Invariant | Verdict | Evidence |
@@ -14,3 +14,12 @@ A probe hit is evidence to read, not proof. "has" means at least one strong prob
 | T7 A run is visible, truthful, and stoppable | ✅ has | `hark/src/hark.ts:935`<br>`hark/src/hark.ts:715` |
 | T8 Changes the agent makes are versioned, gated, and append-only | 🟡 partial | `hark/src/auth/every-scope.ts:101` |
 | T9 Public pages are served before the gate; nothing else is | ✅ has | `hark/src/index.ts:20` |
+
+## Fix tasks
+
+### T8 Changes the agent makes are versioned, gated, and append-only
+
+- Change: Store versions in an append-only table; gate before live; rollback inserts a new row.
+- Where: `hark/src/auth/every-scope.ts:101`
+- Copy from: `tenon/src/index.ts:249`
+- Proof: `node basic/kernel/run.mjs --app=hark && node -e "const r=require('./basic/reports/kernel-hark.json').rows.find(x=>x.id==='T8');process.exit(r.verdict==='has'?0:1)"`

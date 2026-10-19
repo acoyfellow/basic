@@ -3,6 +3,7 @@
   "rows": [
     {
       "id": "T1",
+      "name": "Every non-public request has a verified owner",
       "verdict": "has",
       "strong": [
         {
@@ -10,27 +11,28 @@
           "at": "coil/src/auth/access.ts:19"
         },
         {
-          "re": "/\\/oauth\\/callback/",
+          "re": "/\\/oauth\\/callback/i",
           "at": "coil/src/auth/cloudflare.ts:118"
         },
         {
-          "re": "/crypto\\.subtle\\.verify|verifySession|readSession/",
+          "re": "/crypto\\.subtle\\.verify|verifySession|readSession/i",
           "at": "coil/src/auth/access-jwt.ts:114"
         }
       ],
       "weak": [
         {
-          "re": "/status:\\s*401|, 401\\)/",
+          "re": "/status:\\s*401|, 401\\)/i",
           "at": "coil/src/auth/cloudflare.ts:264"
         },
         {
-          "re": "/SESSION_SECRET/",
+          "re": "/SESSION_SECRET/i",
           "at": "coil/src/auth/cloudflare.ts:37"
         }
       ]
     },
     {
       "id": "T2",
+      "name": "State lives in a Durable Object keyed by that owner",
       "verdict": "has",
       "strong": [
         {
@@ -38,48 +40,61 @@
           "at": null
         },
         {
-          "re": "/props\\.(owner|user)\\b/",
+          "re": "/props\\.(owner|user)\\b/i",
           "at": "coil/src/run.ts:42"
         }
       ],
       "weak": [
         {
-          "re": "/ctx\\.storage\\.sql|storage\\.sql\\.exec|this\\.sql\\b/",
+          "re": "/ctx\\.storage\\.sql|storage\\.sql\\.exec|this\\.sql\\b/i",
           "at": "coil/src/directory.ts:95"
         },
         {
-          "re": "/idFromName\\(|getByName\\(/",
+          "re": "/idFromName\\(|getByName\\(/i",
           "at": "coil/src/auth/cloudflare.ts:108"
         }
       ]
     },
     {
       "id": "T3",
+      "name": "The payer is explicit, and a user payer never falls back to host inference",
       "verdict": "partial",
+      "note": "routes to the user account (coil/src/auth/oauth.ts:197) and also calls host AI (coil/src/thread.ts:299); confirm the host call never serves a user-paid turn",
+      "fix": {
+        "file": "coil/src/auth/oauth.ts",
+        "near": "coil/src/auth/oauth.ts:197",
+        "change": "Declare the payer in config; when the payer is user and no grant exists, fail instead of calling env.AI.",
+        "reference": "tenon/src/index.ts:95",
+        "tests": [
+          "user payer with no grant fails instead of using host inference",
+          "user payer with a grant routes to the user account"
+        ],
+        "proof": "node basic/kernel/run.mjs --app=coil && node -e \"const r=require('./basic/reports/kernel-coil.json').rows.find(x=>x.id==='T3');process.exit(r.verdict==='has'?0:1)\""
+      },
       "strong": [
         {
           "re": "/accounts\\/\\$\\{[^}]*account/i",
           "at": "coil/src/auth/oauth.ts:197"
         },
         {
-          "re": "/no_user_grant|COIL_AUTH|_PAYER\\b/",
+          "re": "/no_user_grant|COIL_AUTH|_PAYER\\b/i",
           "at": "coil/src/auth/gate.ts:7"
         }
       ],
       "weak": [
         {
-          "re": "/env\\.AI\\b|this\\.env\\.AI\\b/",
+          "re": "/env\\.AI\\b|this\\.env\\.AI\\b/i",
           "at": "coil/src/thread.ts:299"
         },
         {
-          "re": "/accountName/",
+          "re": "/accountName/i",
           "at": "coil/src/auth/cloudflare.ts:207"
         }
-      ],
-      "note": "routes to the user account (coil/src/auth/oauth.ts:197) and also calls host AI (coil/src/thread.ts:299); confirm the host call never serves a user-paid turn"
+      ]
     },
     {
       "id": "T4",
+      "name": "Secrets and grant tokens never reach the browser or a log",
       "verdict": "has",
       "strong": [
         {
@@ -91,7 +106,7 @@
           "at": "coil/src/auth/session.ts:82"
         },
         {
-          "re": "/never returned|grant_store/",
+          "re": "/never returned|grant_store/i",
           "at": null
         }
       ],
@@ -104,10 +119,11 @@
     },
     {
       "id": "T5",
+      "name": "Writes must come from the app origin",
       "verdict": "has",
       "strong": [
         {
-          "re": "/origin\\s*!==\\s*(new URL|url\\.origin)|origin\\s*!==\\s*null\\s*&&\\s*origin\\s*!==/",
+          "re": "/origin\\s*!==\\s*(new URL|url\\.origin)|origin\\s*!==\\s*null\\s*&&\\s*origin\\s*!==/i",
           "at": "coil/src/index.ts:127"
         }
       ],
@@ -124,6 +140,7 @@
     },
     {
       "id": "T6",
+      "name": "Agent-written code runs in an isolate with no ambient network or secrets",
       "verdict": "has",
       "strong": [
         {
@@ -144,6 +161,7 @@
     },
     {
       "id": "T7",
+      "name": "A run is visible, truthful, and stoppable",
       "verdict": "has",
       "strong": [
         {
@@ -164,24 +182,25 @@
     },
     {
       "id": "T8",
+      "name": "Changes the agent makes are versioned, gated, and append-only",
       "verdict": "has",
       "strong": [
         {
-          "re": "/CREATE TABLE[^\\n]*\\b(generations|versions)\\b/",
+          "re": "/CREATE TABLE[^\\n]*\\b(generations|versions)\\b/i",
           "at": null
         },
         {
-          "re": "/snapshotId\\b|snapshotContainer\\(/",
+          "re": "/snapshotId\\b|snapshotContainer\\(/i",
           "at": "coil/src/computer.ts:130"
         },
         {
-          "re": "/\\/rollback\\b|\\/api\\/rollback/",
+          "re": "/\\/rollback\\b|\\/api\\/rollback/i",
           "at": null
         }
       ],
       "weak": [
         {
-          "re": "/rollback\\(/",
+          "re": "/rollback\\(/i",
           "at": null
         },
         {
@@ -192,7 +211,18 @@
     },
     {
       "id": "T9",
+      "name": "Public pages are served before the gate; nothing else is",
       "verdict": "partial",
+      "fix": {
+        "file": "coil/src/index.ts",
+        "near": "coil/src/index.ts:231",
+        "change": "Keep one PUBLIC set served before the identity check; everything else goes through it.",
+        "reference": "tenon/src/index.ts:25",
+        "tests": [
+          "public pages load without sign-in"
+        ],
+        "proof": "node basic/kernel/run.mjs --app=coil && node -e \"const r=require('./basic/reports/kernel-coil.json').rows.find(x=>x.id==='T9');process.exit(r.verdict==='has'?0:1)\""
+      },
       "strong": [
         {
           "re": "/SIGN_IN_PATHS|PUBLIC_PATHS|const PUBLIC\\b/",

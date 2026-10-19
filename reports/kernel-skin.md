@@ -1,6 +1,6 @@
 # kernel: skin
 
-Static probes read `skin/kernel, shared` (35 files). Generated 2026-10-19T03:19:29.513Z.
+Static probes read `skin/kernel, shared` (35 files). Generated 2026-10-19T04:43:28.260Z.
 A probe hit is evidence to read, not proof. "has" means at least one strong probe hit; "partial" means only weak probes hit.
 
 | Invariant | Verdict | Evidence |
@@ -14,3 +14,12 @@ A probe hit is evidence to read, not proof. "has" means at least one strong prob
 | T7 A run is visible, truthful, and stoppable | ✅ has | `skin/kernel/conversation.ts:14`<br>`skin/kernel/body.ts:54`<br>`skin/kernel/body.ts:672` |
 | T8 Changes the agent makes are versioned, gated, and append-only | ✅ has | `skin/kernel/body.ts:258`<br>`skin/kernel/index.ts:221`<br>`skin/kernel/body.ts:615` |
 | T9 Public pages are served before the gate; nothing else is | ✅ has | `skin/kernel/index.ts:258`<br>`skin/kernel/index.ts:273` |
+
+## Fix tasks
+
+### T5 Writes must come from the app origin
+
+- Change: Refuse non-GET requests whose Origin header is not the app origin.
+- Where: `skin/kernel/auth/session.ts:105`
+- Copy from: `tenon/src/index.ts:130`
+- Proof: `node basic/kernel/run.mjs --app=skin && node -e "const r=require('./basic/reports/kernel-skin.json').rows.find(x=>x.id==='T5');process.exit(r.verdict==='has'?0:1)"`

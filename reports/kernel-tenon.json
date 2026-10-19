@@ -3,6 +3,7 @@
   "rows": [
     {
       "id": "T1",
+      "name": "Every non-public request has a verified owner",
       "verdict": "has",
       "strong": [
         {
@@ -10,27 +11,28 @@
           "at": "tenon/src/index.ts:89"
         },
         {
-          "re": "/\\/oauth\\/callback/",
+          "re": "/\\/oauth\\/callback/i",
           "at": null
         },
         {
-          "re": "/crypto\\.subtle\\.verify|verifySession|readSession/",
+          "re": "/crypto\\.subtle\\.verify|verifySession|readSession/i",
           "at": "tenon/src/index.ts:49"
         }
       ],
       "weak": [
         {
-          "re": "/status:\\s*401|, 401\\)/",
+          "re": "/status:\\s*401|, 401\\)/i",
           "at": "tenon/src/index.ts:126"
         },
         {
-          "re": "/SESSION_SECRET/",
+          "re": "/SESSION_SECRET/i",
           "at": "tenon/src/index.ts:12"
         }
       ]
     },
     {
       "id": "T2",
+      "name": "State lives in a Durable Object keyed by that owner",
       "verdict": "has",
       "strong": [
         {
@@ -38,23 +40,24 @@
           "at": "tenon/src/index.ts:133"
         },
         {
-          "re": "/props\\.(owner|user)\\b/",
+          "re": "/props\\.(owner|user)\\b/i",
           "at": null
         }
       ],
       "weak": [
         {
-          "re": "/ctx\\.storage\\.sql|storage\\.sql\\.exec|this\\.sql\\b/",
+          "re": "/ctx\\.storage\\.sql|storage\\.sql\\.exec|this\\.sql\\b/i",
           "at": "tenon/src/index.ts:148"
         },
         {
-          "re": "/idFromName\\(|getByName\\(/",
+          "re": "/idFromName\\(|getByName\\(/i",
           "at": "tenon/src/index.ts:133"
         }
       ]
     },
     {
       "id": "T3",
+      "name": "The payer is explicit, and a user payer never falls back to host inference",
       "verdict": "has",
       "strong": [
         {
@@ -62,23 +65,24 @@
           "at": null
         },
         {
-          "re": "/no_user_grant|COIL_AUTH|_PAYER\\b/",
+          "re": "/no_user_grant|COIL_AUTH|_PAYER\\b/i",
           "at": "tenon/src/index.ts:13"
         }
       ],
       "weak": [
         {
-          "re": "/env\\.AI\\b|this\\.env\\.AI\\b/",
+          "re": "/env\\.AI\\b|this\\.env\\.AI\\b/i",
           "at": null
         },
         {
-          "re": "/accountName/",
+          "re": "/accountName/i",
           "at": null
         }
       ]
     },
     {
       "id": "T4",
+      "name": "Secrets and grant tokens never reach the browser or a log",
       "verdict": "has",
       "strong": [
         {
@@ -90,7 +94,7 @@
           "at": "tenon/src/index.ts:121"
         },
         {
-          "re": "/never returned|grant_store/",
+          "re": "/never returned|grant_store/i",
           "at": "tenon/src/index.ts:157"
         }
       ],
@@ -103,10 +107,11 @@
     },
     {
       "id": "T5",
+      "name": "Writes must come from the app origin",
       "verdict": "has",
       "strong": [
         {
-          "re": "/origin\\s*!==\\s*(new URL|url\\.origin)|origin\\s*!==\\s*null\\s*&&\\s*origin\\s*!==/",
+          "re": "/origin\\s*!==\\s*(new URL|url\\.origin)|origin\\s*!==\\s*null\\s*&&\\s*origin\\s*!==/i",
           "at": "tenon/src/index.ts:130"
         }
       ],
@@ -123,6 +128,7 @@
     },
     {
       "id": "T6",
+      "name": "Agent-written code runs in an isolate with no ambient network or secrets",
       "verdict": "has",
       "strong": [
         {
@@ -143,6 +149,7 @@
     },
     {
       "id": "T7",
+      "name": "A run is visible, truthful, and stoppable",
       "verdict": "has",
       "strong": [
         {
@@ -163,24 +170,25 @@
     },
     {
       "id": "T8",
+      "name": "Changes the agent makes are versioned, gated, and append-only",
       "verdict": "has",
       "strong": [
         {
-          "re": "/CREATE TABLE[^\\n]*\\b(generations|versions)\\b/",
+          "re": "/CREATE TABLE[^\\n]*\\b(generations|versions)\\b/i",
           "at": "tenon/src/index.ts:151"
         },
         {
-          "re": "/snapshotId\\b|snapshotContainer\\(/",
+          "re": "/snapshotId\\b|snapshotContainer\\(/i",
           "at": null
         },
         {
-          "re": "/\\/rollback\\b|\\/api\\/rollback/",
+          "re": "/\\/rollback\\b|\\/api\\/rollback/i",
           "at": "tenon/src/index.ts:245"
         }
       ],
       "weak": [
         {
-          "re": "/rollback\\(/",
+          "re": "/rollback\\(/i",
           "at": null
         },
         {
@@ -191,6 +199,7 @@
     },
     {
       "id": "T9",
+      "name": "Public pages are served before the gate; nothing else is",
       "verdict": "has",
       "strong": [
         {

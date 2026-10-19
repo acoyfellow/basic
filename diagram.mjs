@@ -2,6 +2,11 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+if (process.argv.includes('--layer=kernel')) {
+  await import('./kernel/matrix.mjs');
+  process.exit(0);
+}
+
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const OUT = join(ROOT, "diagrams");
 const appName = process.argv.find((arg) => arg.startsWith("--app="))?.slice(6);
