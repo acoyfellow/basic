@@ -1,0 +1,45 @@
+kernel/invariants.mjs
+  s_afaa55a7f6b1c0::t_e54803edb2d0b4 1-75
+kernel/run.mjs
+  s_afaa55a7f6b1c0::t_109f5f839dca08 1-104
+reports/kernel-chat-ax.json
+  s_afaa55a7f6b1c0::t_2ca4261bfd06d3 1-214
+reports/kernel-chat-ax.md
+  s_afaa55a7f6b1c0::t_607f852754ad7b 1-16
+reports/kernel-coil.json
+  s_afaa55a7f6b1c0::t_6b386f9dad67b1 1-215
+reports/kernel-coil.md
+  s_afaa55a7f6b1c0::t_3d94c7e6d52b55 1-16
+reports/kernel-hark.json
+  s_afaa55a7f6b1c0::t_3377e051f2c4e2 1-214
+reports/kernel-hark.md
+  s_afaa55a7f6b1c0::t_3dfadf38a506da 1-16
+reports/kernel-my-ax.json
+  s_afaa55a7f6b1c0::t_431333680b1026 1-215
+reports/kernel-my-ax.md
+  s_afaa55a7f6b1c0::t_08d2b04d06a882 1-16
+reports/kernel-skin.json
+  s_afaa55a7f6b1c0::t_8fd0ce7d167654 1-214
+reports/kernel-skin.md
+  s_afaa55a7f6b1c0::t_8f56232bfdd215 1-16
+reports/kernel-tenon.json
+  s_afaa55a7f6b1c0::t_d50e763a2c7695 1-214
+reports/kernel-tenon.md
+  s_afaa55a7f6b1c0::t_46668ed2838c53 1-16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "5c4bebac732acbe9c7facc6b40ab7b1089cacd83",
+  "prompts": {},
+  "sessions": {
+    "s_afaa55a7f6b1c0": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a14ea7-4b6e-73ae-baa7-f14cc479fb9a",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jordan Coeyman <jcoeyman@cloudflare.com>"
+    }
+  }
+}
