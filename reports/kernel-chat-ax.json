@@ -1,0 +1,214 @@
+{
+  "app": "chat-ax",
+  "rows": [
+    {
+      "id": "T1",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/cf-access-jwt-assertion/i",
+          "at": "chat-ax/src/auth.ts:123"
+        },
+        {
+          "re": "/\\/oauth\\/callback/",
+          "at": null
+        },
+        {
+          "re": "/crypto\\.subtle\\.verify|verifySession|readSession/",
+          "at": "chat-ax/src/agent-capability.ts:60"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/status:\\s*401|, 401\\)/",
+          "at": "chat-ax/src/auth.ts:172"
+        },
+        {
+          "re": "/SESSION_SECRET/",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "T2",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/(getByName|idFromName)\\(\\s*(owner|user|email|actor|this\\.owner|caller\\.owner|identity)/i",
+          "at": "chat-ax/src/connector-vault.ts:264"
+        },
+        {
+          "re": "/props\\.(owner|user)\\b/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/ctx\\.storage\\.sql|storage\\.sql\\.exec|this\\.sql\\b/",
+          "at": "chat-ax/src/pi/durable/do-sqlite-database.ts:13"
+        },
+        {
+          "re": "/idFromName\\(|getByName\\(/",
+          "at": "chat-ax/src/agent-do.ts:1137"
+        }
+      ]
+    },
+    {
+      "id": "T3",
+      "verdict": "partial",
+      "strong": [
+        {
+          "re": "/accounts\\/\\$\\{[^}]*account/i",
+          "at": null
+        },
+        {
+          "re": "/no_user_grant|COIL_AUTH|_PAYER\\b/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/env\\.AI\\b|this\\.env\\.AI\\b/",
+          "at": "chat-ax/src/agent-do.ts:326"
+        },
+        {
+          "re": "/accountName/",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "T4",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/redact/i",
+          "at": "chat-ax/src/activity-log.ts:26"
+        },
+        {
+          "re": "/HttpOnly/i",
+          "at": null
+        },
+        {
+          "re": "/never returned|grant_store/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/__Host-|SameSite/i",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "T5",
+      "verdict": "missing",
+      "strong": [
+        {
+          "re": "/origin\\s*!==\\s*(new URL|url\\.origin)|origin\\s*!==\\s*null\\s*&&\\s*origin\\s*!==/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/sec-fetch-site|csrf/i",
+          "at": null
+        },
+        {
+          "re": "/SameSite=(Strict|Lax)/i",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "T6",
+      "verdict": "missing",
+      "strong": [
+        {
+          "re": "/globalOutbound:\\s*null/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/LOADER\\.(get|load)\\(/",
+          "at": null
+        },
+        {
+          "re": "/getSandbox|sandboxComputer|Container\\b/",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "T7",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/\\/stop\\b|stopLoop|STOPPED_BY_OWNER|status = 'stopped'/",
+          "at": null
+        },
+        {
+          "re": "/interrupted|aborted/",
+          "at": "chat-ax/src/pi/durable/turn-runtime.ts:41"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/AbortController|abort\\(/",
+          "at": "chat-ax/src/agent-do.ts:2184"
+        }
+      ]
+    },
+    {
+      "id": "T8",
+      "verdict": "missing",
+      "strong": [
+        {
+          "re": "/CREATE TABLE[^\\n]*\\b(generations|versions)\\b/",
+          "at": null
+        },
+        {
+          "re": "/snapshotId\\b|snapshotContainer\\(/",
+          "at": null
+        },
+        {
+          "re": "/\\/rollback\\b|\\/api\\/rollback/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/rollback\\(/",
+          "at": null
+        },
+        {
+          "re": "/artifact/i",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "T9",
+      "verdict": "missing",
+      "strong": [
+        {
+          "re": "/SIGN_IN_PATHS|PUBLIC_PATHS|const PUBLIC\\b/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/robots\\.txt/",
+          "at": null
+        },
+        {
+          "re": "/llms\\.txt/",
+          "at": null
+        }
+      ]
+    }
+  ],
+  "live": []
+}

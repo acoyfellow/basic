@@ -1,0 +1,214 @@
+{
+  "app": "tenon",
+  "rows": [
+    {
+      "id": "T1",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/cf-access-jwt-assertion/i",
+          "at": "tenon/src/index.ts:89"
+        },
+        {
+          "re": "/\\/oauth\\/callback/",
+          "at": null
+        },
+        {
+          "re": "/crypto\\.subtle\\.verify|verifySession|readSession/",
+          "at": "tenon/src/index.ts:49"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/status:\\s*401|, 401\\)/",
+          "at": "tenon/src/index.ts:126"
+        },
+        {
+          "re": "/SESSION_SECRET/",
+          "at": "tenon/src/index.ts:12"
+        }
+      ]
+    },
+    {
+      "id": "T2",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/(getByName|idFromName)\\(\\s*(owner|user|email|actor|this\\.owner|caller\\.owner|identity)/i",
+          "at": "tenon/src/index.ts:133"
+        },
+        {
+          "re": "/props\\.(owner|user)\\b/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/ctx\\.storage\\.sql|storage\\.sql\\.exec|this\\.sql\\b/",
+          "at": "tenon/src/index.ts:148"
+        },
+        {
+          "re": "/idFromName\\(|getByName\\(/",
+          "at": "tenon/src/index.ts:133"
+        }
+      ]
+    },
+    {
+      "id": "T3",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/accounts\\/\\$\\{[^}]*account/i",
+          "at": null
+        },
+        {
+          "re": "/no_user_grant|COIL_AUTH|_PAYER\\b/",
+          "at": "tenon/src/index.ts:13"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/env\\.AI\\b|this\\.env\\.AI\\b/",
+          "at": null
+        },
+        {
+          "re": "/accountName/",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "T4",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/redact/i",
+          "at": null
+        },
+        {
+          "re": "/HttpOnly/i",
+          "at": "tenon/src/index.ts:121"
+        },
+        {
+          "re": "/never returned|grant_store/",
+          "at": "tenon/src/index.ts:157"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/__Host-|SameSite/i",
+          "at": "tenon/src/index.ts:121"
+        }
+      ]
+    },
+    {
+      "id": "T5",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/origin\\s*!==\\s*(new URL|url\\.origin)|origin\\s*!==\\s*null\\s*&&\\s*origin\\s*!==/",
+          "at": "tenon/src/index.ts:130"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/sec-fetch-site|csrf/i",
+          "at": null
+        },
+        {
+          "re": "/SameSite=(Strict|Lax)/i",
+          "at": "tenon/src/index.ts:121"
+        }
+      ]
+    },
+    {
+      "id": "T6",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/globalOutbound:\\s*null/",
+          "at": "tenon/src/index.ts:180"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/LOADER\\.(get|load)\\(/",
+          "at": "tenon/src/index.ts:176"
+        },
+        {
+          "re": "/getSandbox|sandboxComputer|Container\\b/",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "T7",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/\\/stop\\b|stopLoop|STOPPED_BY_OWNER|status = 'stopped'/",
+          "at": "tenon/src/index.ts:315"
+        },
+        {
+          "re": "/interrupted|aborted/",
+          "at": "tenon/src/index.ts:158"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/AbortController|abort\\(/",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "T8",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/CREATE TABLE[^\\n]*\\b(generations|versions)\\b/",
+          "at": "tenon/src/index.ts:151"
+        },
+        {
+          "re": "/snapshotId\\b|snapshotContainer\\(/",
+          "at": null
+        },
+        {
+          "re": "/\\/rollback\\b|\\/api\\/rollback/",
+          "at": "tenon/src/index.ts:245"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/rollback\\(/",
+          "at": null
+        },
+        {
+          "re": "/artifact/i",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "T9",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/SIGN_IN_PATHS|PUBLIC_PATHS|const PUBLIC\\b/",
+          "at": "tenon/src/index.ts:25"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/robots\\.txt/",
+          "at": "tenon/src/index.ts:28"
+        },
+        {
+          "re": "/llms\\.txt/",
+          "at": "tenon/src/index.ts:27"
+        }
+      ]
+    }
+  ],
+  "live": []
+}

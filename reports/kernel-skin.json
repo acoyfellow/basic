@@ -1,0 +1,214 @@
+{
+  "app": "skin",
+  "rows": [
+    {
+      "id": "T1",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/cf-access-jwt-assertion/i",
+          "at": null
+        },
+        {
+          "re": "/\\/oauth\\/callback/",
+          "at": "skin/kernel/auth/cloudflare.ts:177"
+        },
+        {
+          "re": "/crypto\\.subtle\\.verify|verifySession|readSession/",
+          "at": "skin/kernel/auth/session.ts:76"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/status:\\s*401|, 401\\)/",
+          "at": "skin/kernel/auth/cloudflare.ts:348"
+        },
+        {
+          "re": "/SESSION_SECRET/",
+          "at": "skin/kernel/auth/cloudflare.ts:39"
+        }
+      ]
+    },
+    {
+      "id": "T2",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/(getByName|idFromName)\\(\\s*(owner|user|email|actor|this\\.owner|caller\\.owner|identity)/i",
+          "at": "skin/kernel/files.ts:55"
+        },
+        {
+          "re": "/props\\.(owner|user)\\b/",
+          "at": "skin/kernel/code-tools.ts:22"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/ctx\\.storage\\.sql|storage\\.sql\\.exec|this\\.sql\\b/",
+          "at": "skin/kernel/auth/directory.ts:40"
+        },
+        {
+          "re": "/idFromName\\(|getByName\\(/",
+          "at": "skin/kernel/agent.ts:93"
+        }
+      ]
+    },
+    {
+      "id": "T3",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/accounts\\/\\$\\{[^}]*account/i",
+          "at": "skin/kernel/auth/oauth.ts:227"
+        },
+        {
+          "re": "/no_user_grant|COIL_AUTH|_PAYER\\b/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/env\\.AI\\b|this\\.env\\.AI\\b/",
+          "at": null
+        },
+        {
+          "re": "/accountName/",
+          "at": "skin/kernel/auth/cloudflare.ts:279"
+        }
+      ]
+    },
+    {
+      "id": "T4",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/redact/i",
+          "at": null
+        },
+        {
+          "re": "/HttpOnly/i",
+          "at": "skin/kernel/auth/session.ts:105"
+        },
+        {
+          "re": "/never returned|grant_store/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/__Host-|SameSite/i",
+          "at": "skin/kernel/auth/session.ts:33"
+        }
+      ]
+    },
+    {
+      "id": "T5",
+      "verdict": "partial",
+      "strong": [
+        {
+          "re": "/origin\\s*!==\\s*(new URL|url\\.origin)|origin\\s*!==\\s*null\\s*&&\\s*origin\\s*!==/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/sec-fetch-site|csrf/i",
+          "at": null
+        },
+        {
+          "re": "/SameSite=(Strict|Lax)/i",
+          "at": "skin/kernel/auth/session.ts:105"
+        }
+      ]
+    },
+    {
+      "id": "T6",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/globalOutbound:\\s*null/",
+          "at": "skin/kernel/agent.ts:82"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/LOADER\\.(get|load)\\(/",
+          "at": "skin/kernel/agent.ts:77"
+        },
+        {
+          "re": "/getSandbox|sandboxComputer|Container\\b/",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "T7",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/\\/stop\\b|stopLoop|STOPPED_BY_OWNER|status = 'stopped'/",
+          "at": "skin/kernel/conversation.ts:14"
+        },
+        {
+          "re": "/interrupted|aborted/",
+          "at": "skin/kernel/body.ts:54"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/AbortController|abort\\(/",
+          "at": "skin/kernel/body.ts:672"
+        }
+      ]
+    },
+    {
+      "id": "T8",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/CREATE TABLE[^\\n]*\\b(generations|versions)\\b/",
+          "at": "skin/kernel/body.ts:258"
+        },
+        {
+          "re": "/snapshotId\\b|snapshotContainer\\(/",
+          "at": null
+        },
+        {
+          "re": "/\\/rollback\\b|\\/api\\/rollback/",
+          "at": "skin/kernel/index.ts:221"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/rollback\\(/",
+          "at": "skin/kernel/body.ts:615"
+        },
+        {
+          "re": "/artifact/i",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "T9",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/SIGN_IN_PATHS|PUBLIC_PATHS|const PUBLIC\\b/",
+          "at": "skin/kernel/index.ts:258"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/robots\\.txt/",
+          "at": "skin/kernel/index.ts:273"
+        },
+        {
+          "re": "/llms\\.txt/",
+          "at": null
+        }
+      ]
+    }
+  ],
+  "live": []
+}

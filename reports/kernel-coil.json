@@ -1,0 +1,215 @@
+{
+  "app": "coil",
+  "rows": [
+    {
+      "id": "T1",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/cf-access-jwt-assertion/i",
+          "at": "coil/src/auth/access.ts:19"
+        },
+        {
+          "re": "/\\/oauth\\/callback/",
+          "at": "coil/src/auth/cloudflare.ts:118"
+        },
+        {
+          "re": "/crypto\\.subtle\\.verify|verifySession|readSession/",
+          "at": "coil/src/auth/access-jwt.ts:114"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/status:\\s*401|, 401\\)/",
+          "at": "coil/src/auth/cloudflare.ts:264"
+        },
+        {
+          "re": "/SESSION_SECRET/",
+          "at": "coil/src/auth/cloudflare.ts:37"
+        }
+      ]
+    },
+    {
+      "id": "T2",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/(getByName|idFromName)\\(\\s*(owner|user|email|actor|this\\.owner|caller\\.owner|identity)/i",
+          "at": null
+        },
+        {
+          "re": "/props\\.(owner|user)\\b/",
+          "at": "coil/src/run.ts:42"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/ctx\\.storage\\.sql|storage\\.sql\\.exec|this\\.sql\\b/",
+          "at": "coil/src/directory.ts:95"
+        },
+        {
+          "re": "/idFromName\\(|getByName\\(/",
+          "at": "coil/src/auth/cloudflare.ts:108"
+        }
+      ]
+    },
+    {
+      "id": "T3",
+      "verdict": "partial",
+      "strong": [
+        {
+          "re": "/accounts\\/\\$\\{[^}]*account/i",
+          "at": "coil/src/auth/oauth.ts:197"
+        },
+        {
+          "re": "/no_user_grant|COIL_AUTH|_PAYER\\b/",
+          "at": "coil/src/auth/gate.ts:7"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/env\\.AI\\b|this\\.env\\.AI\\b/",
+          "at": "coil/src/thread.ts:299"
+        },
+        {
+          "re": "/accountName/",
+          "at": "coil/src/auth/cloudflare.ts:207"
+        }
+      ],
+      "note": "routes to the user account (coil/src/auth/oauth.ts:197) and also calls host AI (coil/src/thread.ts:299); confirm the host call never serves a user-paid turn"
+    },
+    {
+      "id": "T4",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/redact/i",
+          "at": null
+        },
+        {
+          "re": "/HttpOnly/i",
+          "at": "coil/src/auth/session.ts:82"
+        },
+        {
+          "re": "/never returned|grant_store/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/__Host-|SameSite/i",
+          "at": "coil/src/auth/session.ts:26"
+        }
+      ]
+    },
+    {
+      "id": "T5",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/origin\\s*!==\\s*(new URL|url\\.origin)|origin\\s*!==\\s*null\\s*&&\\s*origin\\s*!==/",
+          "at": "coil/src/index.ts:127"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/sec-fetch-site|csrf/i",
+          "at": null
+        },
+        {
+          "re": "/SameSite=(Strict|Lax)/i",
+          "at": "coil/src/auth/session.ts:82"
+        }
+      ]
+    },
+    {
+      "id": "T6",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/globalOutbound:\\s*null/",
+          "at": "coil/src/run.ts:58"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/LOADER\\.(get|load)\\(/",
+          "at": "coil/src/run.ts:54"
+        },
+        {
+          "re": "/getSandbox|sandboxComputer|Container\\b/",
+          "at": "coil/src/browser.ts:111"
+        }
+      ]
+    },
+    {
+      "id": "T7",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/\\/stop\\b|stopLoop|STOPPED_BY_OWNER|status = 'stopped'/",
+          "at": "coil/src/rpc.ts:123"
+        },
+        {
+          "re": "/interrupted|aborted/",
+          "at": "coil/src/agent.ts:197"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/AbortController|abort\\(/",
+          "at": "coil/src/agent.ts:744"
+        }
+      ]
+    },
+    {
+      "id": "T8",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/CREATE TABLE[^\\n]*\\b(generations|versions)\\b/",
+          "at": null
+        },
+        {
+          "re": "/snapshotId\\b|snapshotContainer\\(/",
+          "at": "coil/src/computer.ts:130"
+        },
+        {
+          "re": "/\\/rollback\\b|\\/api\\/rollback/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/rollback\\(/",
+          "at": null
+        },
+        {
+          "re": "/artifact/i",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "T9",
+      "verdict": "partial",
+      "strong": [
+        {
+          "re": "/SIGN_IN_PATHS|PUBLIC_PATHS|const PUBLIC\\b/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/robots\\.txt/",
+          "at": "coil/src/index.ts:231"
+        },
+        {
+          "re": "/llms\\.txt/",
+          "at": "coil/src/auth/cloudflare.ts:62"
+        }
+      ]
+    }
+  ],
+  "live": []
+}

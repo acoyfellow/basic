@@ -1,0 +1,214 @@
+{
+  "app": "hark",
+  "rows": [
+    {
+      "id": "T1",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/cf-access-jwt-assertion/i",
+          "at": null
+        },
+        {
+          "re": "/\\/oauth\\/callback/",
+          "at": "hark/src/auth/cloudflare.ts:74"
+        },
+        {
+          "re": "/crypto\\.subtle\\.verify|verifySession|readSession/",
+          "at": "hark/src/auth/session.ts:54"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/status:\\s*401|, 401\\)/",
+          "at": "hark/src/auth/cloudflare.ts:205"
+        },
+        {
+          "re": "/SESSION_SECRET/",
+          "at": "hark/src/auth/cloudflare.ts:36"
+        }
+      ]
+    },
+    {
+      "id": "T2",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/(getByName|idFromName)\\(\\s*(owner|user|email|actor|this\\.owner|caller\\.owner|identity)/i",
+          "at": null
+        },
+        {
+          "re": "/props\\.(owner|user)\\b/",
+          "at": "hark/src/workbench.ts:26"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/ctx\\.storage\\.sql|storage\\.sql\\.exec|this\\.sql\\b/",
+          "at": "hark/src/directory.ts:30"
+        },
+        {
+          "re": "/idFromName\\(|getByName\\(/",
+          "at": "hark/src/auth/cloudflare.ts:64"
+        }
+      ]
+    },
+    {
+      "id": "T3",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/accounts\\/\\$\\{[^}]*account/i",
+          "at": "hark/src/upstream.ts:48"
+        },
+        {
+          "re": "/no_user_grant|COIL_AUTH|_PAYER\\b/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/env\\.AI\\b|this\\.env\\.AI\\b/",
+          "at": null
+        },
+        {
+          "re": "/accountName/",
+          "at": "hark/src/auth/cloudflare.ts:152"
+        }
+      ]
+    },
+    {
+      "id": "T4",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/redact/i",
+          "at": null
+        },
+        {
+          "re": "/HttpOnly/i",
+          "at": "hark/src/auth/session.ts:83"
+        },
+        {
+          "re": "/never returned|grant_store/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/__Host-|SameSite/i",
+          "at": "hark/src/auth/session.ts:27"
+        }
+      ]
+    },
+    {
+      "id": "T5",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/origin\\s*!==\\s*(new URL|url\\.origin)|origin\\s*!==\\s*null\\s*&&\\s*origin\\s*!==/",
+          "at": "hark/src/index.ts:43"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/sec-fetch-site|csrf/i",
+          "at": null
+        },
+        {
+          "re": "/SameSite=(Strict|Lax)/i",
+          "at": "hark/src/auth/session.ts:83"
+        }
+      ]
+    },
+    {
+      "id": "T6",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/globalOutbound:\\s*null/",
+          "at": "hark/src/workbench.ts:94"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/LOADER\\.(get|load)\\(/",
+          "at": "hark/src/workbench.ts:90"
+        },
+        {
+          "re": "/getSandbox|sandboxComputer|Container\\b/",
+          "at": "hark/src/computer.ts:67"
+        }
+      ]
+    },
+    {
+      "id": "T7",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/\\/stop\\b|stopLoop|STOPPED_BY_OWNER|status = 'stopped'/",
+          "at": null
+        },
+        {
+          "re": "/interrupted|aborted/",
+          "at": "hark/src/hark.ts:935"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/AbortController|abort\\(/",
+          "at": "hark/src/hark.ts:715"
+        }
+      ]
+    },
+    {
+      "id": "T8",
+      "verdict": "partial",
+      "strong": [
+        {
+          "re": "/CREATE TABLE[^\\n]*\\b(generations|versions)\\b/",
+          "at": null
+        },
+        {
+          "re": "/snapshotId\\b|snapshotContainer\\(/",
+          "at": null
+        },
+        {
+          "re": "/\\/rollback\\b|\\/api\\/rollback/",
+          "at": null
+        }
+      ],
+      "weak": [
+        {
+          "re": "/rollback\\(/",
+          "at": null
+        },
+        {
+          "re": "/artifact/i",
+          "at": "hark/src/auth/every-scope.ts:101"
+        }
+      ]
+    },
+    {
+      "id": "T9",
+      "verdict": "has",
+      "strong": [
+        {
+          "re": "/SIGN_IN_PATHS|PUBLIC_PATHS|const PUBLIC\\b/",
+          "at": "hark/src/index.ts:20"
+        }
+      ],
+      "weak": [
+        {
+          "re": "/robots\\.txt/",
+          "at": null
+        },
+        {
+          "re": "/llms\\.txt/",
+          "at": null
+        }
+      ]
+    }
+  ],
+  "live": []
+}
