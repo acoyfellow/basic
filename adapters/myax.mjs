@@ -203,6 +203,55 @@ export default {
 			if (behavior === "smooth") fail("the transcript pins with smooth scrolling, not an instant jump");
 		},
 
+		"Scrolling up during a real reply is never pulled back": async ({ page, base }) => {
+			await openFresh(page, base, "scroll real reply");
+			await fillLog(page, 200);
+			await nextFrame(page);
+			await page.$eval(selectors.log, (element) => (element.scrollTop = element.scrollHeight));
+			await startTurn(page, "Write the numbers 1 to 300, one per line, each followed by a short sentence. Do not use any tools.");
+			await page.waitForFunction((log) => {
+				const element = document.querySelector(log);
+				return element !== null && /\b1[0-9]\b/.test(element.querySelector("article.msg-assistant:last-of-type")?.textContent ?? "");
+			}, selectors.log, { timeout: 60000 });
+			await page.$eval(selectors.log, (element) => (element.scrollTop = element.scrollHeight));
+			await page.waitForTimeout(300);
+			await page.hover(selectors.log);
+			await page.mouse.wheel(0, -900);
+			await page.waitForTimeout(300);
+
+			const heldAt = await page.$eval(selectors.log, (element) => element.scrollTop);
+			const lengthBefore = await page.$eval(selectors.log, (element) => element.scrollHeight);
+			const positions = [];
+
+			for (let index = 0; index < 12; index += 1) {
+				await page.waitForTimeout(250);
+				positions.push(await page.$eval(selectors.log, (element) => element.scrollTop));
+			}
+
+			const lengthAfter = await page.$eval(selectors.log, (element) => element.scrollHeight);
+			const moved = positions.find((position) => Math.abs(position - heldAt) > 2);
+
+			if (lengthAfter <= lengthBefore) {
+				await page.click(selectors.stop).catch(() => {});
+				fail("the reply stopped growing before the check could watch it render");
+			}
+			if (moved !== undefined) {
+				await page.click(selectors.stop).catch(() => {});
+				fail(`a streamed render moved the reader from ${heldAt} to ${moved}`);
+			}
+
+			await page.$eval(selectors.log, (element) => (element.scrollTop = element.scrollHeight - element.clientHeight - 40));
+			await page.waitForTimeout(150);
+			const lengthAtResume = await page.$eval(selectors.log, (element) => element.scrollHeight);
+			await page.waitForFunction(({ log, length }) => (document.querySelector(log)?.scrollHeight ?? 0) > length, { log: selectors.log, length: lengthAtResume }, { timeout: 30000 }).catch(() => {});
+			await nextFrame(page);
+			const distance = await distanceFromBottom(page);
+
+			await page.click(selectors.stop).catch(() => {});
+
+			if (distance > 2) fail(`after scrolling back near the bottom, the next token left the log ${distance}px from the bottom`);
+		},
+
 		"Reading history while the agent streams": async ({ page, base }) => {
 			await openFresh(page, base, "scroll read");
 			await fillLog(page, 200);

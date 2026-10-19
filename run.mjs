@@ -48,7 +48,7 @@ for (const scenario of selected) {
 
 	if (typeof check === "string") {
 		results.push({ ...scenario, status: check.startsWith(MISSING) ? "fail" : "n/a", reason: check.startsWith(MISSING) ? check.slice(MISSING.length).trim() : check, ms: 0 });
-		console.log(`${results.at(-1).status.padEnd(8)} ${scenario.title}`);
+		console.log(`${results.at(-1).status.padEnd(8)} ${scenario.title}${results.at(-1).status === "fail" ? ` — ${results.at(-1).reason}` : ""}`);
 		continue;
 	}
 
@@ -68,7 +68,7 @@ for (const scenario of selected) {
 		await page.close();
 	}
 
-	console.log(`${results.at(-1).status.padEnd(8)} ${scenario.title}`);
+	console.log(`${results.at(-1).status.padEnd(8)} ${scenario.title}${results.at(-1).status === "fail" ? ` — ${results.at(-1).reason}` : ""}`);
 }
 
 await browser.close();
