@@ -15,39 +15,30 @@ A probe hit is evidence to read, not proof. "has" means at least one strong prob
 | T8 Changes the agent makes are versioned, gated, and append-only | ❌ missing | no probe hit |
 | T9 Public pages are served before the gate; nothing else is | ❌ missing | no probe hit |
 
+## Unconfirmed
+
+The code check did not find these, but a live check exists and has not failed. Run it before writing a fix:
+
+`BASE=<url> node basic/kernel/live.mjs --app=chat-ax`
+
+- T5 Writes must come from the app origin
+- T6 Agent-written code runs in an isolate with no ambient network or secrets
+- T9 Public pages are served before the gate; nothing else is
+
 ## Fix tasks
 
 ### T3 The payer is explicit, and a user payer never falls back to host inference
 
+- Why this is a task: no live check for this rule; treat the code finding as the gap
 - Change: Declare the payer in config; when the payer is user and no grant exists, fail instead of calling env.AI.
 - Where: `chat-ax/src/agent-do.ts:326`
 - Copy from: `tenon/src/index.ts:95`
 - Proof: `node basic/kernel/run.mjs --app=chat-ax && node -e "const r=require('./basic/reports/kernel-chat-ax.json').rows.find(x=>x.id==='T3');process.exit(r.verdict==='has'?0:1)"`
 
-### T5 Writes must come from the app origin
-
-- Change: Refuse non-GET requests whose Origin header is not the app origin.
-- Where: `chat-ax/src`
-- Copy from: `tenon/src/index.ts:130`
-- Proof: `node basic/kernel/run.mjs --app=chat-ax && node -e "const r=require('./basic/reports/kernel-chat-ax.json').rows.find(x=>x.id==='T5');process.exit(r.verdict==='has'?0:1)"`
-
-### T6 Agent-written code runs in an isolate with no ambient network or secrets
-
-- Change: Load agent code with Worker Loader and globalOutbound: null; pass only the bindings it needs.
-- Where: `chat-ax/src`
-- Copy from: `tenon/src/index.ts:180`
-- Proof: `node basic/kernel/run.mjs --app=chat-ax && node -e "const r=require('./basic/reports/kernel-chat-ax.json').rows.find(x=>x.id==='T6');process.exit(r.verdict==='has'?0:1)"`
-
 ### T8 Changes the agent makes are versioned, gated, and append-only
 
+- Why this is a task: no live check for this rule; treat the code finding as the gap
 - Change: Store versions in an append-only table; gate before live; rollback inserts a new row.
 - Where: `chat-ax/src`
 - Copy from: `tenon/src/index.ts:249`
 - Proof: `node basic/kernel/run.mjs --app=chat-ax && node -e "const r=require('./basic/reports/kernel-chat-ax.json').rows.find(x=>x.id==='T8');process.exit(r.verdict==='has'?0:1)"`
-
-### T9 Public pages are served before the gate; nothing else is
-
-- Change: Keep one PUBLIC set served before the identity check; everything else goes through it.
-- Where: `chat-ax/src`
-- Copy from: `tenon/src/index.ts:25`
-- Proof: `node basic/kernel/run.mjs --app=chat-ax && node -e "const r=require('./basic/reports/kernel-chat-ax.json').rows.find(x=>x.id==='T9');process.exit(r.verdict==='has'?0:1)"`

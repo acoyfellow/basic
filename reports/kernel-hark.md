@@ -11,7 +11,7 @@ A probe hit is evidence to read, not proof. "has" means at least one strong prob
 | T4 Secrets and grant tokens never reach the browser or a log | ✅ has | `hark/src/auth/session.ts:83`<br>`hark/src/auth/session.ts:27` |
 | T5 Writes must come from the app origin | ✅ has | `hark/src/index.ts:43`<br>`hark/src/auth/session.ts:83` |
 | T6 Agent-written code runs in an isolate with no ambient network or secrets | ✅ has | `hark/src/workbench.ts:94`<br>`hark/src/workbench.ts:90`<br>`hark/src/computer.ts:67` |
-| T7 A run is visible, truthful, and stoppable | ✅ has | `hark/src/hark.ts:935`<br>`hark/src/hark.ts:715` |
+| T7 A run is visible, truthful, and stoppable | ✅ has | `hark/src/hark.ts:946`<br>`hark/src/hark.ts:726` |
 | T8 Changes the agent makes are versioned, gated, and append-only | ❌ missing | no probe hit |
 | T9 Public pages are served before the gate; nothing else is | ✅ has | `hark/src/index.ts:20` |
 
@@ -19,6 +19,7 @@ A probe hit is evidence to read, not proof. "has" means at least one strong prob
 
 ### T8 Changes the agent makes are versioned, gated, and append-only
 
+- Why this is a task: no live check for this rule; treat the code finding as the gap
 - Change: Store versions in an append-only table; gate before live; rollback inserts a new row.
 - Where: `hark/src`
 - Copy from: `tenon/src/index.ts:249`

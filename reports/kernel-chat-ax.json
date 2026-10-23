@@ -68,6 +68,7 @@
           "user payer with no grant fails instead of using host inference",
           "user payer with a grant routes to the user account"
         ],
+        "confirmed": "no live check for this rule; treat the code finding as the gap",
         "proof": "node basic/kernel/run.mjs --app=chat-ax && node -e \"const r=require('./basic/reports/kernel-chat-ax.json').rows.find(x=>x.id==='T3');process.exit(r.verdict==='has'?0:1)\""
       },
       "strong": [
@@ -120,19 +121,14 @@
       "id": "T5",
       "name": "Writes must come from the app origin",
       "verdict": "missing",
-      "fix": {
-        "file": "chat-ax/src",
-        "near": null,
-        "change": "Refuse non-GET requests whose Origin header is not the app origin.",
-        "reference": "tenon/src/index.ts:130",
-        "tests": [
-          "cross-origin writes are refused"
-        ],
-        "proof": "node basic/kernel/run.mjs --app=chat-ax && node -e \"const r=require('./basic/reports/kernel-chat-ax.json').rows.find(x=>x.id==='T5');process.exit(r.verdict==='has'?0:1)\""
-      },
+      "unconfirmed": "run the live check: BASE=<url> node basic/kernel/live.mjs --app=chat-ax",
       "strong": [
         {
           "re": "/origin\\s*!==\\s*(new URL|url\\.origin)|origin\\s*!==\\s*null\\s*&&\\s*origin\\s*!==/i",
+          "at": null
+        },
+        {
+          "re": "/!\\s*(is)?[sS]ameOrigin\\w*\\(|(is)?[sS]ameOrigin\\w*\\([^)]*\\)\\s*(===|==)\\s*false/i",
           "at": null
         }
       ],
@@ -151,16 +147,7 @@
       "id": "T6",
       "name": "Agent-written code runs in an isolate with no ambient network or secrets",
       "verdict": "missing",
-      "fix": {
-        "file": "chat-ax/src",
-        "near": null,
-        "change": "Load agent code with Worker Loader and globalOutbound: null; pass only the bindings it needs.",
-        "reference": "tenon/src/index.ts:180",
-        "tests": [
-          "owner code has no network"
-        ],
-        "proof": "node basic/kernel/run.mjs --app=chat-ax && node -e \"const r=require('./basic/reports/kernel-chat-ax.json').rows.find(x=>x.id==='T6');process.exit(r.verdict==='has'?0:1)\""
-      },
+      "unconfirmed": "run the live check: BASE=<url> node basic/kernel/live.mjs --app=chat-ax",
       "strong": [
         {
           "re": "/globalOutbound:\\s*null/",
@@ -213,6 +200,7 @@
           "rollback appends; history is never rewritten",
           "versions are per owner"
         ],
+        "confirmed": "no live check for this rule; treat the code finding as the gap",
         "proof": "node basic/kernel/run.mjs --app=chat-ax && node -e \"const r=require('./basic/reports/kernel-chat-ax.json').rows.find(x=>x.id==='T8');process.exit(r.verdict==='has'?0:1)\""
       },
       "strong": [
@@ -244,16 +232,7 @@
       "id": "T9",
       "name": "Public pages are served before the gate; nothing else is",
       "verdict": "missing",
-      "fix": {
-        "file": "chat-ax/src",
-        "near": null,
-        "change": "Keep one PUBLIC set served before the identity check; everything else goes through it.",
-        "reference": "tenon/src/index.ts:25",
-        "tests": [
-          "public pages load without sign-in"
-        ],
-        "proof": "node basic/kernel/run.mjs --app=chat-ax && node -e \"const r=require('./basic/reports/kernel-chat-ax.json').rows.find(x=>x.id==='T9');process.exit(r.verdict==='has'?0:1)\""
-      },
+      "unconfirmed": "run the live check: BASE=<url> node basic/kernel/live.mjs --app=chat-ax",
       "strong": [
         {
           "re": "/SIGN_IN_PATHS|PUBLIC_PATHS|const PUBLIC\\b/",

@@ -113,6 +113,10 @@
         {
           "re": "/origin\\s*!==\\s*(new URL|url\\.origin)|origin\\s*!==\\s*null\\s*&&\\s*origin\\s*!==/i",
           "at": "hark/src/index.ts:43"
+        },
+        {
+          "re": "/!\\s*(is)?[sS]ameOrigin\\w*\\(|(is)?[sS]ameOrigin\\w*\\([^)]*\\)\\s*(===|==)\\s*false/i",
+          "at": null
         }
       ],
       "weak": [
@@ -158,13 +162,13 @@
         },
         {
           "re": "/interrupted|aborted/",
-          "at": "hark/src/hark.ts:935"
+          "at": "hark/src/hark.ts:946"
         }
       ],
       "weak": [
         {
           "re": "/AbortController|abort\\(/",
-          "at": "hark/src/hark.ts:715"
+          "at": "hark/src/hark.ts:726"
         }
       ]
     },
@@ -182,6 +186,7 @@
           "rollback appends; history is never rewritten",
           "versions are per owner"
         ],
+        "confirmed": "no live check for this rule; treat the code finding as the gap",
         "proof": "node basic/kernel/run.mjs --app=hark && node -e \"const r=require('./basic/reports/kernel-hark.json').rows.find(x=>x.id==='T8');process.exit(r.verdict==='has'?0:1)\""
       },
       "strong": [

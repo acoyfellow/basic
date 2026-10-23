@@ -37,7 +37,7 @@
       "strong": [
         {
           "re": "/(getByName|idFromName)\\(\\s*(owner|user|email|actor|this\\.owner|caller\\.owner|identity)/i",
-          "at": "my-ax/src/index.tsx:228"
+          "at": "my-ax/src/index.tsx:238"
         },
         {
           "re": "/props\\.(owner|user)\\b/i",
@@ -47,7 +47,7 @@
       "weak": [
         {
           "re": "/ctx\\.storage\\.sql|storage\\.sql\\.exec|this\\.sql\\b/i",
-          "at": null
+          "at": "my-ax/src/agent.ts:159"
         },
         {
           "re": "/idFromName\\(|getByName\\(/i",
@@ -59,7 +59,7 @@
       "id": "T3",
       "name": "The payer is explicit, and a user payer never falls back to host inference",
       "verdict": "partial",
-      "note": "routes to the user account (my-ax/src/routes/browser.ts:6) and also calls host AI (my-ax/src/index.tsx:144); confirm the host call never serves a user-paid turn",
+      "note": "routes to the user account (my-ax/src/routes/browser.ts:6) and also calls host AI (my-ax/src/index.tsx:149); confirm the host call never serves a user-paid turn",
       "fix": {
         "file": "my-ax/src/routes/browser.ts",
         "near": "my-ax/src/routes/browser.ts:6",
@@ -69,6 +69,7 @@
           "user payer with no grant fails instead of using host inference",
           "user payer with a grant routes to the user account"
         ],
+        "confirmed": "no live check for this rule; treat the code finding as the gap",
         "proof": "node basic/kernel/run.mjs --app=my-ax && node -e \"const r=require('./basic/reports/kernel-my-ax.json').rows.find(x=>x.id==='T3');process.exit(r.verdict==='has'?0:1)\""
       },
       "strong": [
@@ -84,7 +85,7 @@
       "weak": [
         {
           "re": "/env\\.AI\\b|this\\.env\\.AI\\b/i",
-          "at": "my-ax/src/index.tsx:144"
+          "at": "my-ax/src/index.tsx:149"
         },
         {
           "re": "/accountName/i",
@@ -125,6 +126,10 @@
         {
           "re": "/origin\\s*!==\\s*(new URL|url\\.origin)|origin\\s*!==\\s*null\\s*&&\\s*origin\\s*!==/i",
           "at": "my-ax/src/routes/attention.ts:165"
+        },
+        {
+          "re": "/!\\s*(is)?[sS]ameOrigin\\w*\\(|(is)?[sS]ameOrigin\\w*\\([^)]*\\)\\s*(===|==)\\s*false/i",
+          "at": null
         }
       ],
       "weak": [
@@ -155,7 +160,7 @@
         },
         {
           "re": "/getSandbox|sandboxComputer|Container\\b/",
-          "at": "my-ax/src/named-computer.ts:1"
+          "at": "my-ax/src/disk-sandbox.ts:15"
         }
       ]
     },
@@ -170,7 +175,7 @@
         },
         {
           "re": "/interrupted|aborted/",
-          "at": "my-ax/src/agent.ts:169"
+          "at": "my-ax/src/agent.ts:140"
         }
       ],
       "weak": [
@@ -191,7 +196,7 @@
         },
         {
           "re": "/snapshotId\\b|snapshotContainer\\(/i",
-          "at": "my-ax/src/routes/system.ts:95"
+          "at": "my-ax/src/disk-sandbox.ts:31"
         },
         {
           "re": "/\\/rollback\\b|\\/api\\/rollback/i",

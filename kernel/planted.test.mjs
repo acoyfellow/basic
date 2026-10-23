@@ -53,6 +53,17 @@ try {
       results.push({ id, kind, verdict, caught: verdict !== 'has' });
     }
   }
+  const helperRoot = join(workspace, 'T5-helper-correct');
+  mkdirSync(join(helperRoot, 'tenon', 'src'), { recursive: true });
+  const helperSource = ORIGINAL.replace(
+    TARGETS.T5.line,
+    "if (!isSameOrigin(req, url)) return json({ error: 'cross_origin_write' }, 403);",
+  ).replace('export default {', 'const isSameOrigin = (request: Request, at: URL) => request.headers.get(\'origin\') === at.origin;\n\nexport default {');
+  if (helperSource === ORIGINAL) throw new Error('T5 helper edit did not apply');
+  writeFileSync(join(helperRoot, 'tenon', 'src', 'index.ts'), helperSource);
+  const helperVerdict = verdictFor(helperRoot, 'T5');
+  results.push({ id: 'T5', kind: 'control (correct, via helper)', verdict: helperVerdict, caught: helperVerdict === 'has' });
+
   const control = join(workspace, 'control');
   cpSync(join(TENON, 'src'), join(control, 'tenon', 'src'), { recursive: true });
   for (const id of Object.keys(TARGETS)) results.push({ id, kind: 'control (unchanged)', verdict: verdictFor(control, id), caught: verdictFor(control, id) === 'has' });

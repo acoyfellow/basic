@@ -84,8 +84,26 @@ if (BASE) {
 
 const icon = { has: '✅ has', partial: '🟡 partial', missing: '❌ missing', 'n/a': '⚪ n/a' };
 
-const fixFor = (row) => {
+const LIVE_RESULTS = (() => {
+  try {
+    return JSON.parse(readFileSync(join(HERE, '..', 'reports', `live-${app}.json`), 'utf8'));
+  } catch {
+    return null;
+  }
+})();
+
+const liveFailed = (id) => LIVE_RESULTS?.results?.some((result) => result.id === id && !result.pass) ?? false;
+
+export const confirmationOf = (row) => {
   if (row.verdict === 'has' || row.verdict === 'n/a') return undefined;
+  if (!row.liveCheck) return 'no live check for this rule; treat the code finding as the gap';
+  if (liveFailed(row.id)) return 'confirmed by the live check';
+  return null;
+};
+
+const fixFor = (row) => {
+  const confirmed = confirmationOf(row);
+  if (confirmed === undefined || confirmed === null) return undefined;
   const hit = [...row.strong, ...row.weak].find((probe) => probe.at);
   return {
     file: hit ? hit.at.replace(/:\d+$/, '') : `${app}/${APPS[app].dirs[0]}`,
@@ -93,6 +111,7 @@ const fixFor = (row) => {
     change: row.fix,
     reference: row.reference,
     tests: row.tests,
+    confirmed,
     proof: `node basic/kernel/run.mjs --app=${app} && node -e "const r=require('./basic/reports/kernel-${app}.json').rows.find(x=>x.id==='${row.id}');process.exit(r.verdict==='has'?0:1)"`,
   };
 };
@@ -117,13 +136,18 @@ mkdirSync(join(HERE, '..', 'reports'), { recursive: true });
 writeFileSync(join(HERE, '..', 'reports', `kernel-${app}.md`), out.join('\n'));
 writeFileSync(
   join(HERE, '..', 'reports', `kernel-${app}.json`),
-  JSON.stringify({ app, rows: rows.map((row) => ({ id: row.id, name: row.name, verdict: row.verdict, note: row.note, fix: fixFor(row), strong: row.strong, weak: row.weak })), live }, null, 2),
+  JSON.stringify({ app, rows: rows.map((row) => ({ id: row.id, name: row.name, verdict: row.verdict, note: row.note, fix: fixFor(row), unconfirmed: confirmationOf(row) === null ? `run the live check: BASE=<url> node basic/kernel/live.mjs --app=${app}` : undefined, strong: row.strong, weak: row.weak })), live }, null, 2),
 );
 const gaps = rows.filter((r) => r.verdict === 'partial' || r.verdict === 'missing');
+const confirmedGaps = gaps.filter((r) => fixFor(r));
+const unconfirmedGaps = gaps.filter((r) => !fixFor(r));
+if (unconfirmedGaps.length) {
+  out.push('## Unconfirmed', '', 'The code check did not find these, but a live check exists and has not failed. Run it before writing a fix:', '', `\`BASE=<url> node basic/kernel/live.mjs --app=${app}\``, '', ...unconfirmedGaps.map((r) => `- ${r.id} ${r.name}`), '');
+}
 if (gaps.length) {
-  out.push('## Fix tasks', '', ...gaps.flatMap((r) => {
+  out.push('## Fix tasks', '', ...confirmedGaps.flatMap((r) => {
     const f = fixFor(r);
-    return [`### ${r.id} ${r.name}`, '', `- Change: ${f.change}`, `- Where: ${f.near ? `\`${f.near}\`` : `\`${f.file}\``}`, `- Copy from: \`${f.reference}\``, `- Proof: \`${f.proof}\``, ''];
+    return [`### ${r.id} ${r.name}`, '', `- Why this is a task: ${f.confirmed}`, `- Change: ${f.change}`, `- Where: ${f.near ? `\`${f.near}\`` : `\`${f.file}\``}`, `- Copy from: \`${f.reference}\``, `- Proof: \`${f.proof}\``, ''];
   }));
   writeFileSync(join(HERE, '..', 'reports', `kernel-${app}.md`), out.join('\n'));
 }

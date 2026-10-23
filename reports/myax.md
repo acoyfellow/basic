@@ -1,14 +1,15 @@
 # myax conformance report
 
-Run against the deployed app on 2026-10-16, floor only.
+Run against the deployed app on 2026-10-19, floor only.
 
-pass 45 · fail 0 · n/a 10 · untested 0
+pass 46 · fail 0 · n/a 10 · untested 0
 
 | Scenario | Tags | Result | Detail |
 | --- | --- | --- | --- |
 | Following the stream while at the bottom | @must | pass |  |
 | Reading history while the agent streams | @must | pass |  |
 | A scroll-wheel up releases the pin at once | @must | pass |  |
+| Scrolling up during a real reply is never pulled back | @must | pass |  |
 | A way back to the newest message | @must | pass |  |
 | Opening a conversation lands at the bottom | @must | pass |  |
 | An existing conversation never flashes the empty state | @must | pass |  |

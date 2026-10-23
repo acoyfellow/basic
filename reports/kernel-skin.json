@@ -108,21 +108,15 @@
     {
       "id": "T5",
       "name": "Writes must come from the app origin",
-      "verdict": "partial",
-      "fix": {
-        "file": "skin/kernel/auth/session.ts",
-        "near": "skin/kernel/auth/session.ts:105",
-        "change": "Refuse non-GET requests whose Origin header is not the app origin.",
-        "reference": "tenon/src/index.ts:130",
-        "tests": [
-          "cross-origin writes are refused"
-        ],
-        "proof": "node basic/kernel/run.mjs --app=skin && node -e \"const r=require('./basic/reports/kernel-skin.json').rows.find(x=>x.id==='T5');process.exit(r.verdict==='has'?0:1)\""
-      },
+      "verdict": "has",
       "strong": [
         {
           "re": "/origin\\s*!==\\s*(new URL|url\\.origin)|origin\\s*!==\\s*null\\s*&&\\s*origin\\s*!==/i",
           "at": null
+        },
+        {
+          "re": "/!\\s*(is)?[sS]ameOrigin\\w*\\(|(is)?[sS]ameOrigin\\w*\\([^)]*\\)\\s*(===|==)\\s*false/i",
+          "at": "skin/kernel/index.ts:325"
         }
       ],
       "weak": [

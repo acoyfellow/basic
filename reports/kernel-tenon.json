@@ -113,6 +113,10 @@
         {
           "re": "/origin\\s*!==\\s*(new URL|url\\.origin)|origin\\s*!==\\s*null\\s*&&\\s*origin\\s*!==/i",
           "at": "tenon/src/index.ts:130"
+        },
+        {
+          "re": "/!\\s*(is)?[sS]ameOrigin\\w*\\(|(is)?[sS]ameOrigin\\w*\\([^)]*\\)\\s*(===|==)\\s*false/i",
+          "at": null
         }
       ],
       "weak": [
