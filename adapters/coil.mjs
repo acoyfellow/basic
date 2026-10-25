@@ -613,14 +613,28 @@ export default {
 		},
 
 		"A long error is summarised, with detail on demand": async ({ page, base }) => {
-			const name = await newThread(page, "long error", "@cf/meta/llama-3.3-70b-instruct-fp8-fast");
+			const name = await newThread(page, "long error");
+			const detail = `400 {"errors":[{"message":"AiError: Bad input: ${"the request was not valid; ".repeat(30)}","code":5006}],"success":false}`;
 
-			await rpc(page, "SendMessage", { name, requestId: `basic-${Date.now()}`, text: "Write 120 numbered lines about the sea into list.txt with your write tool, then summarise it." }).catch(() => undefined);
+			await page.route("**/api/rpc", async (route) => {
+				if (!(route.request().postData() ?? "").includes('"ViewThread"')) return route.continue();
+
+				const response = await route.fetch();
+				const exits = await response.json();
+				const view = exits[0]?.exit?.value;
+
+				if (view === undefined) return route.fulfill({ response });
+
+				view.busy = false;
+				view.messages = [
+					{ id: "u1", role: "user", kind: "pi.user", text: "do the thing" },
+					{ id: "a1", role: "assistant", kind: "pi.assistant", text: `The model call failed: ${detail}` },
+				];
+
+				return route.fulfill({ response, json: exits });
+			});
 			await open(page, base, name);
-
-			const found = await page.waitForSelector(".msg.error", { timeout: 60000 }).catch(() => null);
-
-			if (found === null) return "SKIPPED: the model did not fail on this run, so there was no long error to fold";
+			await page.waitForSelector(".msg.error", { timeout: 30000 }).catch(() => fail("a failed model call is not shown as an error"));
 
 			const summary = await page.$eval(".msg.error .error-summary", (element) => element.textContent ?? "");
 
