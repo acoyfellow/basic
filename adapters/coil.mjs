@@ -655,6 +655,7 @@ export default {
 			await openFresh(page, base, "notify shortcut");
 
 			await openSettings(page, "app");
+			await page.waitForSelector("#notify", { timeout: 10000 }).catch(async () => fail(`the settings dialog shows no notifications control: ${(await page.$eval("body", (body) => body.innerText).catch(() => "")).slice(0, 300)}`));
 
 			const shortcut = await page.$eval("#notify", (element) => element.getAttribute("aria-keyshortcuts")).catch(() => null);
 
