@@ -171,6 +171,15 @@ const streamLong = async (page, base, title) => {
 };
 
 
+const openSettings = async (page, section) => {
+	if ((await page.$("#settings")) === null) {
+		await page.click("#settings-open").catch(() => fail("there is no Settings control in the sidebar"));
+		await page.waitForSelector("#settings", { state: "visible", timeout: 10000 }).catch(() => fail("the Settings control does not open the settings dialog"));
+	}
+
+	await page.click(`#settings [data-section="${section}"]`).catch(() => fail(`the settings dialog has no ${section} section`));
+};
+
 export default {
 	checks: {
 		"Older history pages in without a jump": "coil loads the whole conversation (up to 500 entries) in one view; there is no paged older history to load.",
@@ -573,7 +582,7 @@ export default {
 				return text !== "" && text !== "Signed in with Cloudflare";
 			}, null, { timeout: 15000 }).catch(() => fail("the sidebar does not name the signed-in account"));
 
-			await Promise.all([page.waitForURL(/\/oauth\/gateway/, { timeout: 15000 }), page.click("#gateway-link")]).catch(() => fail(`the Gateway control does not open the gateway picker; the page stays at ${page.url()}`));
+			await Promise.all([page.waitForURL(/\/oauth\/gateway/, { timeout: 15000 }), openSettings(page, "account").then(() => page.click("#gateway-link"))]).catch(() => fail(`the Gateway control does not open the gateway picker; the page stays at ${page.url()}`));
 
 			const current = await page.$eval("input[name=gateway]:checked", (radio) => radio.value).catch(() => fail("the gateway picker shows no gateway in use"));
 
@@ -644,6 +653,8 @@ export default {
 
 		"Notifications have a keyboard shortcut": async ({ page, base }) => {
 			await openFresh(page, base, "notify shortcut");
+
+			await openSettings(page, "app");
 
 			const shortcut = await page.$eval("#notify", (element) => element.getAttribute("aria-keyshortcuts")).catch(() => null);
 
@@ -842,6 +853,7 @@ export default {
 
 		"Signing out is one visible control": async ({ page, base }) => {
 			await openFresh(page, base, "sign out");
+			await openSettings(page, "account");
 			await page.waitForSelector(selectors.signOut, { state: "visible", timeout: 15000 }).catch(() => fail("no visible Sign out control"));
 		},
 	},
