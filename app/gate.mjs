@@ -19,11 +19,13 @@ const record = (name, ok, detail) => {
 	console.log(`${ok ? "ok  " : "FAIL"} ${name}: ${detail}`);
 };
 
+const isSummary = (line) => /^pass \d+ · fail \d+/.test(line);
+
 const conformance = () => {
 	const skip = process.argv.includes("--skip-conformance");
 	if (skip) {
 		const report = readFileSync(join(ROOT, "reports", "reference.md"), "utf8");
-		const line = report.split("\n").find((each) => each.startsWith("pass ")) ?? "";
+		const line = report.split("\n").find(isSummary) ?? "";
 		const counts = Object.fromEntries([...line.matchAll(/(pass|fail|n\/a|untested) (\d+)/g)].map((match) => [match[1], Number(match[2])]));
 		const live = report.includes("basic.customer0.dev") || process.env.BASIC_URL === undefined;
 		record("conformance (from report)", counts.pass === SCENARIOS && counts.fail === 0 && counts["n/a"] === 0 && counts.untested === 0 && live, line);
@@ -31,7 +33,7 @@ const conformance = () => {
 	}
 	const run = spawnSync("node", ["run.mjs", "--app=reference"], { cwd: ROOT, env: { ...process.env, BASE: BASIC }, encoding: "utf8", maxBuffer: 1 << 24, stdio: ["ignore", "pipe", "inherit"] });
 	process.stdout.write(run.stdout ?? "");
-	const summary = (run.stdout ?? "").split("\n").find((line) => line.startsWith("pass ")) ?? "no summary";
+	const summary = (run.stdout ?? "").split("\n").find(isSummary) ?? "no summary";
 	const counts = Object.fromEntries([...summary.matchAll(/(pass|fail|n\/a|untested) (\d+)/g)].map((match) => [match[1], Number(match[2])]));
 	const ok = counts.pass === SCENARIOS && counts.fail === 0 && counts["n/a"] === 0 && counts.untested === 0;
 	record(`conformance against ${BASIC}`, ok, summary);
