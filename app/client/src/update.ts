@@ -238,11 +238,15 @@ export const update = (model: Model, message: Message): Return =>
 		},
 		ClickedExpireSession: () => ({ model, commands: [ExpireSession()] }),
 		CompletedEffect: () => ({ model }),
-		SocketOpened: ({ epoch }) => (epoch === model.socketEpoch ? { model: { ...model, connection: "online", reconnectAttempt: 0 } } : { model }),
+		SocketOpened: ({ epoch }) => {
+			if (epoch !== model.socketEpoch) return { model };
+			const waiting = model.chats.flatMap((chat) => chat.entries.flatMap((entry) => (entry._tag === "Agent" && entry.receivedAt === null && entry.stoppedAt === null ? [entry] : [])));
+			return { model: { ...model, connection: "online", reconnectAttempt: 0 }, commands: waiting.map((turn) => SendTurn({ turnId: turn.id, prompt: turn.prompt })) };
+		},
 		SocketClosed: ({ epoch }) => closeSocket(model, epoch),
 		SocketExpired: ({ epoch }) => (epoch === model.socketEpoch ? { model: { ...model, auth: { _tag: "Expired", returnTo: `${location.pathname}${location.search}` }, connection: "offline" } } : { model }),
 		GotScript: ({ turnId, script, at }) => {
-			const next = scriptedFor(model, turnId, (turn) => (turn.stoppedAt !== null ? turn : { ...turn, script, receivedAt: at, sentAt: turn.sentAt ?? at }));
+			const next = scriptedFor(model, turnId, (turn) => (turn.stoppedAt !== null || turn.receivedAt !== null ? turn : { ...turn, script, receivedAt: at, sentAt: turn.sentAt ?? at }));
 			return { model: next, commands: [persistChats(next)] };
 		},
 		StampedTurn: ({ turnId, at }) => ({ model: scriptedFor(model, turnId, (turn) => ({ ...turn, sentAt: at })) }),

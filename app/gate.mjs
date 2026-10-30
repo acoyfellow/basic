@@ -54,6 +54,7 @@ const logos = async (page) => {
 	for (const site of sites) {
 		await page.goto(site.url, { waitUntil: "load" });
 		await page.waitForSelector(site.selector, { timeout: 15000 }).catch(() => {});
+		await page.waitForFunction((selector) => { const image = document.querySelector(`${selector} img`); return image !== null && image.complete && image.naturalWidth > 0; }, site.selector, { timeout: 15000 }).catch(() => {});
 		const image = await page.$eval(`${site.selector} img`, (img) => ({ src: img.getAttribute("src") ?? "", loaded: img.complete && img.naturalWidth > 0 })).catch(() => null);
 		if (image === null) {
 			record(`${site.name} Cloudflare mark`, false, "no sign-in button with an image");
@@ -90,7 +91,7 @@ const palette = async (page) => {
 const portTests = () => {
 	const run = spawnSync("npx", ["vitest", "run"], { cwd: PORT_REPO, encoding: "utf8" });
 	const line = `${run.stdout}${run.stderr}`.split("\n").find((each) => /Tests\s+\d/.test(each))?.trim() ?? "no summary";
-	record("port vitest", run.status === 0, line);
+	record("port vitest", run.status === 0, `${line} (exit ${run.status})`);
 };
 
 conformance();

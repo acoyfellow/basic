@@ -58,7 +58,7 @@ export const SendTurn = Command.define("SendTurn", {
 	messages: [Message.StampedTurn],
 	execute: ({ turnId, prompt }) =>
 		Effect.sync(() => {
-			live.socket?.send(JSON.stringify({ _tag: "Turn", turnId, prompt }));
+			if (live.socket?.readyState === WebSocket.OPEN) live.socket.send(JSON.stringify({ _tag: "Turn", turnId, prompt }));
 			return Message.StampedTurn({ turnId, at: Date.now() });
 		}),
 });

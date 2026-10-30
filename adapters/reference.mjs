@@ -864,6 +864,7 @@ export default {
 			await fresh(page, base);
 			await page.click("[role=tab]:has-text('faults')");
 			await page.click("#fault-drop");
+			await page.waitForFunction(() => document.querySelector("[data-connection]")?.getAttribute("data-connection") !== "online", null, { timeout: 5000 });
 			await page.waitForFunction(() => document.querySelector("[data-connection]")?.getAttribute("data-connection") === "online", null, { timeout: 10000 });
 			await page.click("#fault-late-close");
 			await page.waitForTimeout(500);
