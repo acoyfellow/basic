@@ -1,0 +1,38 @@
+name: gate
+on:
+  workflow_dispatch:
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: basic
+      - uses: actions/checkout@v4
+        with:
+          repository: acoyfellow/port
+          path: port
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install port test dependencies
+        working-directory: port
+        run: npm ci --no-audit --no-fund
+      - name: Install Playwright
+        working-directory: basic
+        run: |
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.64.0
+          npx playwright install --with-deps chromium
+      - name: Gate against production
+        working-directory: basic
+        run: node app/gate.mjs
+      - name: Keep the report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gate-report
+          path: |
+            basic/reports/reference.md
+            basic/reports/shots/

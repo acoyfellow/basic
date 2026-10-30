@@ -29,7 +29,8 @@ const conformance = () => {
 		record("conformance (from report)", counts.pass === SCENARIOS && counts.fail === 0 && counts["n/a"] === 0 && counts.untested === 0 && live, line);
 		return;
 	}
-	const run = spawnSync("node", ["run.mjs", "--app=reference"], { cwd: ROOT, env: { ...process.env, BASE: BASIC }, encoding: "utf8", maxBuffer: 1 << 24 });
+	const run = spawnSync("node", ["run.mjs", "--app=reference"], { cwd: ROOT, env: { ...process.env, BASE: BASIC }, encoding: "utf8", maxBuffer: 1 << 24, stdio: ["ignore", "pipe", "inherit"] });
+	process.stdout.write(run.stdout ?? "");
 	const summary = (run.stdout ?? "").split("\n").find((line) => line.startsWith("pass ")) ?? "no summary";
 	const counts = Object.fromEntries([...summary.matchAll(/(pass|fail|n\/a|untested) (\d+)/g)].map((match) => [match[1], Number(match[2])]));
 	const ok = counts.pass === SCENARIOS && counts.fail === 0 && counts["n/a"] === 0 && counts.untested === 0;
