@@ -1,0 +1,75 @@
+.gitignore
+  s_231221b99fcbf7::t_4c154f98d74a20 4-8
+adapters/reference.mjs
+  s_231221b99fcbf7::t_d6b82acc1b03f0 1-1295
+app/client/index.html
+  s_231221b99fcbf7::t_525845410015f8 1-19
+app/client/src/command.ts
+  s_231221b99fcbf7::t_12aa2a9426c252 1-218
+app/client/src/entry.ts
+  s_231221b99fcbf7::t_977c428fdf0c7b 1-70
+app/client/src/highlighter.ts
+  s_231221b99fcbf7::t_737a541fdeebf4 1-12
+app/client/src/markdown.ts
+  s_231221b99fcbf7::t_d05a88e66ced04 1-97
+app/client/src/message.ts
+  s_231221b99fcbf7::t_0acca8aac66705 1-88
+app/client/src/model.ts
+  s_231221b99fcbf7::t_1e2fcca75fb1fb 1-115
+app/client/src/mounts.ts
+  s_231221b99fcbf7::t_ec6a1da99a58d4 1-192
+app/client/src/styles.css
+  s_231221b99fcbf7::t_46e116e606cf52 1-147
+app/client/src/subscriptions.ts
+  s_231221b99fcbf7::t_5b536f2acb5616 1-115
+app/client/src/update.ts
+  s_231221b99fcbf7::t_5d31de373a6d56 1-399
+app/client/src/view/composer.ts
+  s_231221b99fcbf7::t_81cde3c397ec60 1-101
+app/client/src/view/index.ts
+  s_231221b99fcbf7::t_c5565c5da65f98 1-274
+app/client/src/view/sidebar.ts
+  s_231221b99fcbf7::t_8a38b7fde71c87 1-169
+app/client/src/view/transcript.ts
+  s_231221b99fcbf7::t_f8441765e7e970 1-285
+app/client/src/view/ui.ts
+  s_231221b99fcbf7::t_2e532027195dd9 1-65
+app/client/vite.config.ts
+  s_231221b99fcbf7::t_f8ccefb7f0537c 1-11
+app/gate.mjs
+  s_231221b99fcbf7::t_cd89ea6a4391b6 1-107
+app/package-lock.json
+  s_231221b99fcbf7::t_f0608a530d9d88 1-3360
+app/package.json
+  s_231221b99fcbf7::t_6f68b96adf3761 1-23
+app/public/brand/cloudflare-cloud.svg
+  s_231221b99fcbf7::t_5b5303b90471c7 1
+app/public/favicon.svg
+  s_231221b99fcbf7::t_3a40a96ac8299a 1
+app/shared/script.ts
+  s_231221b99fcbf7::t_2fb75e7a2de858 1-217
+app/tsconfig.json
+  s_231221b99fcbf7::t_b4b67479068236 1-16
+app/tsconfig.worker.json
+  s_231221b99fcbf7::t_c094c6b9c5e9d5 1-15
+app/worker/index.ts
+  s_231221b99fcbf7::t_4f2a4c828d5f4d 1-157
+app/wrangler.jsonc
+  s_231221b99fcbf7::t_7faec5ad2b65ca 1-16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "0d602305d05c466821bb9a7cf508b48690076cef",
+  "prompts": {},
+  "sessions": {
+    "s_231221b99fcbf7": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a1176a-4538-7369-8003-75cbe8c7d418",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jordan Coeyman <jcoeyman@cloudflare.com>"
+    }
+  }
+}
