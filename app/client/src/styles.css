@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+	--font-sans: "Google Sans Flex", ui-sans-serif, system-ui, sans-serif;
+	--font-mono: "Google Sans Mono", ui-monospace, SFMono-Regular, monospace;
+	--color-bg: var(--bg);
+	--color-panel: var(--panel);
+	--color-raised: var(--raised);
+	--color-line: var(--line);
+	--color-line-strong: var(--line-strong);
+	--color-ink: var(--ink);
+	--color-dim: var(--dim);
+	--color-faint: var(--faint);
+	--color-brand: var(--brand);
+	--color-brand-strong: var(--brand-strong);
+	--color-brand-soft: var(--brand-soft);
+	--color-brand-line: var(--brand-line);
+	--color-ok: var(--ok);
+	--color-warn: var(--warn);
+	--color-bad: var(--bad);
+}
+
+:root {
+	--bg: #ffffff;
+	--panel: #fafaf9;
+	--raised: #f2f1ee;
+	--line: #ebebe8;
+	--line-strong: #d4d4d0;
+	--ink: #18181b;
+	--dim: #52525b;
+	--faint: #8a8a93;
+	--brand: #7c5cff;
+	--brand-strong: #5b3df0;
+	--brand-soft: #f5f0ff;
+	--brand-line: #ddd0fb;
+	--ok: #15803d;
+	--warn: #b45309;
+	--bad: #dc2626;
+	color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not(:has([data-theme="light"])) {
+		--bg: #141416;
+		--panel: #18181b;
+		--raised: #222226;
+		--line: #26262b;
+		--line-strong: #34343a;
+		--ink: #ececee;
+		--dim: #b4b4bb;
+		--faint: #84848c;
+		--brand: #a593ff;
+		--brand-strong: #8d7ad9;
+		--brand-soft: #1a1426;
+		--brand-line: #3a2d5c;
+		--ok: #4ade80;
+		--warn: #fbbf24;
+		--bad: #f87171;
+		color-scheme: dark;
+	}
+}
+
+:root:has([data-theme="dark"]) {
+	--bg: #141416;
+	--panel: #18181b;
+	--raised: #222226;
+	--line: #26262b;
+	--line-strong: #34343a;
+	--ink: #ececee;
+	--dim: #b4b4bb;
+	--faint: #84848c;
+	--brand: #a593ff;
+	--brand-strong: #8d7ad9;
+	--brand-soft: #1a1426;
+	--brand-line: #3a2d5c;
+	--ok: #4ade80;
+	--warn: #fbbf24;
+	--bad: #f87171;
+	color-scheme: dark;
+}
+
+html,
+body,
+#root {
+	height: 100%;
+	margin: 0;
+}
+
+body {
+	font-family: var(--font-sans);
+	background: var(--bg);
+	color: var(--ink);
+	-webkit-font-smoothing: antialiased;
+}
+
+.log {
+	scroll-behavior: auto;
+}
+
+details > summary::-webkit-details-marker {
+	display: none;
+}
+
+.thinking-dots {
+	display: inline-flex;
+	gap: 3px;
+}
+
+.thinking-dots span {
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: var(--brand);
+	animation: basic-dot 1s ease-in-out infinite;
+}
+
+.thinking-dots span:nth-child(2) {
+	animation-delay: 0.15s;
+}
+
+.thinking-dots span:nth-child(3) {
+	animation-delay: 0.3s;
+}
+
+@keyframes basic-dot {
+	0%,
+	100% {
+		opacity: 0.25;
+		transform: translateY(0);
+	}
+	50% {
+		opacity: 1;
+		transform: translateY(-2px);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation: none !important;
+		transition: none !important;
+		scroll-behavior: auto !important;
+	}
+}
