@@ -1,0 +1,45 @@
+README.md
+  s_46448aabb2fde9::t_a87f92f1536848 5
+adapters/reference.mjs
+  s_46448aabb2fde9::t_3baaa4f6cf21f3 52-63,495,504,865,877,918,949-963,966,985,989,993,1002,1009,1016-1017,1050-1051,1054,1059,1075,1225
+app/client/src/message.ts
+  s_46448aabb2fde9::t_dfa632eb6057ed 6,83-84
+app/client/src/model.ts
+  s_46448aabb2fde9::t_9d70e7214cfc69 61-65,114
+app/client/src/update.ts
+  s_46448aabb2fde9::t_c5cde4fd5bf81f 31,178-187,189,409-410
+app/client/src/view/index.ts
+  s_46448aabb2fde9::t_b5b66eb7edab1b 8,128-136,143,168-170,200,231,247,253
+app/client/src/view/sidebar.ts
+  s_46448aabb2fde9::t_f777a10e8be4e6 4-5,89,110-112,155,157-158,160-164
+app/client/src/view/transcript.ts
+  s_46448aabb2fde9::t_a4ad330d15405b 191-198,237
+app/gate.mjs
+  s_46448aabb2fde9::t_b538b07404c181 11
+contract/chat.feature
+  s_46448aabb2fde9::t_40b6f738ab9f06 286-298,336
+diagrams/contract.svg
+  s_46448aabb2fde9::t_24d8411981b49f 1,3,6,10,21-34,96-114,153-175,202,212-225
+diagrams/rules/01-scroll-follows-the-reader-never-the-stream.svg
+  s_46448aabb2fde9::t_22e90b2bbb2031 1,3,57-122,124-151
+diagrams/rules/08-side-panels-fit-the-readers-screen.svg
+  s_46448aabb2fde9::t_e798279348a3c2 1,3,11-135
+diagrams/rules/10-the-page-works-for-everyone.svg
+  s_46448aabb2fde9::t_8f91bca895a875 1,3,49-53,61-75
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "434790c221b3b73ddef9afc575d1ce8e59143689",
+  "prompts": {},
+  "sessions": {
+    "s_46448aabb2fde9": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a16406-55d1-7667-a643-d1b60b40e986",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jordan Coeyman <jcoeyman@cloudflare.com>"
+    }
+  }
+}
