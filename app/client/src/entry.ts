@@ -40,7 +40,6 @@ const initialModel: Model = {
 	highlighter: false,
 	highlighterRequested: false,
 	announced: [],
-	inspector: "trace",
 	seq: 0,
 	pinRequest: 0,
 };

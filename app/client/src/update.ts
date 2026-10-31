@@ -28,7 +28,7 @@ import {
 } from "./command.ts";
 import { isRunningPhase, playTurn } from "./engine.ts";
 import { Message } from "./message.ts";
-import { type AgentTurn, type Chat, DEFAULT_PANELS, type Entry, type Model, PANEL_LIMITS, Panels, PHONE_WIDTH, Settings } from "./model.ts";
+import { type AgentTurn, type Chat, DEFAULT_PANELS, type Detail, type Entry, type Model, PANEL_LIMITS, Panels, PHONE_WIDTH, Settings } from "./model.ts";
 
 type Return = Update.Return<Model, Message>;
 type AnyCommand = Command.Command<Message>;
@@ -175,7 +175,18 @@ const branch = (model: Model, id: string): Return => {
 	return { model: next, commands: [persistChats(next), PushUrl({ url: `/c/${chatId}` })] };
 };
 
+const openDetail = (model: Model, detail: Detail): Return => {
+	const panels = { ...model.panels, rightOpen: true, detail };
+	return { model: { ...model, panels, mobilePanel: model.viewport < PHONE_WIDTH ? "right" : model.mobilePanel }, commands: [persistPanels(panels)] };
+};
+
+const closeDetail = (model: Model): Return => {
+	const panels = { ...model.panels, rightOpen: false, detail: null };
+	return { model: { ...model, panels, mobilePanel: model.mobilePanel === "right" ? "none" : model.mobilePanel }, commands: [persistPanels(panels)] };
+};
+
 const togglePanel = (model: Model, side: "left" | "right"): Return => {
+	if (side === "right" && model.panels.detail === null) return { model };
 	if (model.viewport < PHONE_WIDTH) return { model: { ...model, mobilePanel: model.mobilePanel === side ? "none" : side } };
 	const panels = side === "left" ? { ...model.panels, leftOpen: !model.panels.leftOpen } : { ...model.panels, rightOpen: !model.panels.rightOpen };
 	return { model: { ...model, panels }, commands: [persistPanels(panels)] };
@@ -395,7 +406,8 @@ export const update = (model: Model, message: Message): Return =>
 			const settings = { ...model.settings, theme };
 			return { model: { ...model, settings }, commands: [Persist({ key: STORAGE.settings, value: JSON.stringify(settings) })] };
 		},
-		PickedInspector: ({ tab }) => ({ model: { ...model, inspector: tab } }),
+		OpenedDetail: ({ detail }) => openDetail(model, detail),
+		ClosedDetail: () => closeDetail(model),
 		PressedGlobalKey: ({ key, meta, alt }) => globalKey(model, key, meta, alt),
 		DismissedToast: () => ({ model: { ...model, toast: null } }),
 	});

@@ -1,8 +1,8 @@
 import type { Html } from "foldkit/html";
 import { formatSeconds, traceOf } from "../engine.ts";
 import { Message } from "../message.ts";
-import type { Chat, Model } from "../model.ts";
-import { chatFailed, chatRunning, currentChat, lastTurn, turnClock } from "../update.ts";
+import type { Chat, Detail, Model } from "../model.ts";
+import { chatFailed, chatRunning, currentChat, turnClock } from "../update.ts";
 import { type H, ICONS, icon, iconButton, relativeGroup } from "./ui.ts";
 
 const GROUPS = ["Pinned", "Today", "Yesterday", "Last 7 days", "Older"] as const;
@@ -86,6 +86,7 @@ export const identity = (h: H, model: Model): Html =>
 				[
 					h.span([h.Class("grid size-7 shrink-0 place-items-center rounded-full border border-brand-line bg-brand-soft text-[12px] font-semibold text-brand"), h.AriaHidden(true)], [model.auth.email.slice(0, 1).toUpperCase()]),
 					h.div([h.Class("min-w-0 flex-1 overflow-hidden leading-tight")], [h.p([h.Id("who"), h.Class("truncate text-[13px] font-medium"), h.Title(model.auth.email)], [model.auth.email]), h.p([h.Class("truncate text-[11.5px] text-faint")], [model.auth.account])]),
+					iconButton(h, "Open the test lab", ICONS.right, Message.OpenedDetail({ detail: { _tag: "Lab" } }), { id: "open-lab" }),
 					iconButton(h, "Settings", ICONS.settings, Message.OpenedSettings(), { id: "open-settings" }),
 					h.form([h.Id("sign-out"), h.Attribute("method", "post"), h.Attribute("action", "/auth/sign-out"), h.OnSubmit(Message.ClickedSignOut())], [h.button([h.Type("submit"), h.Title(`Sign out ${model.auth.email}`), h.Class("inline-flex h-8 items-center gap-1.5 rounded-lg px-2 text-[12.5px] font-medium text-dim hover:bg-raised hover:text-ink")], [icon(h, ICONS.signout, 14), "Sign out"])]),
 				],
@@ -106,9 +107,9 @@ const SCRIPT_PROMPTS: ReadonlyArray<readonly [string, string]> = [
 	["fast", "Reply with the single word: ok"],
 ];
 
-const traceTab = (h: H, model: Model): Html => {
-	const turn = lastTurn(currentChat(model));
-	if (turn === null || turn.receivedAt === null) return h.p([h.Class("px-3 py-4 text-[13px] text-faint")], ["Send a message to see its trace: each step, when it started and what it did."]);
+const traceView = (h: H, model: Model, turnId: string): Html => {
+	const turn = currentChat(model)?.entries.find((entry) => entry._tag === "Agent" && entry.id === turnId);
+	if (turn === undefined || turn._tag !== "Agent" || turn.receivedAt === null) return h.p([h.Class("px-3 py-4 text-[13px] text-faint")], ["This turn is not in the open conversation."]);
 	const clock = turnClock(turn, turn.stoppedAt ?? model.now) * model.settings.speed;
 	const events = traceOf(turn.script, clock);
 	return h.ol(
@@ -151,19 +152,13 @@ const faultsTab = (h: H, model: Model): Html =>
 		],
 	);
 
-export const inspector = (h: H, model: Model): Html =>
+const labView = (h: H, model: Model): Html =>
 	h.div(
-		[h.Class("flex min-h-0 flex-1 flex-col")],
-		[
-			h.div(
-				[h.Role("tablist"), h.AriaLabel("Inspector"), h.Class("flex flex-wrap gap-1 border-b border-line px-3 py-2")],
-				(["trace", "scripts", "faults"] as const).map((tab) =>
-					h.button(
-						[h.Type("button"), h.Role("tab"), h.AriaSelected(model.inspector === tab), h.Class(`rounded-md px-2.5 py-1 text-[12.5px] font-medium capitalize ${model.inspector === tab ? "bg-brand-soft text-brand" : "text-dim hover:text-ink"}`), h.OnClick(Message.PickedInspector({ tab }))],
-						[tab],
-					),
-				),
-			),
-			h.div([h.Role("tabpanel"), h.Class("min-h-0 flex-1 overflow-y-auto")], [model.inspector === "trace" ? traceTab(h, model) : model.inspector === "scripts" ? scriptsTab(h) : faultsTab(h, model)]),
-		],
+		[h.Class("min-h-0 flex-1 overflow-y-auto")],
+		[h.h3([h.Class("px-3 pt-2 text-[12px] font-semibold uppercase tracking-wide text-faint")], ["Scripts"]), scriptsTab(h), h.h3([h.Class("px-3 pt-2 text-[12px] font-semibold uppercase tracking-wide text-faint")], ["Faults"]), faultsTab(h, model)],
 	);
+
+export const detailTitle = (detail: Detail): string => (detail._tag === "Trace" ? "Trace" : "Test lab");
+
+export const detailPane = (h: H, model: Model, detail: Detail): Html =>
+	h.div([h.Class("flex min-h-0 flex-1 flex-col overflow-y-auto"), h.DataAttribute("detail", detail._tag.toLowerCase())], [detail._tag === "Trace" ? traceView(h, model, detail.turnId) : labView(h, model)]);

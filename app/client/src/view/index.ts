@@ -5,7 +5,7 @@ import { type Model, PHONE_WIDTH } from "../model.ts";
 import { DragEdge } from "../mounts.ts";
 import { chatRunning, currentChat } from "../update.ts";
 import { activity, composer } from "./composer.ts";
-import { chatList, identity, inspector } from "./sidebar.ts";
+import { chatList, detailPane, detailTitle, identity } from "./sidebar.ts";
 import { entries, transcript } from "./transcript.ts";
 import { cloudflareMark, DANGER, type H, ICONS, icon, iconButton, PRIMARY, SECONDARY } from "./ui.ts";
 
@@ -115,9 +115,6 @@ const jumpButton = (h: H, model: Model): Html | null =>
 				[icon(h, ICONS.down, 14), "Scroll to latest", ...(model.unread > 0 ? [h.span([h.Id("unread-count"), h.Class("rounded-full bg-brand px-1.5 text-[11px] text-white")], [String(model.unread)])] : [])],
 			);
 
-const panelHeader = (h: H, title: string, close: Message): Html =>
-	h.div([h.Class("flex items-center justify-between px-3 pt-3 pb-2")], [h.h2([h.Class("text-[13px] font-semibold")], [title]), iconButton(h, `Close ${title.toLowerCase()}`, ICONS.close, close, { className: "md:hidden" })]);
-
 const leftPanel = (h: H, model: Model): Html =>
 	h.div(
 		[h.Class("flex h-full min-h-0 flex-col")],
@@ -128,14 +125,22 @@ const leftPanel = (h: H, model: Model): Html =>
 		],
 	);
 
-const rightPanel = (h: H, model: Model): Html => h.div([h.Class("flex h-full min-h-0 flex-col")], [panelHeader(h, "Inspector", Message.ClosedMobilePanel()), inspector(h, model)]);
+const rightPanel = (h: H, model: Model): Html => {
+	const detail = model.panels.detail;
+	if (detail === null) return h.div([], []);
+	const title = detailTitle(detail);
+	return h.div(
+		[h.Class("flex h-full min-h-0 flex-col")],
+		[h.div([h.Class("flex items-center justify-between px-3 pt-3 pb-2")], [h.h2([h.Class("text-[13px] font-semibold")], [title]), iconButton(h, `Close ${title.toLowerCase()}`, ICONS.close, Message.ClosedDetail(), { id: "close-detail" })]), detailPane(h, model, detail)],
+	);
+};
 
 const dragEdge = (h: H, model: Model, side: "left" | "right"): Html =>
 	h.div(
 		[
 			h.Role("separator"),
 			h.AriaOrientation("vertical"),
-			h.AriaLabel(side === "left" ? "Resize conversations panel" : "Resize inspector panel"),
+			h.AriaLabel(side === "left" ? "Resize conversations panel" : "Resize details panel"),
 			h.AriaValuenow(side === "left" ? model.panels.leftWidth : model.panels.rightWidth),
 			h.Tabindex(0),
 			h.Id(`drag-${side}`),
@@ -160,7 +165,9 @@ const header = (h: H, model: Model): Html => {
 				[h.Class("flex items-center gap-1")],
 				[
 					h.span([h.Id("notifications"), h.Tabindex(-1), h.Role("region"), h.AriaLabel("Notifications (Alt+T)"), h.AriaKeyshortcuts("Alt+T"), h.Class("hidden sm:inline")], [model.toast === null ? "" : h.span([h.Class("text-[12.5px] text-dim")], [model.toast])]),
-					iconButton(h, phone ? "Open inspector" : model.panels.rightOpen ? "Hide inspector" : "Show inspector", ICONS.right, phone ? Message.OpenedMobilePanel({ side: "right" }) : Message.ToggledPanel({ side: "right" }), { id: "toggle-right", pressed: phone ? model.mobilePanel === "right" : model.panels.rightOpen, shortcut: "Meta+J" }),
+					...(model.panels.detail === null
+						? []
+						: [iconButton(h, phone ? "Open details" : model.panels.rightOpen ? "Hide details" : "Show details", ICONS.right, phone ? Message.OpenedMobilePanel({ side: "right" }) : Message.ToggledPanel({ side: "right" }), { id: "toggle-right", pressed: phone ? model.mobilePanel === "right" : model.panels.rightOpen, shortcut: "Meta+J" })]),
 				],
 			),
 		],
@@ -190,7 +197,7 @@ const settingsDialog = (h: H, model: Model): Html | null =>
 									),
 								],
 							),
-							h.p([h.Class("mt-4 text-[12.5px] text-faint")], ["Shortcuts: Enter sends, Shift + Enter adds a line, Esc stops the agent, Cmd/Ctrl + B toggles conversations, Cmd/Ctrl + J toggles the inspector, Alt + T jumps to notifications."]),
+							h.p([h.Class("mt-4 text-[12.5px] text-faint")], ["Shortcuts: Enter sends, Shift + Enter adds a line, Esc stops the agent, Cmd/Ctrl + B toggles conversations, Cmd/Ctrl + J hides or shows an open details pane, Alt + T jumps to notifications."]),
 							h.div([h.Class("mt-5 flex justify-end gap-2")], [h.button([h.Type("button"), h.Class(SECONDARY), h.OnClick(Message.ClosedSettings())], ["Cancel"]), h.button([h.Type("submit"), h.Id("save-settings"), h.Class(PRIMARY)], ["Save"])]),
 						],
 					),
@@ -221,7 +228,7 @@ const app = (h: H, model: Model): Html => {
 	const chat = currentChat(model);
 	const phone = model.viewport < PHONE_WIDTH;
 	const leftOpen = !phone && model.panels.leftOpen;
-	const rightOpen = !phone && model.panels.rightOpen;
+	const rightOpen = !phone && model.panels.rightOpen && model.panels.detail !== null;
 	const jump = jumpButton(h, model);
 	const settings = settingsDialog(h, model);
 	const remove = deleteDialog(h, model);
@@ -237,13 +244,13 @@ const app = (h: H, model: Model): Html => {
 				[header(h, model), transcript(h, model, chat, body), h.div([h.Class("relative shrink-0")], [...(jump === null ? [] : [jump]), activity(h, model), composer(h, model)])],
 			),
 			...(rightOpen
-				? [dragEdge(h, model, "right"), h.aside([h.Id("right-panel"), h.AriaLabel("Inspector"), h.DataAttribute("panel", "right"), h.Class("@container h-full shrink-0 overflow-hidden border-l border-line bg-panel"), h.Style({ width: `${model.panels.rightWidth}px` })], [rightPanel(h, model)])]
+				? [dragEdge(h, model, "right"), h.aside([h.Id("right-panel"), h.AriaLabel("Details"), h.DataAttribute("panel", "right"), h.Class("@container h-full shrink-0 overflow-hidden border-l border-line bg-panel"), h.Style({ width: `${model.panels.rightWidth}px` })], [rightPanel(h, model)])]
 				: []),
 			...(phone && model.mobilePanel !== "none"
 				? [
 						h.div([h.Class("fixed inset-0 z-30 bg-ink/30"), h.OnClick(Message.ClosedMobilePanel()), h.AriaHidden(true)], []),
 						h.aside(
-							[h.Id(`${model.mobilePanel}-panel`), h.AriaLabel(model.mobilePanel === "left" ? "Conversations" : "Inspector"), h.AriaModal(true), h.Role("dialog"), h.DataAttribute("panel", model.mobilePanel), h.DataAttribute("overlay", ""), h.Class(`fixed inset-y-0 z-40 w-[86vw] max-w-[360px] overflow-hidden bg-panel shadow-xl ${model.mobilePanel === "left" ? "left-0 border-r" : "right-0 border-l"} border-line`)],
+							[h.Id(`${model.mobilePanel}-panel`), h.AriaLabel(model.mobilePanel === "left" ? "Conversations" : "Details"), h.AriaModal(true), h.Role("dialog"), h.DataAttribute("panel", model.mobilePanel), h.DataAttribute("overlay", ""), h.Class(`fixed inset-y-0 z-40 w-[86vw] max-w-[360px] overflow-hidden bg-panel shadow-xl ${model.mobilePanel === "left" ? "left-0 border-r" : "right-0 border-l"} border-line`)],
 							[model.mobilePanel === "left" ? leftPanel(h, model) : rightPanel(h, model)],
 						),
 					]

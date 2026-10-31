@@ -3,7 +3,7 @@ import { defineMessageUnion } from "foldkit/message";
 import { Url } from "foldkit/url";
 import { Me } from "../../shared/protocol.ts";
 import { Script } from "../../shared/script.ts";
-import { Attachment, Chat } from "./model.ts";
+import { Attachment, Chat, Detail } from "./model.ts";
 
 const Side = Schema.Literals(["left", "right"]);
 
@@ -80,7 +80,8 @@ export const Message = defineMessageUnion({
 	SavedSettings: {},
 	PickedSpeed: { speed: Schema.Number },
 	PickedTheme: { theme: Schema.Literals(["system", "light", "dark"]) },
-	PickedInspector: { tab: Schema.Literals(["trace", "scripts", "faults"]) },
+	OpenedDetail: { detail: Detail },
+	ClosedDetail: {},
 	PressedGlobalKey: { key: Schema.String, meta: Schema.Boolean, alt: Schema.Boolean, shift: Schema.Boolean },
 	DismissedToast: {},
 });

@@ -283,6 +283,19 @@ Feature: The expected UX contract for an agent chat, October 2026
 
   Rule: Side panels fit the reader's screen
 
+    A left panel for the conversation list is common. A right pane is optional:
+    it opens for something the reader picked, such as a trace, a file or a
+    preview, and it is not part of the page when there is nothing to show.
+
+    @must
+    Scenario: A details pane opens for what I picked, and only then
+      Given the app offers a pane beside the conversation for details
+      When nothing has been picked
+      Then no details pane or empty placeholder takes width from the conversation
+      When I open the details of a turn, a tool call or an attachment
+      Then a pane opens beside the conversation showing that item
+      And closing it gives the conversation its width back
+
     @must
     Scenario: A side panel can be hidden and shown again
       Given the page has a left or a right panel next to the conversation
@@ -320,7 +333,7 @@ Feature: The expected UX contract for an agent chat, October 2026
 
     @should
     Scenario: Each panel toggle has a keyboard shortcut
-      Then each side panel can be shown and hidden with a documented shortcut, such as Cmd+B for the left and Cmd+J for the right
+      Then each open side panel can be shown and hidden with a documented shortcut
 
     @should
     Scenario: A double click on the drag edge restores the default width

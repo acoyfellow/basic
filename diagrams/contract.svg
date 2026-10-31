@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1268" height="1294" viewBox="0 0 1268 1294" role="img" aria-label="Basic agent chat contract map">
+<svg xmlns="http://www.w3.org/2000/svg" width="1268" height="1370" viewBox="0 0 1268 1370" role="img" aria-label="Basic agent chat contract map">
 <title>Basic agent chat contract map</title>
-<rect width="1268" height="1294" fill="#ffffff"/>
+<rect width="1268" height="1370" fill="#ffffff"/>
 <g font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
 <text x="40" y="56" font-size="26" font-weight="700" fill="#1d1d1f" text-anchor="start">Basic: the agent chat contract</text>
-<text x="40" y="86" font-size="14" font-weight="400" fill="#6e6e73" text-anchor="start">68 scenarios in 11 rules. 54 are @must, the floor. 14 @should, 6 @agent.</text>
+<text x="40" y="86" font-size="14" font-weight="400" fill="#6e6e73" text-anchor="start">71 scenarios in 11 rules. 57 are @must, the floor. 14 @should, 6 @agent.</text>
 <rect x="40" y="112" width="47" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="63.5" y="125" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">@must</text>
 <rect x="97" y="112" width="60.199999999999996" height="18" rx="9" fill="#eef4ff" stroke="#4a7bd8"/><text x="127.1" y="125" font-size="11" font-weight="600" fill="#1f4a99" text-anchor="middle">@should</text>
 <rect x="167.2" y="112" width="53.599999999999994" height="18" rx="9" fill="#f1ecff" stroke="#7a5af5"/><text x="194" y="125" font-size="11" font-weight="600" fill="#4b2fc0" text-anchor="middle">@agent</text>
-<rect x="40" y="150" width="380" height="322" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<rect x="40" y="150" width="380" height="366" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
 <circle cx="64" cy="176" r="12" fill="#1d1d1f"/>
 <text x="64" y="180" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
 <text x="84" y="181" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">Scroll follows the reader, never the</text>
@@ -18,17 +18,20 @@
 <text x="64" y="262" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Reading history while the agent streams</text>
 <rect x="54" y="274" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
 <text x="64" y="290" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A scroll-wheel up releases the pin at once</text>
-<rect x="54" y="302" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="318" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A way back to the newest message</text>
-<rect x="54" y="330" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="346" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Opening a conversation lands at the bottom</text>
-<rect x="54" y="358" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
-<text x="64" y="374" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Older history pages in without a jump</text>
-<rect x="54" y="386" width="352" height="40" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="402" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">An existing conversation never flashes the</text>
-<text x="64" y="418" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">empty state</text>
-<rect x="54" y="430" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="446" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">My own message always pins</text>
+<rect x="54" y="302" width="352" height="40" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="318" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Scrolling up during a real reply is never</text>
+<text x="64" y="334" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">pulled back</text>
+<rect x="54" y="346" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="362" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A way back to the newest message</text>
+<rect x="54" y="374" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="390" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Opening a conversation lands at the bottom</text>
+<rect x="54" y="402" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="64" y="418" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Older history pages in without a jump</text>
+<rect x="54" y="430" width="352" height="40" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="446" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">An existing conversation never flashes the</text>
+<text x="64" y="462" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">empty state</text>
+<rect x="54" y="474" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="490" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">My own message always pins</text>
 <rect x="444" y="150" width="380" height="448" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
 <circle cx="468" cy="176" r="12" fill="#1d1d1f"/>
 <text x="468" y="180" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
@@ -90,25 +93,25 @@
 <rect x="862" y="474" width="352" height="40" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
 <text x="872" y="490" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Tool rows keep their open or closed state</text>
 <text x="872" y="506" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">while streaming</text>
-<rect x="40" y="496" width="380" height="266" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
-<circle cx="64" cy="522" r="12" fill="#1d1d1f"/>
-<text x="64" y="526" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
-<text x="84" y="527" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">The conversation list tells me what</text>
-<text x="84" y="545" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">needs me</text>
-<rect x="54" y="564" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="580" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A new chat appears in the list at once</text>
-<rect x="54" y="592" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="608" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Each chat shows whether it is working</text>
-<rect x="54" y="620" width="352" height="40" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="636" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Each chat shows working, idle, or failed at</text>
-<text x="64" y="652" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">a glance</text>
-<text x="398" y="636" font-size="10" font-weight="700" fill="#4b2fc0" text-anchor="end">agent</text>
-<rect x="54" y="664" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="680" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">The list is grouped by time and searchable</text>
-<rect x="54" y="692" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
-<text x="64" y="708" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Pin, archive, and rename from the row</text>
-<rect x="54" y="720" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
-<text x="64" y="736" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Delete asks first</text>
+<rect x="40" y="540" width="380" height="266" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<circle cx="64" cy="566" r="12" fill="#1d1d1f"/>
+<text x="64" y="570" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="84" y="571" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">The conversation list tells me what</text>
+<text x="84" y="589" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">needs me</text>
+<rect x="54" y="608" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="624" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A new chat appears in the list at once</text>
+<rect x="54" y="636" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="652" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Each chat shows whether it is working</text>
+<rect x="54" y="664" width="352" height="40" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="680" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Each chat shows working, idle, or failed at</text>
+<text x="64" y="696" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">a glance</text>
+<text x="398" y="680" font-size="10" font-weight="700" fill="#4b2fc0" text-anchor="end">agent</text>
+<rect x="54" y="708" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="724" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">The list is grouped by time and searchable</text>
+<rect x="54" y="736" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="64" y="752" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Pin, archive, and rename from the row</text>
+<rect x="54" y="764" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="64" y="780" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Delete asks first</text>
 <rect x="848" y="556" width="380" height="192" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
 <circle cx="872" cy="582" r="12" fill="#1d1d1f"/>
 <text x="872" y="586" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
@@ -147,26 +150,29 @@
 <rect x="862" y="868" width="352" height="40" rx="6" fill="#fff1e6" stroke="#f38020"/>
 <text x="872" y="884" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A long error is summarised, with detail on</text>
 <text x="872" y="900" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">demand</text>
-<rect x="40" y="786" width="380" height="292" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
-<circle cx="64" cy="812" r="12" fill="#1d1d1f"/>
-<text x="64" y="816" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">8</text>
-<text x="84" y="817" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">Side panels fit the reader's screen</text>
-<rect x="54" y="836" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="852" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A side panel can be hidden and shown again</text>
-<rect x="54" y="864" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="880" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A side panel can be resized on desktop</text>
-<rect x="54" y="892" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="908" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Panel sizes and visibility survive a reload</text>
-<rect x="54" y="920" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="936" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">What is inside a panel adapts to its width</text>
-<rect x="54" y="948" width="352" height="40" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="964" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">On a phone, side panels open over the</text>
-<text x="64" y="980" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">conversation</text>
-<rect x="54" y="992" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
-<text x="64" y="1008" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Each panel toggle has a keyboard shortcut</text>
-<rect x="54" y="1020" width="352" height="40" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
-<text x="64" y="1036" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">A double click on the drag edge restores the</text>
-<text x="64" y="1052" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">default width</text>
+<rect x="40" y="830" width="380" height="336" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<circle cx="64" cy="856" r="12" fill="#1d1d1f"/>
+<text x="64" y="860" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">8</text>
+<text x="84" y="861" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">Side panels fit the reader's screen</text>
+<rect x="54" y="880" width="352" height="40" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="896" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A details pane opens for what I picked, and</text>
+<text x="64" y="912" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">only then</text>
+<rect x="54" y="924" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="940" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A side panel can be hidden and shown again</text>
+<rect x="54" y="952" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="968" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">A side panel can be resized on desktop</text>
+<rect x="54" y="980" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="996" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Panel sizes and visibility survive a reload</text>
+<rect x="54" y="1008" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="1024" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">What is inside a panel adapts to its width</text>
+<rect x="54" y="1036" width="352" height="40" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="64" y="1052" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">On a phone, side panels open over the</text>
+<text x="64" y="1068" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">conversation</text>
+<rect x="54" y="1080" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="64" y="1096" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Each panel toggle has a keyboard shortcut</text>
+<rect x="54" y="1108" width="352" height="40" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="64" y="1124" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">A double click on the drag edge restores the</text>
+<text x="64" y="1140" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">default width</text>
 <rect x="444" y="854" width="380" height="380" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
 <circle cx="468" cy="880" r="12" fill="#1d1d1f"/>
 <text x="468" y="884" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">9</text>
@@ -193,7 +199,7 @@
 <rect x="458" y="1176" width="352" height="40" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
 <text x="468" y="1192" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">An expired session sends me to sign in,</text>
 <text x="468" y="1208" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">keeping my place</text>
-<rect x="848" y="950" width="380" height="176" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<rect x="848" y="950" width="380" height="204" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
 <circle cx="872" cy="976" r="12" fill="#1d1d1f"/>
 <text x="872" y="980" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">10</text>
 <text x="892" y="981" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">The page works for everyone</text>
@@ -203,17 +209,19 @@
 <text x="872" y="1044" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Motion respects the system setting</text>
 <rect x="862" y="1056" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
 <text x="872" y="1072" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">Every icon button has a name</text>
-<rect x="862" y="1084" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
-<text x="872" y="1100" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Notifications have a keyboard shortcut</text>
-<rect x="40" y="1102" width="380" height="148" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
-<circle cx="64" cy="1128" r="12" fill="#1d1d1f"/>
-<text x="64" y="1132" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">11</text>
-<text x="84" y="1133" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">The first screen invites a first message</text>
-<rect x="54" y="1152" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
-<text x="64" y="1168" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">The empty state offers starters</text>
-<rect x="54" y="1180" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
-<text x="64" y="1196" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Starters belong to the owner</text>
-<rect x="54" y="1208" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
-<text x="64" y="1224" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">The copy names the outcome, not the feature</text>
+<rect x="862" y="1084" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="872" y="1100" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">No text sits on top of other text</text>
+<rect x="862" y="1112" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="872" y="1128" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Notifications have a keyboard shortcut</text>
+<rect x="848" y="1178" width="380" height="148" rx="12" fill="#ffffff" stroke="#d2d2d7"/>
+<circle cx="872" cy="1204" r="12" fill="#1d1d1f"/>
+<text x="872" y="1208" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">11</text>
+<text x="892" y="1209" font-size="14" font-weight="700" fill="#1d1d1f" text-anchor="start">The first screen invites a first message</text>
+<rect x="862" y="1228" width="352" height="24" rx="6" fill="#fff1e6" stroke="#f38020"/>
+<text x="872" y="1244" font-size="12" font-weight="400" fill="#9a4a00" text-anchor="start">The empty state offers starters</text>
+<rect x="862" y="1256" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="872" y="1272" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">Starters belong to the owner</text>
+<rect x="862" y="1284" width="352" height="24" rx="6" fill="#eef4ff" stroke="#4a7bd8"/>
+<text x="872" y="1300" font-size="12" font-weight="400" fill="#1f4a99" text-anchor="start">The copy names the outcome, not the feature</text>
 </g>
 </svg>

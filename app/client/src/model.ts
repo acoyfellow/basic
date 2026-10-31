@@ -58,7 +58,11 @@ export const Auth = Schema.Union([
 
 export type Auth = typeof Auth.Type;
 
-export const Panels = Schema.Struct({ leftOpen: Schema.Boolean, rightOpen: Schema.Boolean, leftWidth: Schema.Number, rightWidth: Schema.Number });
+export const Detail = Schema.Union([Schema.TaggedStruct("Trace", { turnId: Schema.String }), Schema.TaggedStruct("Lab", {})]);
+
+export type Detail = typeof Detail.Type;
+
+export const Panels = Schema.Struct({ leftOpen: Schema.Boolean, rightOpen: Schema.Boolean, leftWidth: Schema.Number, rightWidth: Schema.Number, detail: Schema.NullOr(Detail) });
 
 export type Panels = typeof Panels.Type;
 
@@ -101,14 +105,13 @@ export const Model = Schema.Struct({
 	highlighter: Schema.Boolean,
 	highlighterRequested: Schema.Boolean,
 	announced: Schema.Array(Schema.String),
-	inspector: Schema.Literals(["trace", "scripts", "faults"]),
 	seq: Schema.Number,
 	pinRequest: Schema.Number,
 });
 
 export type Model = typeof Model.Type;
 
-export const DEFAULT_PANELS: Panels = { leftOpen: true, rightOpen: true, leftWidth: 272, rightWidth: 320 };
+export const DEFAULT_PANELS: Panels = { leftOpen: true, rightOpen: false, leftWidth: 272, rightWidth: 320, detail: null };
 
 export const PANEL_LIMITS = { min: 200, max: 480, conversationMin: 420 } as const;
 

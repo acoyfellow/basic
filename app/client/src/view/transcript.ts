@@ -188,6 +188,14 @@ const copyButton = (h: H, model: Model, id: string, text: string): Html =>
 		[icon(h, ICONS.copy, 14), model.copied === id ? "Copied" : "Copy"],
 	);
 
+const traceButton = (h: H, model: Model, turnId: string): Html => {
+	const showing = model.panels.detail?._tag === "Trace" && model.panels.detail.turnId === turnId && model.panels.rightOpen;
+	return h.button(
+		[h.Type("button"), h.Class("inline-flex h-7 items-center gap-1 rounded-md px-2 text-[12px] text-dim hover:bg-raised hover:text-ink"), h.AriaLabel("Show this turn's trace"), h.AriaPressed(showing ? "true" : "false"), h.DataAttribute("open-trace", turnId), h.OnClick(showing ? Message.ClosedDetail() : Message.OpenedDetail({ detail: { _tag: "Trace", turnId } }))],
+		[icon(h, ICONS.right, 14), "Trace"],
+	);
+};
+
 const userMessage = (h: H, model: Model, entry: UserMessage, running: boolean): Html => {
 	const signedIn = model.auth._tag === "SignedIn";
 	const editLabel = signedIn ? (running ? "Stop the running turn to edit messages" : "Edit message") : "You need to sign in to edit messages";
@@ -226,7 +234,7 @@ const agentTurn = (h: H, model: Model, turn: AgentTurn): Html => {
 		[
 			...view.items.map((each, index) => item(h, model, turn.id, each, index)),
 			...turnStatus(h, view),
-			...(finished && text !== "" ? [h.div([h.Class("mt-1 flex gap-0.5"), h.DataAttribute("message-actions", "")], [copyButton(h, model, `${turn.id}:copy`, text)])] : []),
+			...(finished && text !== "" ? [h.div([h.Class("mt-1 flex gap-0.5"), h.DataAttribute("message-actions", "")], [copyButton(h, model, `${turn.id}:copy`, text), traceButton(h, model, turn.id)])] : []),
 		],
 	);
 };

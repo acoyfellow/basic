@@ -8,7 +8,7 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const PORT_REPO = join(dirname(ROOT), "port");
 const BASIC = process.env.BASIC_URL ?? "https://basic.customer0.dev";
 const PORT = process.env.PORT_URL ?? "https://port.customer0.dev";
-const SCENARIOS = 70;
+const SCENARIOS = 71;
 
 const PALETTE = new Set(["30,20,70", "228,220,255", "165,147,255", "124,92,255", "141,122,217", "179,165,236", "196,184,245", "20,12,50", "255,255,255", "0,0,0"]);
 

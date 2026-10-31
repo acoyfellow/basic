@@ -49,6 +49,18 @@ const open = async (page, base, path = "/") => {
 	await ready(page);
 };
 
+const openLab = async (page) => {
+	if ((await page.$("#fault-drop")) === null) await page.click("#open-lab");
+	await page.waitForSelector("#fault-drop", { timeout: 3000 });
+};
+
+const openTrace = async (page) => {
+	await startTurn(page, "Reply with the single word: ok");
+	await waitIdle(page);
+	await page.click("[data-entry='agent'] [data-open-trace]");
+	await page.waitForSelector(`${S.rightPanel} [data-trace]`, { timeout: 3000 });
+};
+
 const fresh = async (page, base) => {
 	await signIn(page.context(), base);
 	await page.goto(`${base}/brand/cloudflare-cloud.svg`, { waitUntil: "load" });
@@ -480,7 +492,7 @@ export default {
 			await fresh(page, base);
 			await startTurn(page, "Reply with the single word: ok");
 			await waitIdle(page);
-			await page.click("[role=tab]:has-text('faults')");
+			await openLab(page);
 			await page.click("#fault-block");
 			await page.waitForFunction(() => /Reconnecting|offline/i.test(document.querySelector("#composer-hint")?.textContent ?? ""), null, { timeout: 5000 });
 			await page.fill(S.composer, "keep me");
@@ -489,7 +501,7 @@ export default {
 			await frames(page);
 			const kept = await page.inputValue(S.composer);
 			const log = await page.textContent(S.log);
-			await page.click("[role=tab]:has-text('faults')");
+			await openLab(page);
 			if (kept !== "keep me") fail(`draft became ${JSON.stringify(kept)}`);
 			if (!log.includes("Message not sent: reconnecting. Your draft is still in the composer")) fail("no notice that the draft was kept");
 			if ((await page.$$("[data-entry='user']")).length !== 1) fail("the message was sent anyway");
@@ -850,7 +862,7 @@ export default {
 
 		"Reconnecting is shown, then gives up honestly": async ({ page, base }) => {
 			await fresh(page, base);
-			await page.click("[role=tab]:has-text('faults')");
+			await openLab(page);
 			await page.click("#fault-block");
 			await page.waitForFunction(() => /Reconnecting/.test(document.querySelector("#connection")?.textContent ?? ""), null, { timeout: 5000 });
 			await page.waitForSelector("#retry-connection", { timeout: 20000 });
@@ -862,7 +874,7 @@ export default {
 
 		"A stale close cannot undo a good connection": async ({ page, base }) => {
 			await fresh(page, base);
-			await page.click("[role=tab]:has-text('faults')");
+			await openLab(page);
 			await page.click("#fault-drop");
 			await page.waitForFunction(() => document.querySelector("[data-connection]")?.getAttribute("data-connection") !== "online", null, { timeout: 5000 });
 			await page.waitForFunction(() => document.querySelector("[data-connection]")?.getAttribute("data-connection") === "online", null, { timeout: 10000 });
@@ -903,7 +915,7 @@ export default {
 			await fresh(page, base);
 			await startTurn(page, "Run the statement workflow and show the error");
 			await waitIdle(page);
-			await page.click("[role=tab]:has-text('faults')");
+			await openLab(page);
 			await page.click("#fault-block");
 			await page.waitForFunction(() => /Reconnecting|offline/i.test(document.querySelector("#composer-hint")?.textContent ?? ""), null, { timeout: 5000 });
 			await page.fill(S.composer, "try anyway");
@@ -934,8 +946,24 @@ export default {
 			if (!detail?.includes("at normaliseInvoice")) fail("the full text is not in the disclosure");
 		},
 
+		"A details pane opens for what I picked, and only then": async ({ page, base }) => {
+			await fresh(page, base);
+			if ((await width(page, S.rightPanel)) !== 0) fail("a details pane is open before anything was picked");
+			if ((await page.$(S.toggleRight)) !== null) fail("there is a details toggle with nothing to show");
+			const empty = await width(page, "#conversation");
+			await openTrace(page);
+			const open = await width(page, S.rightPanel);
+			if (open === 0) fail("the trace did not open a pane");
+			if ((await width(page, "#conversation")) >= empty) fail("the pane did not sit beside the conversation");
+			await page.click("#close-detail");
+			if ((await width(page, S.rightPanel)) !== 0) fail("the pane did not close");
+			if ((await width(page, "#conversation")) !== empty) fail("the conversation did not get its width back");
+			return "no pane until a turn's trace is opened; closing it restores the conversation width";
+		},
+
 		"A side panel can be hidden and shown again": async ({ page, base }) => {
 			await fresh(page, base);
+			await openTrace(page);
 			for (const [toggle, panel] of [
 				[S.toggleLeft, S.leftPanel],
 				[S.toggleRight, S.rightPanel],
@@ -954,14 +982,15 @@ export default {
 
 		"A side panel can be resized on desktop": async ({ page, base }) => {
 			await fresh(page, base);
+			await openTrace(page);
 			const start = await width(page, S.rightPanel);
 			await drag(page, S.dragRight, -80);
 			const wider = await width(page, S.rightPanel);
-			if (Math.abs(wider - (start + 80)) > 4) fail(`the inspector went from ${start} to ${wider} px for an 80 px drag`);
+			if (Math.abs(wider - (start + 80)) > 4) fail(`the details pane went from ${start} to ${wider} px for an 80 px drag`);
 			await drag(page, S.dragRight, -3000);
 			const max = await width(page, S.rightPanel);
 			const conversation = await width(page, "#conversation");
-			if (max > 480) fail(`the inspector grew past its maximum to ${max} px`);
+			if (max > 480) fail(`the details pane grew past its maximum to ${max} px`);
 			if (conversation < 420) fail(`the conversation shrank to ${conversation} px`);
 			await drag(page, S.dragLeft, -3000);
 			const min = await width(page, S.leftPanel);
@@ -970,19 +999,22 @@ export default {
 
 		"Panel sizes and visibility survive a reload": async ({ page, base }) => {
 			await fresh(page, base);
+			await openTrace(page);
 			await drag(page, S.dragRight, -60);
 			await page.click(S.toggleLeft);
 			const right = await width(page, S.rightPanel);
 			await page.reload({ waitUntil: "load" });
 			await ready(page);
 			if ((await width(page, S.leftPanel)) !== 0) fail("the hidden panel came back after a reload");
-			if ((await width(page, S.rightPanel)) !== right) fail(`the inspector is ${await width(page, S.rightPanel)} px after a reload, not ${right}`);
+			if ((await width(page, S.rightPanel)) !== right) fail(`the details pane is ${await width(page, S.rightPanel)} px after a reload, not ${right}`);
 		},
 
 		"What is inside a panel adapts to its width": async ({ page, base }) => {
 			await fresh(page, base);
 			await startTurn(page, "Run the tests and fix what fails");
 			await waitIdle(page);
+			await page.click("[data-entry='agent'] [data-open-trace]");
+			await page.waitForSelector(S.rightPanel, { timeout: 3000 });
 			const report = [];
 			for (const size of [1440, 1100, 900, 780]) {
 				await page.setViewportSize({ width: size, height: 800 });
@@ -1015,14 +1047,16 @@ export default {
 				if ((await width(tab, "#conversation")) !== conversation) fail("opening the panel changed the conversation width");
 				await tab.tap("button[aria-label='Close conversations']");
 				await tab.waitForSelector(S.leftPanel, { state: "detached", timeout: 2000 });
-				await tab.tap(S.toggleRight);
+				await tab.tap(S.toggleLeft);
+				await tab.tap("#open-lab");
 				await tab.waitForSelector(S.rightPanel, { timeout: 2000 });
 				const right = await tab.$eval(S.rightPanel, (element) => getComputedStyle(element).position);
-				if (right !== "fixed") fail(`the inspector opened as ${right}`);
+				if (right !== "fixed") fail(`the details pane opened as ${right}`);
 			}),
 
 		"Each panel toggle has a keyboard shortcut": async ({ page, base }) => {
 			await fresh(page, base);
+			await openTrace(page);
 			for (const [key, panel] of [
 				["b", S.leftPanel],
 				["j", S.rightPanel],
@@ -1038,6 +1072,7 @@ export default {
 
 		"A double click on the drag edge restores the default width": async ({ page, base }) => {
 			await fresh(page, base);
+			await openTrace(page);
 			const start = await width(page, S.rightPanel);
 			await drag(page, S.dragRight, -100);
 			if ((await width(page, S.rightPanel)) === start) fail("the drag did not change the width");
@@ -1187,7 +1222,7 @@ export default {
 				await startTurn(tab, "Reply with the single word: ok");
 				await waitIdle(tab);
 				const chat = new URL(tab.url()).pathname;
-				await tab.click("[role=tab]:has-text('faults')");
+				await openLab(tab);
 				await tab.click("#fault-expire");
 				await tab.waitForTimeout(300);
 				await tab.fill(S.composer, "are you there?");
