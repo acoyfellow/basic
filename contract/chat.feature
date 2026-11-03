@@ -242,6 +242,11 @@ Feature: The expected UX contract for an agent chat, October 2026
       Then the new title shows in the header and in the list, and survives a reload
 
     @must
+    Scenario: Every item in a side list can be renamed and deleted the same way
+      Given any list in the side panel, such as chats or scheduled tasks
+      Then each item has the same options button with Rename and Delete
+
+    @must
     Scenario: New chat is one obvious click
       Then a "New chat" button with a plus icon is visible on desktop and on a phone
 
@@ -265,6 +270,12 @@ Feature: The expected UX contract for an agent chat, October 2026
       When a reply with code streams in
       Then markdown renders from the first token
       And syntax highlighting loads lazily and upgrades the block
+
+    @must @agent
+    Scenario: A tool call opens to show its full trace
+      When I click a tool call row
+      Then it expands to show the full input and the full output or error
+      And clicking again collapses it
 
   Rule: Connection state is truthful
 
@@ -452,6 +463,10 @@ Feature: The expected UX contract for an agent chat, October 2026
     Scenario: Large numbers are grouped for reading
       Given a reply, card, or chart shows a number of 1,000 or more
       Then the number is written with digit grouping, such as 13,954, never 13954
+
+    @should
+    Scenario: Scrollbars stay out of the way
+      Then scrollbars are thin and rounded, and hidden until the reader hovers or scrolls
 
     @must
     Scenario: Everything clickable looks clickable
