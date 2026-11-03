@@ -1,3 +1,4 @@
+import { checkComposerFits } from "../composer-fit.mjs";
 const S = {
 	log: "#log",
 	composer: "#composer",
@@ -477,6 +478,12 @@ export default {
 			if (grown <= start) fail(`did not grow (${start} → ${grown})`);
 			if (capped.height > 165) fail(`grew past the limit to ${capped.height}px`);
 			if (!capped.scrolls) fail("at the limit the composer does not scroll inside itself");
+		},
+
+		"The composer never scrolls before it reaches its limit": async ({ page, base }) => {
+			await fresh(page, base);
+			const problems = await checkComposerFits(page, S.composer);
+			if (problems.length > 0) fail(problems.join("; "));
 		},
 
 		"Send is disabled for empty input, and says why": async ({ page, base }) => {

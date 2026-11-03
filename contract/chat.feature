@@ -101,6 +101,13 @@ Feature: The expected UX contract for an agent chat, October 2026
       Then the composer grows up to about 160 px, then scrolls inside itself
 
     @must
+    Scenario: The composer never scrolls before it reaches its limit
+      Given a narrow window where the placeholder wraps
+      Then the empty composer is tall enough to show the whole placeholder, with no scrollbar
+      When I type text that wraps, clear it, or the window is resized
+      Then the composer fits its content exactly, with no scrollbar, until it reaches its limit
+
+    @must
     Scenario: Send is disabled for empty input, and says why
       Given the composer is empty
       Then the Send button is disabled with the label "Message requires text"
@@ -220,6 +227,23 @@ Feature: The expected UX contract for an agent chat, October 2026
     Scenario: Delete asks first
       When I delete a conversation
       Then I am asked to confirm, naming the conversation
+
+    @must
+    Scenario: Every chat can be renamed and deleted from its row
+      Then each row has one options button that opens a menu with Rename and Delete
+      And Rename edits the title in place, Enter saves and Escape cancels
+      And Delete asks first and removes the row from the list
+
+    @must
+    Scenario: The open chat shows its title and I can rename it there
+      Given a chat is open
+      Then its title is visible above the transcript
+      When I click the title, edit it, and press Enter
+      Then the new title shows in the header and in the list, and survives a reload
+
+    @must
+    Scenario: New chat is one obvious click
+      Then a "New chat" button with a plus icon is visible on desktop and on a phone
 
   Rule: Messages have actions where I need them
 
@@ -423,6 +447,15 @@ Feature: The expected UX contract for an agent chat, October 2026
     @should
     Scenario: Notifications have a keyboard shortcut
       Then the notification region is reachable with a documented shortcut such as Alt+T
+
+    @must
+    Scenario: Large numbers are grouped for reading
+      Given a reply, card, or chart shows a number of 1,000 or more
+      Then the number is written with digit grouping, such as 13,954, never 13954
+
+    @must
+    Scenario: Everything clickable looks clickable
+      Then every enabled button, link, and summary shows a pointer cursor on hover
 
   Rule: The first screen invites a first message
 
