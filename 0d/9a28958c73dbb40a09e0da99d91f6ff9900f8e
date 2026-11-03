@@ -1,0 +1,19 @@
+contract/chat.feature
+  s_48b2cfd9e5d78c::t_c078bd0f7b7df8 244-248,274-279,467-470
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "0d9a28958c73dbb40a09e0da99d91f6ff9900f8e",
+  "prompts": {},
+  "sessions": {
+    "s_48b2cfd9e5d78c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019ff130-6f0d-770a-adb2-c454f944b8e9",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Jordan Coeyman <jcoeyman@cloudflare.com>"
+    }
+  }
+}
