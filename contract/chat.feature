@@ -277,6 +277,15 @@ Feature: The expected UX contract for an agent chat, October 2026
       Then it expands to show the full input and the full output or error
       And clicking again collapses it
 
+  Rule: The first paint is the real page
+
+    @must
+    Scenario: Opening the app shows my real page at once
+      When I open the app, or reload an open chat
+      Then the first paint already shows my chats, my name or greeting, and the open transcript
+      And it never shows "Connecting" while the page loads
+      And nothing jumps from a generic page to a personal one
+
   Rule: Connection state is truthful
 
     @must
