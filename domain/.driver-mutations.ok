@@ -1,0 +1,4 @@
+Driver re-planted by hand with sed (not scripts/mutate.mjs), 2026-11-19:
+A: Conversation.aggregate SendMessage `if (false && chat.runningTurn !== null)` -> FAIL "Rule 3 / Send becomes Stop: a running turn refuses a second send and accepts a stop" (1 failed | 12 passed)
+B: Conversation.aggregate ownedChat `if (false && current.email !== state.owner)` -> FAIL "Rule 4 / Other owners' chats are not changeable" (1 failed | 12 passed)
+Reverted from backup; suite 13 passed. No source comments found in src/ or test/.

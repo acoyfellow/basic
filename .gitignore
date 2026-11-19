@@ -6,3 +6,6 @@ app/client/dist
 app/.tmp
 app/.wrangler
 .DS_Store
+domain/agent.log
+domain/agent.pid
+domain/TASK.md

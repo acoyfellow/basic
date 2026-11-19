@@ -1,0 +1,19 @@
+{
+  "name": "@basic/domain",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@alchemy.run/domain": "2.0.0-beta.87",
+    "effect": "^4.1.4"
+  },
+  "devDependencies": {
+    "@effect/vitest": "^4",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.1"
+  }
+}
