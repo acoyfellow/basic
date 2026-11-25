@@ -2,7 +2,7 @@
 
 Packages: `@alchemy.run/domain@2.0.0-beta.87`, `effect@4.1.4`, `vitest@5.1.1`. Everything runs in memory. Nothing was deployed, no Cloudflare account was used, and there was no network beyond npm and the docs.
 
-Run it: `npx vitest run` (13 tests), `npx tsc -p .` (clean), `node scripts/mutate.mjs [M1 M2 ...]` (the mutation check).
+Run it: `npx vitest run` (18 tests), `npx tsc -p .` (clean), `node scripts/mutate.mjs [M1 M2 ...]` (the mutation check).
 
 ## What works
 
@@ -33,6 +33,9 @@ Run it: `npx vitest run` (13 tests), `npx tsc -p .` (clean), `node scripts/mutat
 | Rule 4: other owners' chats not visible (T1/T2) | `Rule 4 / Other owners' chats are not visible...` | test/Rule4.story.test.ts |
 | Rule 4: other owners' chats not changeable (T1/T2) | `Rule 4 / Other owners' chats are not changeable...` | test/Rule4.story.test.ts |
 | Rule 4: Every chat can be renamed and deleted | `Rule 4 / Every chat can be renamed and deleted by its owner...` | test/Rule4.story.test.ts |
+| Rule 3: A stuck tool row never runs forever | `Rule 3 / A stuck tool row never runs forever...` (2 stories) | test/Rule3.ending.story.test.ts |
+| Rule 3: A turn that ends with nothing visible says so | `Rule 3 / A turn that ends with nothing visible says so...` | test/Rule3.ending.story.test.ts |
+| Rule 4: the list dot (shared with basic/app) | `Rule 4 / the list dot...` (2 tests) | test/chatStatus.test.ts |
 | (T1/T2 over the wire) | `ChatList refuses to be read by a different owner...` | test/ChatListApi.test.ts |
 | (declaration) | `the model is well defined` | test/Model.test.ts |
 
@@ -59,6 +62,9 @@ Each break was applied to one file, the whole suite ran, and the file was restor
 | M17 `RenameChat` skips the owner check | Conversation.aggregate | Other owners' chats are not changeable |
 | M11 delete leaves the row | ChatList.view | Every chat can be renamed and deleted |
 | M14 `ChatList` ignores renames | ChatList.view | Every chat can be renamed and deleted |
+| M19 an ended turn leaves open tool calls running | Turn.aggregate | A stuck tool row never runs forever (both) |
+| M20 an empty reply counts as finished | rules/chatStatus | A turn that ends with nothing visible says so |
+| M21 a running chat shows its last outcome | rules/chatStatus | the list dot: a running chat is working |
 | M5 `ChatList.validate` lets anyone read | ChatList.view | ChatListApi test only (see below) |
 
 Every story caught at least one break. The ones that need a note:
@@ -68,6 +74,10 @@ Every story caught at least one break. The ones that need a note:
 - M5 (`validate` skipped) is not caught by any story. A story can read a view, but it does not run the view's `validate` or the middleware. Only the Api test catches it, so `ChatListApi.test.ts` exists for that reason.
 - A first version of M8 (a new chat starts as `idle`) survived. The very next `MessageSent` event sets `working` anyway, so the break could not be seen. I replaced it with M8 above and kept the note here.
 - Another first run of M11 (delete leaves the row) survived because the story used `view(..., { chats: {} })`. A partial match treats an empty object as "anything". I changed the story to a function check that fails if any row remains. If you use a partial match on a collection, it can pass when the collection is not empty.
+
+## Shared with basic/app
+
+`src/rules/chatStatus.ts` has no Domain or Effect imports. `ChatList` uses it for each row's status, and `basic/app` imports the same file for its sidebar dot (`chatStatus` in `app/client/src/update.ts`). If either side changes how a chat's status is chosen, both change together, and M3, M10 and M21 catch a wrong change. The app still runs its own scripted turns in the browser. It does not host this model.
 
 ## What Domain made easy
 
@@ -104,6 +114,5 @@ Every story caught at least one break. The ones that need a note:
 - No `Today / Yesterday / Last 7 days` grouping or search in the list, and no pin or archive.
 - `needs-you` is a model idea that the contract does not define yet.
 - Tool call commands (`StartToolCall`, `FinishToolCall`) are called directly in stories. Nothing in the model emits them from the provider, because the scripted model only returns a reply.
-- A tool call that never finishes is not turned into an error (the contract's "stuck tool row" scenario).
-- Only 18 hand-picked mutations were run, not a full mutation-testing tool.
-- Nothing is committed. `agent.log` and `agent.pid` in this folder belong to the other agent and were left alone.
+- Only 21 hand-picked mutations were run, not a full mutation-testing tool.
+- `basic/app` does not host the model. Moving it to Durable Objects would replace the browser-side turn engine and is a separate decision.

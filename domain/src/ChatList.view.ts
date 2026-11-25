@@ -9,6 +9,7 @@ import { TurnSettled } from "./Conversation/SettleTurn.command.ts";
 import { CurrentOwner } from "./CurrentOwner.context.ts";
 import { OwnerEmail } from "./ids.ts";
 import { NotOwner } from "./NotOwner.rejection.ts";
+import { statusAfter } from "./rules/chatStatus.ts";
 import { Session } from "./Session.middleware.ts";
 
 export const ChatStatus = Schema.Literals(["working", "idle", "failed", "needs-you"]);
@@ -23,12 +24,6 @@ type ChatRow = typeof ChatRow.Type;
 
 const ChatListState = Schema.Struct({ chats: Schema.Record(Schema.String, ChatRow) });
 type ChatListState = typeof ChatListState.Type;
-
-const statusAfter = (outcome: typeof TurnSettled.Type.outcome): ChatStatus => {
-  if (outcome === "failed") return "failed";
-  if (outcome === "needs-you") return "needs-you";
-  return "idle";
-};
 
 const upsert = (
   state: ChatListState,

@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1052" height="644" viewBox="0 0 1052 644" role="img" aria-label="Basic rule 5: Messages have actions where I need them">
+<svg xmlns="http://www.w3.org/2000/svg" width="1052" height="771" viewBox="0 0 1052 771" role="img" aria-label="Basic rule 5: Messages have actions where I need them">
 <title>Basic rule 5: Messages have actions where I need them</title>
-<rect width="1052" height="644" fill="#ffffff"/>
+<rect width="1052" height="771" fill="#ffffff"/>
 <g font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
 <text x="40" y="52" font-size="22" font-weight="700" fill="#1d1d1f" text-anchor="start">Rule 5: Messages have actions where I need them</text>
 <text x="40" y="78" font-size="13" font-weight="400" fill="#6e6e73" text-anchor="start">Each row is one scenario: the situation, what happens, and what must be true after.</text>
@@ -63,5 +63,20 @@
 <text x="724" y="561" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">markdown renders from the first token</text>
 <text x="724" y="576" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and syntax highlighting loads lazily and</text>
 <text x="724" y="591" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">upgrades the block</text>
+<rect x="40" y="634" width="40.4" height="18" rx="9" fill="#fff1e6" stroke="#f38020"/><text x="60.2" y="647" font-size="11" font-weight="600" fill="#9a4a00" text-anchor="middle">must</text>
+<rect x="86.4" y="634" width="47" height="18" rx="9" fill="#f1ecff" stroke="#7a5af5"/><text x="109.9" y="647" font-size="11" font-weight="600" fill="#4b2fc0" text-anchor="middle">agent</text>
+<text x="145.4" y="648" font-size="14" font-weight="600" fill="#9a4a00" text-anchor="start">A tool call opens to show its full trace</text>
+<rect x="40" y="666" width="300" height="65" rx="8" fill="none" stroke="#d2d2d7" stroke-dasharray="4 4"/>
+<text x="190" y="702.5" font-size="12" font-weight="400" fill="#6e6e73" text-anchor="middle">no step</text>
+<path d="M346 698.5 H368" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M368 694.5 L374 698.5 L368 702.5 Z" fill="#6e6e73"/>
+<rect x="376" y="666" width="300" height="65" rx="8" fill="#fff1e6" stroke="#f38020"/>
+<text x="388" y="688" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">I click a tool call row</text>
+<path d="M682 698.5 H704" stroke="#6e6e73" stroke-width="1.5"/>
+<path d="M704 694.5 L710 698.5 L704 702.5 Z" fill="#6e6e73"/>
+<rect x="712" y="666" width="300" height="65" rx="8" fill="#e9f7ef" stroke="#2e9e5b"/>
+<text x="724" y="688" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">it expands to show the full input and</text>
+<text x="724" y="703" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">the full output or error</text>
+<text x="724" y="718" font-size="12.5" font-weight="400" fill="#1d1d1f" text-anchor="start">and clicking again collapses it</text>
 </g>
 </svg>

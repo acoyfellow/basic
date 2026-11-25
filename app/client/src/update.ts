@@ -26,7 +26,8 @@ import {
 	SignOut,
 	STORAGE,
 } from "./command.ts";
-import { isRunningPhase, playTurn } from "./engine.ts";
+import { type ChatStatus, statusOf, type TurnOutcome } from "../../../domain/src/rules/chatStatus.ts";
+import { isRunningPhase, type Phase, playTurn } from "./engine.ts";
 import { Message } from "./message.ts";
 import { type AgentTurn, type Chat, DEFAULT_PANELS, type Detail, type Entry, type Model, PANEL_LIMITS, Panels, PHONE_WIDTH, Settings } from "./model.ts";
 
@@ -69,11 +70,16 @@ export const isTurnRunning = (turn: AgentTurn | null, model: Model) => turn !== 
 
 export const chatRunning = (chat: Chat, model: Model) => isTurnRunning(lastTurn(chat), model);
 
-export const chatFailed = (chat: Chat, model: Model) => {
+const outcomeOf = (phase: Phase): TurnOutcome | null => {
+	if (phase === "failed" || phase === "stuck" || phase === "empty") return "failed";
+	if (phase === "stopped") return "stopped";
+	if (phase === "done") return "finished";
+	return null;
+};
+
+export const chatStatus = (chat: Chat, model: Model): ChatStatus => {
 	const turn = lastTurn(chat);
-	if (turn === null) return false;
-	const phase = turnView(turn, model).phase;
-	return phase === "failed" || phase === "stuck" || phase === "empty";
+	return statusOf(chatRunning(chat, model), turn === null ? null : outcomeOf(turnView(turn, model).phase));
 };
 
 const withChat = (model: Model, id: string, change: (chat: Chat) => Chat): Model => ({ ...model, chats: model.chats.map((chat) => (chat.id === id ? change(chat) : chat)) });

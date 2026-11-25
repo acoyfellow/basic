@@ -2,17 +2,21 @@ import type { Html } from "foldkit/html";
 import { formatSeconds, traceOf } from "../engine.ts";
 import { Message } from "../message.ts";
 import type { Chat, Detail, Model } from "../model.ts";
-import { chatFailed, chatRunning, currentChat, turnClock } from "../update.ts";
+import type { ChatStatus } from "../../../../domain/src/rules/chatStatus.ts";
+import { chatRunning, chatStatus, currentChat, turnClock } from "../update.ts";
 import { type H, ICONS, icon, iconButton, relativeGroup } from "./ui.ts";
 
 const GROUPS = ["Pinned", "Today", "Yesterday", "Last 7 days", "Older"] as const;
 
+const STATUS_LABEL: Record<ChatStatus, string> = { working: "Response in progress", idle: "Idle", failed: "Last turn failed", "needs-you": "Needs your answer" };
+
+const STATUS_DOT: Record<ChatStatus, string> = { working: "animate-pulse bg-brand", idle: "bg-ok", failed: "bg-bad", "needs-you": "bg-warn" };
+
 const statusDot = (h: H, model: Model, chat: Chat): Html => {
-	const running = chatRunning(chat, model);
-	const failed = !running && chatFailed(chat, model);
-	const label = running ? "Response in progress" : failed ? "Last turn failed" : "Idle";
+	const status = chatStatus(chat, model);
+	const label = STATUS_LABEL[status];
 	return h.span(
-		[h.Class(`size-2 shrink-0 rounded-full ${running ? "animate-pulse bg-brand" : failed ? "bg-bad" : "bg-ok"}`), h.Role("img"), h.AriaLabel(label), h.Title(label), h.DataAttribute("status", running ? "working" : failed ? "failed" : "idle")],
+		[h.Class(`size-2 shrink-0 rounded-full ${STATUS_DOT[status]}`), h.Role("img"), h.AriaLabel(label), h.Title(label), h.DataAttribute("status", status)],
 		[],
 	);
 };

@@ -21,6 +21,11 @@ export class ToolCallFinished extends Domain.Event("ToolCallFinished", {
   at: Schema.String,
 }) {}
 
+export class ToolCallAbandoned extends Domain.Event("ToolCallAbandoned", {
+  callId: Schema.String,
+  at: Schema.String,
+}) {}
+
 export class TurnFinished extends Domain.Event("TurnFinished", {
   conversationId: ConversationId,
   reply: Schema.String,
@@ -67,14 +72,14 @@ export class FinishToolCall extends Domain.Command("FinishToolCall", {
 export class FinishTurn extends Domain.Command("FinishTurn", {
   target: TurnId,
   input: { reply: Schema.String },
-  events: [TurnFinished],
+  events: [TurnFinished, TurnFailed, ToolCallAbandoned],
   rejects: [TurnNotRunning],
 }) {}
 
 export class FailTurn extends Domain.Command("FailTurn", {
   target: TurnId,
   input: { reason: Schema.String },
-  events: [TurnFailed],
+  events: [TurnFailed, ToolCallAbandoned],
   rejects: [TurnNotRunning],
 }) {}
 

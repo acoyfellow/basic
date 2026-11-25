@@ -19,7 +19,7 @@ const mutations = [
   {
     id: "M3",
     name: "ChatList ignores failures",
-    file: "src/ChatList.view.ts",
+    file: "src/rules/chatStatus.ts",
     from: "if (outcome === \"failed\") return \"failed\";",
     to: "",
   },
@@ -48,7 +48,7 @@ const mutations = [
     id: "M7",
     name: "task finish time is not the time of the finish",
     file: "src/Turn/Turn.aggregate.ts",
-    from: "new TurnFinished({ conversationId: turn.conversationId, reply: command.reply, at: iso(now) })",
+    from: "new TurnFinished({ conversationId: turn.conversationId, reply: command.reply, at })",
     to: "new TurnFinished({ conversationId: turn.conversationId, reply: command.reply, at: \"1970-01-01T00:00:00.000Z\" })",
   },
   {
@@ -68,7 +68,7 @@ const mutations = [
   {
     id: "M10",
     name: "ChatList shows a stopped turn as failed",
-    file: "src/ChatList.view.ts",
+    file: "src/rules/chatStatus.ts",
     from: "return \"idle\";\n};",
     to: "return outcome === \"stopped\" ? \"failed\" : \"idle\";\n};",
   },
@@ -127,6 +127,27 @@ const mutations = [
     file: "src/ChatList.view.ts",
     from: "ChatStarted: ({ event }: { event: ChatStarted }) => event.owner,",
     to: "ChatStarted: () => OwnerEmail.make(\"ada@example.com\"),",
+  },
+  {
+    id: "M19",
+    name: "a turn that ends leaves its open tool calls running",
+    file: "src/Turn/Turn.aggregate.ts",
+    from: "turn.openCalls.map((callId) => new ToolCallAbandoned({ callId, at }));",
+    to: "[];",
+  },
+  {
+    id: "M20",
+    name: "an empty reply counts as a finished turn",
+    file: "src/rules/chatStatus.ts",
+    from: "reply.trim() !== \"\"",
+    to: "true",
+  },
+  {
+    id: "M21",
+    name: "a running chat shows its last outcome instead of working",
+    file: "src/rules/chatStatus.ts",
+    from: "running ? \"working\" : ",
+    to: "",
   },
 ];
 
