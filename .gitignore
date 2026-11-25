@@ -9,3 +9,4 @@ app/.wrangler
 domain/agent.log
 domain/agent.pid
 domain/TASK.md
+.guardrail/
